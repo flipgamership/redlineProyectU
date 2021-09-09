@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>login red line </title>
+    <link rel="icon" href="imgs/logo-white.ico">
+    <link rel="stylesheet" href="css/styleLogin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body class="login" >
+
+<nav class="navbar navbar-expand-lg "  style="background-color: #ffffff ;">
+    <div class="nav-cont">
+        <a href="" class="navbar-brand">
+            <img src="img/login.png" style="width: 9%; " alt="">
+        </a>
+    </div>
+</nav>
+<div class="container">
+    <div class="row justify-content-center mt-5 ">
+        <div class="col-lg-4 col-md-8 col-sm-8">
+            <div class="card shadow">
+                <div class="card-title text-center border-bottom">
+                    <h2 class="p-3">Login</h2>
+                </div>
+                <div class="card-body">
+                    <form action="loginAuth" method="POST">
+                        <div class="mb-4">
+                            <label for="usuario">Usuario</label>
+                            <input type="text" class="form-control" name="user">
+                        </div>
+                        <div class="mb-4">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" name="pass">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<% if(typeof alert != "undefined") { %> 
+    <script>
+        Swal.fire({
+            title: '<%=alertTitle %>',
+            text: '<%= alertMessage%>',
+            icon: '<%=alertIcon %>',
+            showConfirmButton: '<%= showConfirmButton %>' ,
+            timer: '<%= timer %>'
+        }).then(()=>{
+            window.location='/<%= ruta %>'
+        })
+    </script>
+    <% } %> 
+<script>
+    var inputs = $("input[type=text]");
+  for(var i = 0; i < inputs.length; i++){
+    var aux = $(inputs[i]).val().trim();
+    $(inputs[i]).val(aux);
+  }
+  </script>
+</body>
+
+
+</html>
+

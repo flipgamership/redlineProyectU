@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title></title>
+</head>
+
+
+
+<body>
+
+
+
+  <%- include('./partials/nav.ejs') %>
+  <div class="container" style="margin-top: 100px;">
+    <% if (role == 'tecnico') {%>
+      <div class="container" >
+        <div class="row justify-content-center mt-5" >
+          <div class="card-group shadow-lg p-3 mb-5 bg-white rounded" style="margin-left: 10px;" >
+            <div class="card">
+              <img src="https://www.seguridad-laboral.es/wp-content/uploads/sites/6/2020/07/11-900x600.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title" style="font-size: 16px;"> <i class='bx bx-shield'></i> Inventario de equipo de seguridad</h5>
+                <p class="card-text" style="font-size: 14px;">dentro de aca podras acceder al sistema de inventario para retirar el equipo de seguridad del inventario teniendo en cuenta que se te esta realizando un prestamo del equipo de seguridad</p>
+              </div>
+              <div class="card-footer">
+                <a href="/telecomunicaciones" class="btn btn-primary"  style="font-size: 12px;" type="button">Inventario de equipo de seguridad</a>
+              </div>
+            </div>
+            <div class="card" style="margin-left: 10px;">
+              <img src="https://images.pexels.com/photos/6790074/pexels-photo-6790074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title" style="font-size: 16px;"> <i class='bx bx-wrench'></i> Inventario de herramientas</h5>
+                <p class="card-text" style="font-size: 14px;">dentro de aca podras acceder al sistema de inventario para retirar las herramientas del inventario teniendo en cuenta que se te esta realizando un prestamo de las herramientas</p>
+              </div>
+              <div class="card-footer">
+                <a class="btn btn-primary"  style="font-size: 12px;" type="button">Inventario de herramientas</a>
+              </div>
+            </div>
+            <div class="card" style="margin-left: 10px;">
+              <img src="https://images.pexels.com/photos/315658/pexels-photo-315658.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"style="font-size: 16px;"><i class='bx bxs-component'></i> Inventario de Insumos </h5>
+                <p class="card-text" style="font-size: 14px;">dentro de aca podras acceder al sistema de inventario para retirar insumos del inventario</p>
+              </div>
+              <div class="card-footer">
+                <a class="btn btn-primary"  style="font-size: 12px;" type="button"> Inventario de Insumos </a>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+    </div>
+      
+    <% } %> 
+    <% if (role == 'servicioCliente') {%>
+      <div class="container" >
+        <div class="row justify-content-center mt-5" >
+        <div class="card-group shadow-lg p-3 mb-5 bg-white rounded" style="margin-left: 10px;" >
+          <div class="card">
+            <img src="https://images.pexels.com/photos/2454803/pexels-photo-2454803.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title" style="font-size: 16px;"> <i class='bx bxs-phone-outgoing' ></i> Telecomunicaciones</h5>
+              <p class="card-text" style="font-size: 14px;">dentro de este apartado podras acceder al sistema de inventario para retirar el equipo de seguridad del inventario teniendo en cuenta que se te esta realizando un prestamo del equipo de seguridad.</p>
+            </div>
+            <div class="card-footer">
+              <a href="" class="btn btn-primary"  style="font-size: 12px;" type="button">Telecomunicaciones</a>
+            </div>
+          </div>
+          <div class="card" style="margin-left: 10px;">
+            <img src="https://images.pexels.com/photos/7709166/pexels-photo-7709166.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title" style="font-size: 16px;"> <i class='bx bx-support'></i> Servicio al cliente</h5>
+              <p class="card-text" style="font-size: 14px;">dentro de este apartado podras acceder al sistema de inventario para retirar las herramientas del inventario teniendo en cuenta que se te esta realizando un prestamo de las herramientas</p>
+            </div>
+            <div class="card-footer">
+              <a class="btn btn-primary"  style="font-size: 12px;" type="button">Servicio al cliente</a>
+            </div>
+          </div>
+          <div class="card" style="margin-left: 10px;">
+            <img src="https://images.pexels.com/photos/196639/pexels-photo-196639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"style="font-size: 16px;"><i class='bx bxs-badge-dollar'></i> Registro de pagos</h5>
+              <p class="card-text" style="font-size: 14px;">dentro de este apartado acceder al sistema de inventario para sacar insumos del inventario teniendo en cuenta los gastos de tu cuadrilla</p>
+            </div>
+            <div class="card-footer">
+              <a class="btn btn-primary"  style="font-size: 12px;" type="button">Registro de pagos</a>
+            </div>
+          </div>
+        </div>
+    
+      </div>  
+    </div>
+      
+    <% } %> 
+    <% if (role == 'admin') {%>
+    <div class="row justify-content-center mt-5" >
+      <div class="card-group shadow-lg p-3 mb-5 bg-white rounded" style="margin-left: 10px;" >
+        <div class="card">
+          <img src="https://www.seguridad-laboral.es/wp-content/uploads/sites/6/2020/07/11-900x600.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title" style="font-size: 16px;"> <i class='bx bx-shield'></i> Inventario de equipo de seguridad</h5>
+            <p class="card-text" style="font-size: 14px;">dentro de aca podras acceder al sistema de inventario para retirar el equipo de seguridad del inventario teniendo en cuenta que se te esta realizando un prestamo del equipo de seguridad</p>
+          </div>
+          <div class="card-footer">
+            <a href="" class="btn btn-primary"  style="font-size: 12px;" type="button">Inventario de equipo de seguridad</a>
+          </div>
+        </div>
+        <div class="card" style="margin-left: 10px;">
+          <img src="https://images.pexels.com/photos/6790074/pexels-photo-6790074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title" style="font-size: 16px;"> <i class='bx bx-wrench'></i> Inventario de herramientas</h5>
+            <p class="card-text" style="font-size: 14px;">dentro de aca podras acceder al sistema de inventario para retirar las herramientas del inventario teniendo en cuenta que se te esta realizando un prestamo de las herramientas</p>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary"  style="font-size: 12px;" type="button">Inventario de herramientas</a>
+          </div>
+        </div>
+        <div class="card" style="margin-left: 10px;">
+          <img src="https://images.pexels.com/photos/315658/pexels-photo-315658.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"style="font-size: 16px;"><i class='bx bxs-component'></i> Inventario de Insumos </h5>
+            <p class="card-text" style="font-size: 14px;">dentro de aca podras acceder al sistema de inventario para retirar insumos del inventario</p>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary"  style="font-size: 12px;" type="button">Inventario de Insumos</a>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  <!-- sdc -->
+  <div class="container" style=" margin-top: 10px;">
+    <div class="row justify-content-center mt-5" >
+    <div class="card-group shadow-lg p-3 mb-5 bg-white rounded" style="margin-left: 10px;" >
+      <div class="card">
+        <img src="https://images.pexels.com/photos/2454803/pexels-photo-2454803.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title" style="font-size: 16px;"> <i class='bx bxs-phone-outgoing' ></i> Telecomunicaciones</h5>
+          <p class="card-text" style="font-size: 14px;">dentro de este apartado podras acceder al sistema de inventario para retirar el equipo de seguridad del inventario teniendo en cuenta que se te esta realizando un prestamo del equipo de seguridad.</p>
+        </div>
+        <div class="card-footer">
+          <a href="/telecomunicaciones" class="btn btn-primary"  style="font-size: 12px;" type="button">Telecomunicaciones</a>
+        </div>
+      </div>
+      <div class="card" style="margin-left: 10px;">
+        <img src="https://images.pexels.com/photos/7709166/pexels-photo-7709166.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title" style="font-size: 16px;"> <i class='bx bx-support'></i> Servicio al cliente</h5>
+          <p class="card-text" style="font-size: 14px;">dentro de este apartado podras acceder al sistema de inventario para retirar las herramientas del inventario teniendo en cuenta que se te esta realizando un prestamo de las herramientas</p>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-primary"  style="font-size: 12px;" type="button">Servicio al cliente</a>
+        </div>
+      </div>
+      <div class="card" style="margin-left: 10px;">
+        <img src="https://images.pexels.com/photos/196639/pexels-photo-196639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"style="font-size: 16px;"><i class='bx bxs-badge-dollar'></i> Registro de pagos</h5>
+          <p class="card-text" style="font-size: 14px;">dentro de este apartado acceder al sistema de inventario para sacar insumos del inventario teniendo en cuenta los gastos de tu cuadrilla</p>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-primary"  style="font-size: 12px;" type="button">Registro de pagos</a>
+        </div>
+      </div>
+    </div>
+
+  </div>  
+</div>
+  <% } %>
+  </div>
+  <%- include('./partials/footer.ejs') %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

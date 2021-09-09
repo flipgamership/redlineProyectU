@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>login red line </title>
+    <link rel="icon" href="imgs/logo-white.ico">
+    <link rel="stylesheet" href="css/styleRegister.css">
+    <link rel="stylesheet" href="css/styleLogin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styleNavar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <script>import 'boxicons';</script>
+    <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
+</head>
+</head>
+<body class="login" >
+    <header class="headerNav" >
+        <nav class="navbarPrimary">
+            <a href="#" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
+            <ul class="navMenu">
+                <li class="navItem">
+                    <a  href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i> Home</a>
+                </li>
+                <li class="navItem">
+                    <a href="" class="navLink"><i class='bx bxs-box'></i> Inventorio Herramientas y equipo</a>
+                </li>
+                <li class="navItem">
+                    <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de material</a>
+                </li>
+                <li class="navItem">
+                    <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipos</a>
+                </li>
+                <li class="navItem">
+                    <a href="/register" class="navLink"><i class='bx bx-food-menu' ></i> register</a>
+                    </li>
+                <li class="navItem" >
+                    <a style="margin-left:20px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Seccion</a>
+                </li>
+                    
+                
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+<div class="container" style="margin-top: 150px; ">
+    <div class="row justify-content-center mt-5 ">
+        <div class="col-lg-5 col-md-8 col-sm-8">
+            <div class="card">
+                <div class="card-title text-center border-bottom">
+                    <h2 class="p-3">Register</h2>
+                </div>
+                <div class="card-body">
+                    <form action="sendRegister" method="POST">
+                        <div class="mb-3">
+                            <h5 for="usuario">Nombre completo</h5>
+                            <input type="text" class="form-control" name="nombre">
+                        </div>
+                        <div class="mb-3">
+                            <h5 for="usuario">Correo electronico</h5>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <h5 for="usuario">Usuario</h5>
+                            <input type="text" class="form-control" name="user" required>
+                        </div>
+                            <h5 for="password">contraseña</h5>
+                            <div class="input-group mb-3 ">
+                            
+                            <input ID="txtPassword" type="Password" Class="form-control" name="password" required>
+                            <div class="input-group-append">
+                                  <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <i class='bx bx-show-alt'></i> </button>
+                                </div>
+                          </div>
+                          <div class="mb-3">
+                                <h5 for="my-select">Rol del usuario en la plataforma</h5>
+                                <select id="my-select" class="form-control" name="role" style="font-size: 12px;" required>
+                                    <option value="tecnico" style="font-size: 12px;">Tecnico</option>
+                                    <option value="user" style="font-size: 12px;">Usuario</option>
+                                    <option value="admin" style="font-size: 12px;">Adminitrador</option>
+                                    <option value="servicioCliente">Servicio al cliente</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<% if(typeof alert != "undefined") { %> 
+<script>
+    Swal.fire({
+        title: '<%=alertTitle %>',
+        text: '<%= alertMessage%>',
+        icon: '<%=alertIcon %>',
+        showConfirmButton: '<%= showConfirmButton %>' ,
+        timer: '<%= timer %>'
+    }).then(()=>{
+        window.location='/<%= ruta %>'
+    })
+</script>
+<% } %> 
+<script type="text/javascript">
+    function mostrarPassword(){
+            var cambio = document.getElementById("txtPassword");
+            if(cambio.type == "password"){
+                cambio.type = "text";
+                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            }else{
+                cambio.type = "password";
+                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+        } 
+        
+        $(document).ready(function () {
+        //CheckBox mostrar contraseña
+        $('#ShowPassword').click(function () {
+            $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+        });
+    });
+    </script>
+    <script>
+        var inputs = $("input[type=text]");
+      for(var i = 0; i < inputs.length; i++){
+        var aux = $(inputs[i]).val().trim();
+        $(inputs[i]).val(aux);
+      }
+      </script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<%- include('./partials/footer.ejs') %>
+</body>
+</html>
