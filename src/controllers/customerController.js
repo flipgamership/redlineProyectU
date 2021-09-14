@@ -140,6 +140,37 @@ controller.teleTableCP = (req, res) => {
         })
     }
 }
+//TABLA 1 USUARIOS CON ESTADO DE LLAMADA SI
+controller.teleTableCC = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM telemercadeoclientes WHERE estadoLLamada = 'Si'", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('teleTableCC', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+                    }
+                })
+            })
+        } else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+}
 //api nuevos usuario telecomunicaciones no confirmados
 controller.teleTableNewClientCP = (req, res) => {
     if (req.session.loggedin) {
@@ -198,6 +229,8 @@ controller.teleTableNewClientSendCP = async (req, res) => {
     })
 
 }
+
+//api general de telecomunicaciones
 controller.teleTableEdit = (req, res) => {
     if (req.session.loggedin) {
         if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
@@ -223,6 +256,7 @@ controller.teleTableEdit = (req, res) => {
 
 
 }
+
 controller.teleTableEditSend = (req, res)=>{
     if (req.session.loggedin) {
         if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
@@ -236,7 +270,7 @@ controller.teleTableEditSend = (req, res)=>{
                     if (error) {
                         console.log(error)
                     } else {
-                        res.redirect('/telecomunicacionesTableClientsP')
+                        res.redirect('/telecomunicaciones')
                     }
                 })
 
@@ -246,6 +280,62 @@ controller.teleTableEditSend = (req, res)=>{
         }
     } else {
         res.redirect('/login')
+    }
+}
+controller.teleTableValidUser = (req, res)=>{
+    if(req.session.loggedin){
+        if(req.session.role == 'admin' || req.session.role == 'servicioCliente'){
+            const id = req.params.id;
+            req.getConnection((error, conn) => {
+                conn.query('SELECT * FROM telemercadeoclientes WHERE id = ?', [id], (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('teleTipeficacion', { user: results[0] })
+                    }
+                })
+            })
+        }
+    }
+}
+controller.teleTableValidUserSend = (req, res)=>{
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
+            const id = req.body.id
+            const tipificacion = req.body.tipificacion
+            const observaciones = req.body.observaciones
+            const estadoLLamada = req.body.estado
+            req.getConnection((error, conn) => {
+                conn.query('UPDATE telemercadeoclientes SET ? WHERE id = ?', [{ tipificacion:tipificacion, observaciones: observaciones, estadoLLamada: estadoLLamada}, id], (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.redirect('/telecomunicaciones')
+                    }
+                })
+
+            })
+        } else {
+            res.redirect('/home')
+        }
+    } else {
+        res.redirect('/login')
+    }
+}
+controller.teleDeleteUser = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
+            const id = req.params.id
+            req.getConnection((error, conn) => {
+                conn.query('DELETE FROM telemercadeoclientes WHERE id= ?', [id], (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.redirect('/telecomunicaciones')
+                    }
+                })
+            })
+        }
     }
 }
 

@@ -29,8 +29,12 @@ router.post('/newUserClientTeleSend', customerController.teleTableNewClientSendC
 router.get('/newUserClientTele', customerController.teleTableNewClientCP)
 router.get('/editTeletrabajoClient/:id', customerController.teleTableEdit)
 router.post('/editTeletrabajoClientSend', customerController.teleTableEditSend)
+router.get('/telecomunicacionesValidarUsuario/:id', customerController.teleTableValidUser)
+router.post('/telecomunicacionesValidarUsuarioSend', customerController.teleTableValidUserSend)
+router.get('/telecomunicacionesUsersDelate/:id', customerController.teleDeleteUser)
+router.get('/telecomunicacionesTableClientsC', customerController.teleTableCC)
 //codigo reutilizable
-// router.get('/agregar', customerController.agregar);
+// router.get('/agregar', customerController.agregar); 
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);
 // router.get('/update/:ID', customerController.edit);
