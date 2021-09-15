@@ -33,8 +33,17 @@ router.get('/telecomunicacionesValidarUsuario/:id', customerController.teleTable
 router.post('/telecomunicacionesValidarUsuarioSend', customerController.teleTableValidUserSend)
 router.get('/telecomunicacionesUsersDelate/:id', customerController.teleDeleteUser)
 router.get('/telecomunicacionesTableClientsC', customerController.teleTableCC)
+router.get('/telecomunicacionesReportDiaMenu', customerController.reporteTeleMenu)
+router.get('/telecomunicacionesReportTable', customerController.teleTableVerificDia)
+router.get('/telecomunicacionesNuevoReportDia', customerController.teleReportInsertNewReport)
+router.post('/telecomunicacionesNuevoReportDiaSend', customerController.teleReportInsertNewReportSend)
+router.get('/telecomunicacionesEditReporteDia/:id', customerController.reportTeleTableEdit)
+router.post('/telecomunicacionesEditReporteDiaSend', customerController.reportTeleTableEditSend)
+router.get('/telecomunicacionesReportDelate/:id', customerController.teleDeleteReport)
 //codigo reutilizable
-// router.get('/agregar', customerController.agregar); 
+router.get('/pruebas', customerController.pruebas); 
+router.get('/pruebas2', customerController.pruebas2);
+router.get('/disaing', customerController.disaing);
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);
 // router.get('/update/:ID', customerController.edit);

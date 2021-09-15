@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+    <body>
+        <%- include('./partials/nav.ejs') %>
+        <div class="container" style="margin-top: 80px;">
+          <div class="card mb-3 shadow-lg p-3 bg-white rounded">
+            <img src="https://drscdn.500px.org/photo/1037143360/m%3D900/v2?sig=83e80eae9c05341889ee4da2680ccdbfc0b7d27c103ccb3d648ff33c379d542c" class="card-img-top" alt="..." >
+            <div class="card-body">
+              <h5 class="card-title" style="font-size: 18px;"> <i class='bx bxs-phone-outgoing' ></i>Reporte de telecomunicaciones</h5>
+              <% if (login){ %>
+              <p class="card-text" style="font-size: 16px; text-align: center;">Bienvenido querido usuario: <%= name %>  aca podras encontrar el menu del apartado de la plataforma enpleado a telecomunicaciones en el cual encontraras el reporte diaro de las llamadas ralizadas a los clientes a los cuales se les a realizado la llamada</p>
+            <% } %> 
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="card shadow-lg p-3 bg-white rounded" >
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size: 16px;">tabla de reporte diario <i class='bx bx-user-x' style="font-size: 20px;"></i></h5>
+                  <p class="card-text" style="font-size: 14px;">aca podras encontrar la lista de de kas estadisticas del reporte de usuarios aca podras agregar nuevos reportes</p>
+                  <a href="/telecomunicacionesReportTable" class="btn btn-primary">Ingresar</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card shadow-lg p-3 bg-white rounded">
+                <div class="card-body" >
+                  <h5 class="card-title" style="font-size: 16px;">estadisticas de reportes <i class='bx bx-user-check' style="font-size: 20px;" ></i></h5>
+                  <p class="card-text" style="font-size: 14px; margin-bottom: 31px;">aca podras encontrar la estadisticas de usuarios a los cuales se les a llamado</p>
+                  <a href="/telecomunicacionesTableClientsC" class="btn btn-primary">Ingresar</a>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="pruebas" width="150" height="150"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <% if(user){%> 
+    
+  <script>
+        var canvas = document.getElementById('pruebas');
+        var data = {
+            labels: ['<%- JSON.stringify(user.fecha); %>', '2021-09-15'],
+            datasets: ['<%- JSON.stringify(user.llamadas); %>', '70',
+                {
+                    label: "My First dataset",
+                    backgroundColor: "rgba(255,99,132,0.2)",
+                    borderColor: "rgba(255,99,132,1)",
+                    borderWidth: 2,
+                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                    hoverBorderColor: "rgba(255,99,132,1)",
+                    data: [10, 20, 81, 56, 55, 40],
+                }]
+            
+  };
+  </script>
+  <% }  %> 
+</body>
+
+</html>
