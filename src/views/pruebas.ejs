@@ -16,8 +16,13 @@
 
   <body>
     <div class="container">
-      <div style="width: 30%; margin-left: 350px;">
-        <canvas id="myChart" width="20%" height="10%"></canvas>
+      <div style="width: 300px; margin: auto;">
+        <canvas id="myChart" width="100" height="100"></canvas>
+      </div>
+    </div>
+    <div class="container" style="margin-top: 100px;">
+      <div style="width: 350px; margin: auto;">
+        <canvas id="myChart2" width="100" height="100"></canvas>
       </div>
     </div>
 
@@ -30,9 +35,10 @@
     var myChart = new Chart(ctx, {
       type: "bar",
       data: {
+
         labels: label,
         datasets: [{
-          label: 'fechas',
+          label: 'Llamadas por fecha',
           data: datas,
           backgroundColor: [
             'rgb(66, 134, 244,0.5)',
@@ -56,16 +62,79 @@
             'rgb(205, 92, 92)',
             'rgb(75, 0, 130)',
             'rgb(240, 128, 128)',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
+            'rgb(72, 209, 204)',
+            'rgb(72, 209, 204)',
+            'rgb(60, 179, 113)',
+            'rgb(123, 104, 238)',
+            'rgb(147, 112, 219)',
+            'rgb(0, 0, 205)',
+            'rgb(255, 165, 0)',
+            'rgb(219, 112, 147)',
+            'rgb(255, 99, 71)'
+          ]
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  </script>
+  <script>
+    var label = [<% user.forEach((user, index, array) => {%> <%- `'${user.fecha}${index < array.length-1 ? "',": "'"}` %><% })  %>]
+    var datas = [<% user.forEach((user, index, array) => {%> <%- `${user.soporte}${index < array.length-1 ? ",": ""}` %> <% })  %>]
+
+    var ctx = document.getElementById("myChart2").getContext("2d");
+    var myChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        
+        labels: label,
+        datasets: [{
+          label: 'Soporte',
+          data: datas,
+          
+          backgroundColor: [
+            'rgb(66, 134, 244,0.5)',
+            'rgb(255, 99, 71)',
+            'rgb(72, 209, 204)',
+            'rgb(123, 104, 238)',
+            'rgb(218, 165, 32)',
+            
+            'rgb(74, 135, 72,0.5)',
+            'rgb(229, 89, 50,0.5)',
+            'rgb(250, 235, 215)',
+            'rgb(0, 255, 255)',
+            'rgb(127, 255, 212)',
+            'rgb(240, 255, 255)',
+            'rgb(245, 245, 220)',
+            'rgb(255, 228, 196)',
+            'rgb(148, 0, 211)',
+            'rgb(255, 20, 147)',
+            'rgb(0, 191, 255)',
+            'rgb(30, 144, 255)',
+            'rgb(255, 215, 0)',
+
+            'rgb(0, 128, 0)',
+            'rgb(173, 255, 47)',
+            'rgb(255, 105, 180)',
+            'rgb(205, 92, 92)',
+            'rgb(75, 0, 130)',
+            'rgb(240, 128, 128)',
+
+            'rgb(72, 209, 204)',
+            'rgb(60, 179, 113)',
+
+            'rgb(147, 112, 219)',
+            'rgb(0, 0, 205)',
+            'rgb(255, 165, 0)',
+            'rgb(219, 112, 147)',
+
           ]
         }]
       },
