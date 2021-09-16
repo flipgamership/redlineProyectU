@@ -40,6 +40,12 @@ router.post('/telecomunicacionesNuevoReportDiaSend', customerController.teleRepo
 router.get('/telecomunicacionesEditReporteDia/:id', customerController.reportTeleTableEdit)
 router.post('/telecomunicacionesEditReporteDiaSend', customerController.reportTeleTableEditSend)
 router.get('/telecomunicacionesReportDelate/:id', customerController.teleDeleteReport)
+router.get ('/telecomunicacionesEstadisticasMenu2', customerController.teleEstadisticasMenu)
+router.get('/telecomunicacionesEstadisticasTable1', customerController.teleEstadisticasTable1)
+router.get('/telecomunicacionesEstadisticasTable2', customerController.teleEstadisticasTable2)
+router.get('/telecomunicacionesEstadisticasTable3', customerController.teleEstadisticasTable3)
+router.get('/telecomunicacionesEstadisticasTable4', customerController.teleEstadisticasTable4)
+router.get('/telecomunicacionesEstadisticasTable5', customerController.teleEstadisticasTable5)
 //codigo reutilizable
 router.get('/pruebas', customerController.pruebas); 
 router.get('/pruebas2', customerController.pruebas2);

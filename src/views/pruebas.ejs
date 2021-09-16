@@ -6,31 +6,79 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
-  <canvas id="pruebas" width="150" height="150"></canvas>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <% if(user){%> 
-    
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div style="width: 30%; margin-left: 350px;">
+        <canvas id="myChart" width="20%" height="10%"></canvas>
+      </div>
+    </div>
+
+  </body>
   <script>
-        var canvas = document.getElementById('pruebas');
-        var data = {
-            labels: ['<%- JSON.stringify(user.fecha); %>', '2021-09-15'],
-            datasets: ['<%- JSON.stringify(user.llamadas); %>', '70',
-                {
-                    label: "My First dataset",
-                    backgroundColor: "rgba(255,99,132,0.2)",
-                    borderColor: "rgba(255,99,132,1)",
-                    borderWidth: 2,
-                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                    hoverBorderColor: "rgba(255,99,132,1)",
-                    data: [10, 20, 81, 56, 55, 40],
-                }]
-            
-  };
+    var label = [<% user.forEach((user, index, array) => {%> <%- `'${user.fecha}${index < array.length-1 ? "',": "'"}` %><% })  %>]
+    var datas = [<% user.forEach((user, index, array) => {%> <%- `${user.llamadas}${index < array.length-1 ? ",": ""}` %> <% })  %>]
+
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var myChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: label,
+        datasets: [{
+          label: 'fechas',
+          data: datas,
+          backgroundColor: [
+            'rgb(66, 134, 244,0.5)',
+            'rgb(74, 135, 72,0.5)',
+            'rgb(229, 89, 50,0.5)',
+            'rgb(250, 235, 215)',
+            'rgb(0, 255, 255)',
+            'rgb(127, 255, 212)',
+            'rgb(240, 255, 255)',
+            'rgb(245, 245, 220)',
+            'rgb(255, 228, 196)',
+            'rgb(148, 0, 211)',
+            'rgb(255, 20, 147)',
+            'rgb(0, 191, 255)',
+            'rgb(30, 144, 255)',
+            'rgb(255, 215, 0)',
+            'rgb(218, 165, 32)',
+            'rgb(0, 128, 0)',
+            'rgb(173, 255, 47)',
+            'rgb(255, 105, 180)',
+            'rgb(205, 92, 92)',
+            'rgb(75, 0, 130)',
+            'rgb(240, 128, 128)',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+          ]
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
   </script>
-  <% }  %> 
-</body>
 
 </html>

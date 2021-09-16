@@ -16,10 +16,8 @@
 <br>
 <br>
 <div class="container">
-    <h5 style="font-size: 20px; margin-bottom: 10px;" >Tabla de reportes diarios</h5>
-    <div class="row">
-        <a href="/telecomunicacionesNuevoReportDia" style="margin-bottom: 10px; margin-left: 8px; font-size: 20px;" class="btn btn-outline-secondary col-md-1 " type="button"><i class='bx bx-plus' ></i></a>
-      </div>
+  <div class="row">
+    <h5 style="font-size: 20px; margin-bottom: 10px;" >Tabla de estadisticas de reportes diarios</h5>
     <table id="users" class="table table-light table-striped table-hover table-bordered text-center  " style="font-size: 14px;">
       <thead>
         <tr>
@@ -32,26 +30,23 @@
         <th>Usuarios interesados</th>
         <th>solicitan soporte</th>
         <th>Observaciones</th>
-        <th>administrar datos</th>
       </tr>
       </thead>
-      <!-- <a class="btn btn-outline-warning" type="button"><i class='bx bxs-customize' ></i></a> -->
+
       <tbody>
         <% results.forEach((user) => {%>
+
+
         <tr>
-          <td ><%= user.id %> </td>
-          <td style="width: 10%;"><%= user.fecha %></td>
-          <td><%= user.llamadas %></td>
-          <td><%= user.contestadas %></td>
-          <td><%= user.noContestadas %></td>
-          <td><%= user.buzon %></td>
-          <td><%= user.interesados %></td>
-          <td><%= user.soporte %></td>
-          <td><%= user.observaciones %></td>
-          <td>
-            <a href="/telecomunicacionesEditReporteDia/<%= user.id %>" class="btn btn-warning" type="button"><i class='bx bx-pencil'></i></a>
-            <a onclick="alertDelate('<%= user.id %>')" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
-          </td>
+        <td ><%= user.id %> </td>
+        <td style="width: 10%;"><%= user.fecha %></td>}
+        <td><%= user.llamadas %></td>
+        <td><%= user.contestadas %></td>
+        <td><%= user.noContestadas %></td>
+        <td><%= user.buzon %></td>
+        <td><%= user.interesados %></td>
+        <td><%= user.soporte %></td>
+        <td><%= user.observaciones %></td>
         </tr>
         <% }) %>
       </tbody>
@@ -98,7 +93,7 @@
   }
   function timeUot (values, id){
     if(values){
-      window.location='/telecomunicacionesReportDelate/'+ id
+      window.location='/telecomunicacionesUsersDelate/'+ id
     }
     
   }

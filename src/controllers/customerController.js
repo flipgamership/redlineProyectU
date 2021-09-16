@@ -517,6 +517,173 @@ controller.teleDeleteReport = (req, res) => {
         }
     }
 }
+controller.teleEstadisticasMenu = (req, res) => {
+    if (req.session.loggedin){
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente'){
+            res.render('menuEstadisticasReportDia', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        
+        }
+    }
+}
+
+
+controller.teleEstadisticasTable1 = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM telemercadoreportediario ", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('teleTableEstadisticas1', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+                    }
+                })
+            })
+        } else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+}
+controller.teleEstadisticasTable2 = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM telemercadeoclientes WHERE tipificacion = 'Soporte';", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('teleTableEstadisticas2', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+                    }
+                })
+            })
+        } else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+}
+controller.teleEstadisticasTable3 = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM telemercadeoclientes WHERE tipificacion = 'Apps y Tv' || tipificacion = 'Interesado apps'|| tipificacion = 'Interesado tv';", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('teleTableEstadisticas3', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+                    }
+                })
+            })
+        } else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+}
+controller.teleEstadisticasTable4 = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM telemercadeoclientes WHERE tipificacion = 'Interesado apps';", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('teleTableEstadisticas3', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+                    }
+                })
+            })
+        } else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+}
+controller.teleEstadisticasTable5 = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM telemercadeoclientes WHERE tipificacion = 'Interesado tv';", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('teleTableEstadisticas3', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+                    }
+                })
+            })
+        } else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+}
+
+
+//data 
 //vistas register
 controller.register = (req, res) => {
     if (req.session.loggedin) {
@@ -726,12 +893,14 @@ controller.savePasssword = async (req, res) => {
 //zona de pruebas 
 controller.pruebas = async (req, res) => {
     req.getConnection((error, conn) => {
-        const sql = "SELECT `fecha`, `llamadas` FROM `telemercadoreportediario` WHERE `fecha`;"
+        const sql = "SELECT `fecha`, `llamadas`, `soporte`, `interesados`  FROM `telemercadoreportediario` WHERE `fecha`;"
         conn.query(sql, (error, results) => {
             if (error) throw error;
+
             if (results.length > 0) {
-                res.render('pruebas',{
-                     user: results[0] 
+                console.log(results)
+                res.render('pruebas', {
+                    user: results
                 });
             } else {
                 res.send('not result');
@@ -755,7 +924,7 @@ controller.disaing = (req, res) => {
         name: req.session.name,
         role: req.session.role
     })
-  
+
 }
 
 module.exports = controller
