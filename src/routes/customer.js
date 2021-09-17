@@ -46,9 +46,10 @@ router.get('/telecomunicacionesEstadisticasTable2', customerController.teleEstad
 router.get('/telecomunicacionesEstadisticasTable3', customerController.teleEstadisticasTable3)
 router.get('/telecomunicacionesEstadisticasTable4', customerController.teleEstadisticasTable4)
 router.get('/telecomunicacionesEstadisticasTable5', customerController.teleEstadisticasTable5)
+router.post('/teleEstadisticasReportDiaGraficosSend', customerController.seleccionaFechaEstadisticas1);
 //codigo reutilizable
 router.get('/pruebas', customerController.pruebas); 
-router.get('/pruebas2', customerController.pruebas2);
+router.post('/pruebas2', customerController.pruebas2);
 router.get('/disaing', customerController.disaing);
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);

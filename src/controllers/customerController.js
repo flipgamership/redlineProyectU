@@ -526,7 +526,17 @@ controller.teleEstadisticasMenu = (req, res) => {
                 role: req.session.role
             })
         
+        }else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
         }
+    }else {
+        res.render('login', {
+            login: false,
+        })
     }
 }
 
@@ -684,6 +694,42 @@ controller.teleEstadisticasTable5 = (req, res) => {
 
 
 //data 
+controller.seleccionaFechaEstadisticas1 = async (req, res) => {
+    if (req.session.loggedin) {
+        if(req.session.role == 'admin'|| req.session.role == 'servicioCliente'){
+            const fecha = req.body.fecha
+    req.getConnection((error, conn) => {
+        conn.query('SELECT fecha, llamadas, soporte, buzon, interesados FROM telemercadoreportediario WHERE fecha >= ?', [fecha], (error, results) => {
+            if (error) throw error;
+
+            if (results.length > 0) {
+                console.log(results)
+                res.render('estadisticasReportDiaF', {
+                    user: results,
+                    login: true,
+                    name: req.session.name,
+                    role: req.session.role
+                });
+            } else {
+                res.redirect('/home')
+            }
+        })
+    })
+        }else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    } 
+
+    
+}
 //vistas register
 controller.register = (req, res) => {
     if (req.session.loggedin) {
@@ -893,7 +939,7 @@ controller.savePasssword = async (req, res) => {
 //zona de pruebas 
 controller.pruebas = async (req, res) => {
     req.getConnection((error, conn) => {
-        const sql = "SELECT `fecha`, `llamadas`, `soporte`, `interesados`  FROM `telemercadoreportediario` WHERE `fecha`;"
+        const sql = "SELECT `fecha`, `llamadas`, `soporte`, `interesados`  FROM `telemercadoreportediario` WHERE `fecha` > '2021-09-15' ;"
         conn.query(sql, (error, results) => {
             if (error) throw error;
 
@@ -908,15 +954,40 @@ controller.pruebas = async (req, res) => {
         })
     })
 }
+controller.pruebas2 = async (req, res) => {
+    const fecha = req.body.fecha
+    req.getConnection((error, conn) => {
+        conn.query('SELECT fecha, llamadas, soporte, interesados FROM telemercadoreportediario WHERE fecha >= ?', [fecha], (error, results) => {
+            if (error) throw error;
 
-
-
-
-
-
-controller.pruebas2 = (req, res) => {
-    res.render('pruebas')
+            if (results.length > 0) {
+                console.log(results)
+                res.render('pruebas2', {
+                    user: results,
+                    login: true,
+                    name: req.session.name,
+                    role: req.session.role
+                });
+            } else {
+                res.send('not result');
+            }
+        })
+    })
 }
+
+// if(results.length > 0){
+            //     console.log(results)
+            //     res.render('pruebas2',{
+            //         results:results
+            //     });
+            // }else{
+            //     res.send('not result')
+            // }
+
+
+
+
+
 
 controller.disaing = (req, res) => {
     res.render('menuEstadisticasReportDia', {

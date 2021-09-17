@@ -56,7 +56,7 @@
               <div class="card-body">
                 <h5 class="card-title" style="font-size: 16px;">estadisticas de reportes <i class='bx bxs-pie-chart-alt-2'></i></h5>
                 <p class="card-text" style="font-size: 14px; margin-bottom: 31px;">aca podras encontrar la estadisticas de usuarios a los cuales se les a llamado</p>
-                <a href="/telecomunicacionesTableClientsC" class="btn btn-primary">Ingresar</a>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2" >ingresar</button>
               </div>
             </div>
           </div>
@@ -84,8 +84,56 @@
           </div>
         </div>
       </div>
-      <%- include('./partials/footer.ejs') %>
 
+      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 16px; ">Selecciona una fecha</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 20px; ">
+                <span style="margin-left: 7px; margin-right: 7px;" aria-hidden="true">&times;</span>
+              </button>
+              
+            </div>
+            <form action="/teleEstadisticasReportDiaGraficosSend" method="POST">
+            <div class="modal-body">
+              <p style="font-size: 14px; ">porfavor seleccione la fecha desde la cual quiere que se muestre las estadisticas en adelante</p>
+             <input type="date" name="fecha" >
+            </div>
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Seleccionar fecha</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      <%- include('./partials/footer.ejs') %>
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script>
+          function alert() {
+            Swal.fire({
+              title: '¿Porfavor verifique que la fecha sea valida sino la plataforma lo tirara hacia atras?',
+              icon: 'warning',
+              showCancelButton: true,
+              cancelButtonText: 'NO',
+              cancelButtonColor: '#d33' ,
+              confirmButtonColor:'#3085d6' ,
+              confirmButtonText: ` SI `,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                const value = true
+                setTimeout(timeUot, 1000, value);
+              } 
+            })
+          }
+          function timeUot (values){
+            if(values){
+              document.forms[0].submit()
+            }
+            
+          }
+        </script>
 
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
