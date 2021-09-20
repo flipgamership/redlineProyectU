@@ -61,15 +61,15 @@
                     <form action="/telecomunicacionesValidarUsuarioSend" method="POST">
                         <input type="hidden" name="id" value="<%= user.id %> " hidden>
                         <div class="mb-3">
-                            <h5 for="my-select">tipificacion</h5>
+                            <h5 for="my-select">Tipificacion</h5>
                             <select id="my-select" class="form-control" name="tipificacion" style="font-size: 12px;" required>
                               <option <%= user.tipificacion=='No contesto' ? "selected" : '' %> value="No contesto" style="font-size: 12px;">No contesto</option>
-                              <option <%= user.tipificacion=='Buzon de voz' ? "selected" : '' %> value="Buzon de voz" style="font-size: 12px;">Buzon de voz</option>
+                              <option <%= user.tipificacion=='Buzon de voz' ? "selected" : '' %> value="Buzon de voz" style="font-size: 12px;">Buzón de voz</option>
                               <option <%= user.tipificacion=='Soporte' ? "selected" : '' %> value="Soporte" style="font-size: 12px;">Soporte</option>
                               <option <%= user.tipificacion=='Satisfecho' ? "selected" : '' %> value="Satisfecho" style="font-size: 12px;">Satisfecho</option>
-                              <option <%= user.tipificacion=='Interesado tv' ? "selected" : '' %> value="Interesado tv" style="font-size: 12px;">Interesado tv</option>
-                              <option <%= user.tipificacion=='Interesado apps' ? "selected" : '' %> value="Interesado apps" style="font-size: 12px;">Interesado apps</option>
-                              <option <%= user.tipificacion=='Apps y Tv' ? "selected" : '' %> value="Apps y Tv" style="font-size: 12px;">Apps y Tv</option>
+                              <option <%= user.tipificacion=='Interesado tv' ? "selected" : '' %> value="Interesado tv" style="font-size: 12px;">Interesado TV</option>
+                              <option <%= user.tipificacion=='Interesado apps' ? "selected" : '' %> value="Interesado apps" style="font-size: 12px;">Interesado Apps</option>
+                              <option <%= user.tipificacion=='Apps y Tv' ? "selected" : '' %> value="Apps y Tv" style="font-size: 12px;">Apps y TV</option>
                               <option <%= user.tipificacion=='Desconocido' ? "selected" : '' %> value="Desconocido" style="font-size: 12px;">Desconocido</option>
                               <option <%= user.tipificacion=='Otros' ? "selected" : '' %> value="Otros" style="font-size: 12px;">Otros</option>
                             </select>
