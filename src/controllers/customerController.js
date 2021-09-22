@@ -132,7 +132,7 @@ controller.teleTableCP = (req, res) => {
     if (req.session.loggedin) {
         if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
             req.getConnection((error, conn) => {
-                conn.query("SELECT * FROM telemercadeoclientes WHERE estadoLLamada = 'No'", (error, results) => {
+                conn.query("SELECT * FROM telemercadeoclientes WHERE estadoLLamada = 'No' || estadoLLamada = ''", (error, results) => {
                     if (error) {
                         console.log(error)
                     } else {

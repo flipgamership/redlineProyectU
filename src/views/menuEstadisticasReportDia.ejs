@@ -15,9 +15,9 @@
     <div class="card mb-3 shadow-lg p-3 bg-white rounded">
       <img src="https://drscdn.500px.org/photo/1037190480/m%3D900/v2?sig=546ee7c6afdfe4f65cab1bcc7431829acbc20f5227f3bad4a66f38d3dfdeb6ac" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title" style="font-size: 18px;"> <i class='bx bxs-phone-outgoing'></i>Reporte de estadistico y visualiza tablas de los reportes</h5>
+        <h5 class="card-title" style="font-size: 18px;"> <i class='bx bxs-phone-outgoing'></i>Reporte de estadístico y visualiza tablas de los reportes</h5>
         <% if (login){ %>
-        <p class="card-text" style="font-size: 16px; text-align: center;">Bienvenido querido usuario: <%= name %> aca podras encontrar el menu del apartado de la plataforma estadisticas de telecomunicaciones en el cual encontraras el reporte diaro de las llamadas ralizadas a los clientes a los cuales se les a realizado la llamada</p>
+        <p class="card-text" style="font-size: 16px; text-align: center;">Bienvenido querido usuario: <%= name %> acá podras encontrar el menú del apartado de la plataforma estadísticas de telecomunicaciones en el cual encontraras el reporte diario de las llamadas realizadas a los clientes a los cuales se les ha realizado la llamada</p>
         <% } %>
       </div>
     </div>
@@ -25,8 +25,8 @@
       <div class="col-sm-6">
         <div class="card shadow-lg p-3 bg-white rounded">
           <div class="card-body">
-            <h5 class="card-title" style="font-size: 16px;">tabla de reporte diario <i class='bx bx-border-all'></i></h5>
-            <p class="card-text" style="font-size: 14px; margin-bottom: 51px;">aca podras encontrar la lista de de las estadisticas del reporte de usuarios</p>
+            <h5 class="card-title" style="font-size: 16px;">Tabla de reporte diario <i class='bx bx-border-all'></i></h5>
+            <p class="card-text" style="font-size: 14px; margin-bottom: 51px;">Acá podras encontrar la lista de las estadísticas del reporte de usuarios</p>
             <a href="/telecomunicacionesEstadisticasTable1" class="btn btn-primary">Ingresar</a>
           </div>
         </div>
@@ -34,8 +34,8 @@
       <div class="col-sm-6">
         <div class="card shadow-lg p-3 bg-white rounded">
           <div class="card-body">
-            <h5 class="card-title" style="font-size: 16px;">tabla de usuarios interesados en apps y tv <i class='bx bx-list-ul'></i></h5>
-            <p class="card-text" style="font-size: 14px; ">aca podras encontrar la tabla de estadisticas de usuarios a los cuales se les a llamado y estan interesados por las apps y la televicion </p>
+            <h5 class="card-title" style="font-size: 16px;">Tabla de usuarios interesados en apps y tv <i class='bx bx-list-ul'></i></h5>
+            <p class="card-text" style="font-size: 14px; ">Acá podras encontrar la tabla de estadísticas de usuarios a los cuales se les ha llamado y están interesados por las apps y la televisión </p>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-top: 20px;">ingresar</button>
           </div>
         </div>
@@ -45,8 +45,8 @@
           <div class="col-sm-6">
             <div class="card shadow-lg p-3 bg-white rounded">
               <div class="card-body">
-                <h5 class="card-title" style="font-size: 16px;">tabla de usuarios que nesesitan soporte tecnico <i class='bx bx-list-ul'></i></h5>
-                <p class="card-text" style="font-size: 14px;">aca podras encontrar la tabla de usuarios que nesesitan soporte tecnico segun el reporte diario</p>
+                <h5 class="card-title" style="font-size: 16px;">Eabla de usuarios que necesitan soporte técnico <i class='bx bx-list-ul'></i></h5>
+                <p class="card-text" style="font-size: 14px;">Acá podras encontrar la tabla de usuarios que necesitan soporte técnico según el reporte diario estadísticas de reportes </p>
                 <a href="/telecomunicacionesEstadisticasTable2" class="btn btn-primary">Ingresar</a>
               </div>
             </div>
@@ -54,8 +54,8 @@
           <div class="col-sm-6">
             <div class="card shadow-lg p-3 bg-white rounded">
               <div class="card-body">
-                <h5 class="card-title" style="font-size: 16px;">estadisticas de reportes <i class='bx bxs-pie-chart-alt-2'></i></h5>
-                <p class="card-text" style="font-size: 14px; margin-bottom: 31px;">aca podras encontrar la estadisticas de usuarios a los cuales se les a llamado</p>
+                <h5 class="card-title" style="font-size: 16px;">Estadisticas de reportes <i class='bx bxs-pie-chart-alt-2'></i></h5>
+                <p class="card-text" style="font-size: 14px; margin-bottom: 31px;">Acá podras encontrar la estadísticas de usuarios a los cuales se les ha llamado</p>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2" >ingresar</button>
               </div>
             </div>
@@ -97,7 +97,7 @@
             </div>
             <form action="/teleEstadisticasReportDiaGraficosSend" method="POST">
             <div class="modal-body">
-              <p style="font-size: 14px; ">porfavor seleccione la fecha desde la cual quiere que se muestre las estadisticas en adelante</p>
+              <p style="font-size: 14px; ">por favor seleccione la fecha desde la cual quiere que se muestre las estadísticas en adelante</p>
              <input type="date" name="fecha" >
             </div>
             <div class="modal-footer">
@@ -112,7 +112,7 @@
       <script>
           function alert() {
             Swal.fire({
-              title: '¿Porfavor verifique que la fecha sea valida sino la plataforma lo tirara hacia atras?',
+              title: '¿Por favor verifique que la fecha sea valida si no la plataforma lo tirara hacia atrás?',
               icon: 'warning',
               showCancelButton: true,
               cancelButtonText: 'NO',
