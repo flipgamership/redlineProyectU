@@ -948,10 +948,21 @@ controller.savePasssword = async (req, res) => {
 //tabla de tecnicos para retirar del inventario herramientas 
 
 controller.menuInventoryH1 = (req, res)=>{
-    if ( req.session.loggedin){
-        if(req.session.role == 'admin' || req.session.role == 'tecnico'){
-            
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'tecnico') {
+            res.render('menu1InventarioHerramientas', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+
+        } else {
+            res.redirect('/home')
         }
+    } else {
+        res.render('login', {
+            login: false,
+        })
     }
 
 }
@@ -988,11 +999,16 @@ controller.menuInventoryH1 = (req, res)=>{
 
 //zona de pruebas 
 controller.pruebas = async (req, res) => {
-    res.render('pruebas', {
-        login: true,
-        name: req.session.name,
-        role: req.session.role
-    });
+    req.getConnection((error, conn) => {
+        conn.query('UPDATE herramienta SET ? WHERE id = ?', [{ password: passwordHaash }, id], async (error, results) => {
+            if (error) {
+                console.log(error)
+            } else {
+                res.redirect('/register')
+            }
+        })
+
+    })
 }
 
 controller.pruebas2 = async (req, res) => {

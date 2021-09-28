@@ -47,6 +47,10 @@ router.get('/telecomunicacionesEstadisticasTable3', customerController.teleEstad
 router.get('/telecomunicacionesEstadisticasTable4', customerController.teleEstadisticasTable4)
 router.get('/telecomunicacionesEstadisticasTable5', customerController.teleEstadisticasTable5)
 router.post('/teleEstadisticasReportDiaGraficosSend', customerController.seleccionaFechaEstadisticas1);
+//inventarios 
+// inventario de herramientas 
+router.get('/invetarioHerramientasRedline', customerController.menuInventoryH1)
+
 //codigo reutilizable
 router.get('/pruebas', customerController.pruebas); 
 router.post('/pruebas2', customerController.pruebas2);
