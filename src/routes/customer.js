@@ -51,6 +51,7 @@ router.post('/teleEstadisticasReportDiaGraficosSend', customerController.selecci
 router.get('/pruebas', customerController.pruebas); 
 router.post('/pruebas2', customerController.pruebas2);
 router.get('/disaing', customerController.disaing);
+// router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);
 // router.get('/update/:ID', customerController.edit);

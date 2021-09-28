@@ -936,44 +936,69 @@ controller.savePasssword = async (req, res) => {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+//tabla de tecnicos para retirar del inventario herramientas 
+
+controller.menuInventoryH1 = (req, res)=>{
+    if ( req.session.loggedin){
+        if(req.session.role == 'admin' || req.session.role == 'tecnico'){
+            
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //zona de pruebas 
 controller.pruebas = async (req, res) => {
-    req.getConnection((error, conn) => {
-        const sql = "SELECT `fecha`, `llamadas`, `soporte`, `interesados`  FROM `telemercadoreportediario` WHERE `fecha` > '2021-09-15' ;"
-        conn.query(sql, (error, results) => {
-            if (error) throw error;
-
-            if (results.length > 0) {
-                console.log(results)
-                res.render('pruebas', {
-                    user: results
-                });
-            } else {
-                res.send('not result');
-            }
-        })
-    })
+    res.render('pruebas', {
+        login: true,
+        name: req.session.name,
+        role: req.session.role
+    });
 }
+
 controller.pruebas2 = async (req, res) => {
-    const fecha = req.body.fecha
-    req.getConnection((error, conn) => {
-        conn.query('SELECT fecha, llamadas, soporte, interesados FROM telemercadoreportediario WHERE fecha >= ?', [fecha], (error, results) => {
-            if (error) throw error;
-
-            if (results.length > 0) {
-                console.log(results)
-                res.render('pruebas2', {
-                    user: results,
-                    login: true,
-                    name: req.session.name,
-                    role: req.session.role
-                });
-            } else {
-                res.send('not result');
-            }
-        })
-    })
+    
 }
+
 
 // if(results.length > 0){
             //     console.log(results)

@@ -34,13 +34,14 @@ app.use(express.urlencoded({extended:false}));
 //import routes
 const customerRoutes = require('./routes/customer');
 
-
-
-//routes
-app.use('/', customerRoutes);
 //static files
 
 app.use(express.static(path.join(__dirname, '/public')));
+// subir imagen 
+
+//routes
+app.use('/', customerRoutes);
+;
 
 //START
 app.listen(app.get('port'), ()=>{
