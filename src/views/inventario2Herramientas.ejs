@@ -17,7 +17,7 @@
 <br>
 <div class="container"
   <div class="row">
-    <h5 style="font-size: 20px; margin-bottom: 10px;" >Tabla de estadisticas de reportes diarios</h5>
+    <h5 style="font-size: 20px; margin-bottom: 10px;" >inventario de herramientas que se encuentran prestadas a los tecnicos</h5>
     <hr>
     <table id="users" class="table table-light table-striped table-hover table-bordered text-center  " style="font-size: 14px;">
       <thead>
@@ -28,6 +28,7 @@
         <th>donde esta</th>
         <th>descripcion del estado de la herramienta</th>
         <th>fecha</th>
+        <th>quien la tiene</th>
         <th>utilidades</th>
       </tr>
       </thead>
@@ -43,6 +44,15 @@
           <td><%= user.estado %></td>
           <td><%= user.descripcion %></td>
           <td><%= user.fecha %></td>
+          <td>
+            <form action="/buscarQuienMeTiene" method="POST">
+              <input type="hidden" name="codigoH" value="<%= user.codigo_herramienta%>" hidden>
+              <input type="hidden" name="nameH" value="<%= user.nombre %>" hidden>
+              <input type="hidden" name="id" value="<%= user.id_tecnico %>" hidden>
+              <button class="btn btn-outline-success"button">¿Quien la tiene?</button>
+            </form>
+            
+          </td>
           <td>
             <a href="/editTeletrabajoClient/<%= user.id %>" class="btn btn-warning" type="button"><i class='bx bx-pencil'></i></a>
             <a href="/telecomunicacionesValidarUsuario/<%= user.id %>" class="btn btn-success" type="button"><i class='bx bx-user-check'></i></a>

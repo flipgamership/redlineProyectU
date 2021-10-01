@@ -1,8 +1,11 @@
 const bcryptjs = require('bcryptjs');
+const nodemailer = require('nodemailer')
 const { render } = require('ejs');
 const session = require('express-session');
 const express = require('express');
-const moment = require('moment')
+const moment = require('moment');
+const { text } = require('express');
+
 const controller = {}
 
 
@@ -518,22 +521,22 @@ controller.teleDeleteReport = (req, res) => {
     }
 }
 controller.teleEstadisticasMenu = (req, res) => {
-    if (req.session.loggedin){
-        if (req.session.role == 'admin' || req.session.role == 'servicioCliente'){
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
             res.render('menuEstadisticasReportDia', {
                 login: true,
                 name: req.session.name,
                 role: req.session.role
             })
-        
-        }else {
+
+        } else {
             res.render('home', {
                 login: true,
                 name: req.session.name,
                 role: req.session.role
             })
         }
-    }else {
+    } else {
         res.render('login', {
             login: false,
         })
@@ -696,26 +699,26 @@ controller.teleEstadisticasTable5 = (req, res) => {
 //data 
 controller.seleccionaFechaEstadisticas1 = async (req, res) => {
     if (req.session.loggedin) {
-        if(req.session.role == 'admin'|| req.session.role == 'servicioCliente'){
+        if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
             const fecha = req.body.fecha
-    req.getConnection((error, conn) => {
-        conn.query('SELECT fecha, llamadas, soporte, buzon, interesados FROM telemercadoreportediario WHERE fecha >= ?', [fecha], (error, results) => {
-            if (error) throw error;
+            req.getConnection((error, conn) => {
+                conn.query('SELECT fecha, llamadas, soporte, buzon, interesados FROM telemercadoreportediario WHERE fecha >= ?', [fecha], (error, results) => {
+                    if (error) throw error;
 
-            if (results.length > 0) {
-                console.log(results)
-                res.render('estadisticasReportDiaF', {
-                    user: results,
-                    login: true,
-                    name: req.session.name,
-                    role: req.session.role
-                });
-            } else {
-                res.redirect('/home')
-            }
-        })
-    })
-        }else {
+                    if (results.length > 0) {
+                        console.log(results)
+                        res.render('estadisticasReportDiaF', {
+                            user: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        });
+                    } else {
+                        res.redirect('/home')
+                    }
+                })
+            })
+        } else {
             res.render('home', {
                 login: true,
                 name: req.session.name,
@@ -726,9 +729,9 @@ controller.seleccionaFechaEstadisticas1 = async (req, res) => {
         res.render('login', {
             login: false,
         })
-    } 
+    }
 
-    
+
 }
 //vistas register
 controller.register = (req, res) => {
@@ -947,7 +950,7 @@ controller.savePasssword = async (req, res) => {
 
 //tabla de tecnicos para retirar del inventario herramientas 
 
-controller.menuInventoryH1 = (req, res)=>{
+controller.menuInventoryH1 = (req, res) => {
     if (req.session.loggedin) {
         if (req.session.role == 'admin' || req.session.role == 'tecnico') {
             res.render('menu1InventarioHerramientas', {
@@ -966,13 +969,153 @@ controller.menuInventoryH1 = (req, res)=>{
     }
 
 }
+controller.inventarioH1 = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'tecnico') {
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM herramienta WHERE estado = 'bodega'", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('inventario1Herramientas', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
 
+                    }
 
+                })
 
+            })
+        }
+    }
+}
+controller.inventarioH2 = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'tecnico') {
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM herramienta WHERE estado = 'prestado'", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('inventario2Herramientas', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
 
+                    }
 
+                })
 
+            })
+        }
+    }
+}
+controller.quienMeTieneh1 = (req, res) => {
+    const id = req.body.id
+    const nameH1 = req.body.nameH
+    const codigoH1 = req.body.codigoH
+    console.log(id, nameH1, codigoH1)
+    req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM `cuadrillas` WHERE id_cuadrilla = ?", [id], (error, results)=>{
+            if (error){
+                console.log(error)
+            }else{
+                console.log(results)
+                res.render('quienMeTieneH1',{
+                    results: results,
+                    nameH1: nameH1,
+                    codigoH1: codigoH1,
+                    name: req.session.name,
+                    role: req.session.role
+                })
+            }
+        })
+    })
+}
+controller.sendCorreoH1  = async(req, res)=>{
+    const correo = req.body.correo
+    const name = req.body.nombre
+    const name_herramienta = req.body.nombre_herramienta
+    const codigoH = req.body.codigo_herramienta
+    var transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+            user:"maisanmailer@gmail.com",
+            pass: "231215maisanmailer"
+        }
 
+    })
+    var mailOptions ={
+        from: "Remitente",
+        to: correo,
+        subject: "hola mundo como estas todo bien",
+        html: `<!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="utf-8">
+            <title>holi</title>
+        </head>
+        <body style="background-color: black ">
+        
+        <!--Copia desde aquí-->
+        <table style="max-width: 600px; padding: 10px; margin:0 auto; border-collapse: collapse;">
+            <tr>
+                <td style="background-color: #ecf0f1; text-align: left; padding: 0">
+                    <a href="https://redline.net.co/">
+                        <img width="20%" style="display:block; margin: 1.5% 3%" src="https://redline.net.co/wp-content/uploads/2020/01/cropped-LOGOREDLINE-2.png">
+                    </a>
+                </td>
+            </tr>
+        
+            <tr>
+                <td style="padding: 0">
+                    <img style="padding: 0; display: block" src="https://p4.wallpaperbetter.com/wallpaper/335/895/657/wind-farm-wallpaper-preview.jpg" width="100%">
+                </td>
+            </tr>
+            
+            <tr>
+                <td style="background-color: #ecf0f1">
+                    <div style="color: #34495e; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif">
+                        <h2 style="color: #e67e22; margin: 0 0 7px">Hola tecnico de Redline!</h2>
+                        <p style="margin: 2px; font-size: 15px">
+                            espero que este teniendo un hermoso dia somos el servicio de notificaciones a 
+                            correo del sistema de inventario de redline el dia de hoy te escirbimos para solicitar la debolucion de :</p>
+                        <ul style="font-size: 15px;  margin: 10px 0">
+                            <li>Herramienta: </li>`+name_herramienta+`
+                            <li>Codigo de herramienta: </li>`+codigoH+`
+                            <li>¿Quien me tiene?</li>
+                            <li>tecnico que me tiene: </li>`+name+`
+                            <li>Espero que la devuelvas a la bodega y el ingreso en la plataforma</li>
+                        </ul>
+                        <p style="color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0">redline || <a href="https://github.com/flipgamership">Juan Felipe Correa Rios</a></p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--hasta aquí-->
+        
+        </body>
+        </html>
+        
+        `
+        
+    }
+    const info = await transporter.sendMail(mailOptions, (error, info)=>{
+        if (error){
+            console.log(error)
+        }else{
+            console.log("mail enviado")
+            res.redirect("/pruebas2")
+        }
+    })
+}
 
 
 
@@ -998,32 +1141,55 @@ controller.menuInventoryH1 = (req, res)=>{
 
 
 //zona de pruebas 
-controller.pruebas = async (req, res) => {
+controller.pruebas = (req, res) => {
     req.getConnection((error, conn) => {
-        conn.query('UPDATE herramienta SET ? WHERE id = ?', [{ password: passwordHaash }, id], async (error, results) => {
+        conn.query("SELECT * FROM herramienta WHERE estado = 'bodega'", (error, results) => {
             if (error) {
                 console.log(error)
             } else {
-                res.redirect('/register')
+                res.render('inventario1Herramientas', {
+                    results: results,
+                    login: true,
+                    name: req.session.name,
+                    role: req.session.role
+                })
+
             }
+
         })
 
     })
 }
 
-controller.pruebas2 = async (req, res) => {
-    
+controller.pruebas2 = (req, res) => {
+    req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM herramienta WHERE estado = 'prestado'", (error, results) => {
+            if (error) {
+                console.log(error)
+            } else {
+                res.render('inventario2Herramientas', {
+                    results: results,
+                    login: true,
+                    name: req.session.name,
+                    role: req.session.role
+                })
+
+            }
+
+        })
+
+    })
 }
 
 
 // if(results.length > 0){
-            //     console.log(results)
-            //     res.render('pruebas2',{
-            //         results:results
-            //     });
-            // }else{
-            //     res.send('not result')
-            // }
+//     console.log(results)
+//     res.render('pruebas2',{
+//         results:results
+//     });
+// }else{
+//     res.send('not result')
+// }
 
 
 

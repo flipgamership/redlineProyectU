@@ -51,10 +51,11 @@ router.post('/teleEstadisticasReportDiaGraficosSend', customerController.selecci
 // inventario de herramientas 
 router.get('/invetarioHerramientasRedline', customerController.menuInventoryH1)
 
-//codigo reutilizable
+//codigo de pruebas 
 router.get('/pruebas', customerController.pruebas); 
-router.post('/pruebas2', customerController.pruebas2);
-router.get('/disaing', customerController.disaing);
+router.get('/pruebas2', customerController.pruebas2);
+router.post('/buscarQuienMeTiene', customerController.quienMeTieneh1);
+router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);

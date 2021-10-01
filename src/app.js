@@ -5,6 +5,7 @@ const mysql= require("mysql")
 const myconnection= require('express-myconnection')
 const session = require('express-session')
 const app= express()
+const nodemailer = require('nodemailer')
 const bcrypt = require('bcrypt');
 
 app.use(session({

@@ -21,6 +21,7 @@
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.6.5",
     "nodemon": "^2.0.9",
     "sweetalert2": "^11.1.4"
   }
