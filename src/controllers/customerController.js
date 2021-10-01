@@ -1037,6 +1037,7 @@ controller.quienMeTieneh1 = (req, res) => {
         })
     })
 }
+// envio de correos 
 controller.sendCorreoH1  = async(req, res)=>{
     const correo = req.body.correo
     const name = req.body.nombre
@@ -1055,14 +1056,14 @@ controller.sendCorreoH1  = async(req, res)=>{
     var mailOptions ={
         from: "Remitente",
         to: correo,
-        subject: "hola mundo como estas todo bien",
+        subject: "Por favor debuelva el equipo ",
         html: `<!DOCTYPE html>
         <html lang="es">
         <head>
             <meta charset="utf-8">
             <title>holi</title>
         </head>
-        <body style="background-color: black ">
+        <body style="background-color: white ">
         
         <!--Copia desde aquí-->
         <table style="max-width: 600px; padding: 10px; margin:0 auto; border-collapse: collapse;">
