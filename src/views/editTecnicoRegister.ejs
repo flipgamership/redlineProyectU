@@ -27,15 +27,17 @@
                     <a  href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i> Home</a>
                 </li>
                 <li class="navItem">
-                    <a href="" class="navLink"><i class='bx bxs-box'></i> Inventorio Herramientas</a>
+                    <a href="/telecomunicaciones" class="navLink"> <i class='bx bxs-phone-outgoing' ></i> Telecomunicaciones</a>
                 </li>
                 <li class="navItem">
-                    <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de material</a>
+                    <a href="#" class="navLink"><i class='bx bxs-user'></i> Servicio al cliente</a>
                 </li>
-                <li class="navItem"> 
-                    <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipo</a>
+                <li class="navItem">
+                    <a href="#" class="navLink"> <i class='bx bxs-badge-dollar'></i> Registro de pagos</a>
                 </li>
-                    
+                <li class="navItem" >
+                    <a style="margin-left:20px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Seccion</a>
+                </li>
                 
             </ul>
             <div class="hamburger">
@@ -50,34 +52,32 @@
     <div class="row justify-content-center mt-5 ">
         <div class="col-lg-5 col-md-8 col-sm-8">
             <div class="card">
+                <%if (data){ %>
                 <div class="card-title text-center border-bottom">
-                    <h2 class="p-3">quien me tiene</h2>
+                    <h2 class="p-3"></h2>
                 </div>
-                <% results.forEach((user) => {%>
                 <div class="card-body">
-                    <form action="/QuienMeTieneMail" method="POST">
-                        <input type="hidden" name="id" value="<%= user.id_cuadrilla %> " hidden>
+                    <form action="" method="POST">
+                        <input type="hidden" name="id" value="<%= data.id %> " hidden>
                         <div class="mb-3">
-                            <h5 for="usuario">Nombre de la persona que tiene la herramienta</h5>
-                            <input type="text" class="form-control" value="<%= user.miembro %>" name="nombre" readonly>
+                            <h5 for="usuario"></h5>
+                            <input type="text" class="form-control" value="<%= data.miembro %>" name="nombre">
                         </div>
                         <div class="mb-3">
-                            <h5 for="usuario">Correo de la persona que tiene la herramienta</h5>
-                            <input type="text" class="form-control" value="<%= user.correo %>" name="correo" readonly>
+                            <h5 for="usuario"></h5>
+                            <input type="text" class="form-control" value="<%= data.correo %>" name="correo" required>
                         </div>
-                        <% }) %> 
                         <div class="mb-3">
-                            <h5 for="usuario">Nombre de la herramienta</h5>
-                            <input type="text" class="form-control" value="<%= nameH1 %>" name="nombre_herramienta" readonly>
+                            <h5 for="usuario"></h5>
+                            <input type="text" class="form-control" value="<%= data.cc %>" name="cedula" required>
                         </div>
-                      
-                        
                         <div class="mb-3">
-                            <h5 for="usuario">codigo de la herramienta</h5>
-                            <input type="text" class="form-control" value="<%= codigoH1 %>" name="codigo_herramienta" readonly>
+                            <h5 for="usuario"></h5>
+                            <input type="text" class="form-control" value="<%= data.celular %>" name="celular" required>
                         </div>
+                        <% } %>
                         <div class="d-grid">
-                            <a  style="font-size: 14px;" onclick="alert()" class="btn btn-outline-success">solicitud de devolucion de herramienta al tecnico</a>
+                            <a  style="font-size: 14px;" onclick="alert()" class="btn btn-primary"></a>
                         </div>
                     </form>
                 </div>
@@ -90,7 +90,7 @@
 <script>
   function alert() {
     Swal.fire({
-      title: '¿Quieres que devuelva la herramienta el tecnico?',
+      title: '¿Quieres actualizar los datos de este usuario?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'NO',
@@ -100,7 +100,7 @@
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('correo enviado exitosamente', '', 'success')
+        Swal.fire('Usuario actualizado exitosamente', '', 'success')
         const value = true
         setTimeout(timeUot, 2000, value);
       } 

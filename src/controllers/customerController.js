@@ -1016,29 +1016,38 @@ controller.inventarioH2 = (req, res) => {
     }
 }
 controller.quienMeTieneh1 = (req, res) => {
-    const id = req.body.id
-    const nameH1 = req.body.nameH
-    const codigoH1 = req.body.codigoH
-    console.log(id, nameH1, codigoH1)
-    req.getConnection((error, conn) => {
-        conn.query("SELECT * FROM `cuadrillas` WHERE id_cuadrilla = ?", [id], (error, results)=>{
-            if (error){
-                console.log(error)
-            }else{
-                console.log(results)
-                res.render('quienMeTieneH1',{
-                    results: results,
-                    nameH1: nameH1,
-                    codigoH1: codigoH1,
-                    name: req.session.name,
-                    role: req.session.role
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'tecnico') {
+            const id = req.body.id
+            const nameH1 = req.body.nameH
+            const codigoH1 = req.body.codigoH
+            console.log(id, nameH1, codigoH1)
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM `cuadrillas` WHERE id = ?", [id], (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        console.log(results)
+                        res.render('quienMeTieneH1', {
+                            results: results,
+                            nameH1: nameH1,
+                            codigoH1: codigoH1,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+                    }
                 })
-            }
-        })
-    })
+            })
+        }else{
+        res.redirect('/home')}
+    }else{
+    res.render('login', {
+        login: false,
+    })}
+
 }
 // envio de correos 
-controller.sendCorreoH1  = async(req, res)=>{
+controller.sendCorreoH1 = async (req, res) => {
     const correo = req.body.correo
     const name = req.body.nombre
     const name_herramienta = req.body.nombre_herramienta
@@ -1048,12 +1057,12 @@ controller.sendCorreoH1  = async(req, res)=>{
         port: 587,
         secure: false,
         auth: {
-            user:"maisanmailer@gmail.com",
+            user: "maisanmailer@gmail.com",
             pass: "231215maisanmailer"
         }
 
     })
-    var mailOptions ={
+    var mailOptions = {
         from: "Remitente",
         to: correo,
         subject: "Por favor debuelva el equipo ",
@@ -1089,10 +1098,10 @@ controller.sendCorreoH1  = async(req, res)=>{
                             espero que este teniendo un hermoso dia somos el servicio de notificaciones a 
                             correo del sistema de inventario de redline el dia de hoy te escirbimos para solicitar la debolucion de :</p>
                         <ul style="font-size: 15px;  margin: 10px 0">
-                            <li>Herramienta: </li>`+name_herramienta+`
-                            <li>Codigo de herramienta: </li>`+codigoH+`
+                            <li>Herramienta: </li>`+ name_herramienta + `
+                            <li>Codigo de herramienta: </li>`+ codigoH + `
                             <li>¿Quien me tiene?</li>
-                            <li>tecnico que me tiene: </li>`+name+`
+                            <li>tecnico que me tiene: </li>`+ name + `
                             <li>Espero que la devuelvas a la bodega y el ingreso en la plataforma</li>
                         </ul>
                         <p style="color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0">redline || <a href="https://github.com/flipgamership">Juan Felipe Correa Rios</a></p>
@@ -1106,23 +1115,130 @@ controller.sendCorreoH1  = async(req, res)=>{
         </html>
         
         `
-        
+
     }
-    const info = await transporter.sendMail(mailOptions, (error, info)=>{
-        if (error){
+    const info = await transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
             console.log(error)
-        }else{
+        } else {
             console.log("mail enviado")
-            res.redirect("/pruebas2")
+            res.redirect("/inventarioHerramientasPRedline")
         }
     })
 }
 
+controller.herramientasPrestadasInventario = (req, res) => {
+    if(req.session.loggedin){
+        if(req.session.role == 'admin' || req.session.role == 'tecnico'){
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM herramienta WHERE estado = 'prestado'", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('inventario2Herramientas', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+        
+                    }
+        
+                })
+        
+            })
+        }else{
+            res.redirect('/home')
+        }
+        
+    }else{
+        res.render('login', {
+            login: false,})
+    }
+}
+controller.herramientasNoPrestadasInventario = (req, res) =>{
+    if (req.session.loggedin){
+        if(req.session.role == 'admin' || req.session.role == 'tecnico'){
+            req.getConnection((error, conn) => {
+                conn.query("SELECT * FROM herramienta WHERE estado = 'bodega'", (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('inventario1Herramientas', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+        
+                    }
+        
+                })
+        
+            })
+        }else{
+            res.redirect('/home')
+        }
+    }else{
+        res.render('login', {
+            login: false,})
+    }
+}
+//tecnicos register
+controller.registrarTecnico = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin') {
+            req.getConnection((error, conn) => {
+                conn.query('SELECT * FROM cuadrillas', (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.render('tableTecnicoGeneral', {
+                            results: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+                    }
+                })
+            })
+        } else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+}
 
-
-
-
-
+controller.tecnicoEditTable = (req, res) => {
+   const id = req.params.id
+    if (req.session.loggedin){
+        if(req.session.role == 'admin'){
+            req.getConnection((error, conn)=>{
+                conn.query('SELECT * FROM cuadrillas WHERE id = ?', [id], (error, results)=>{
+                    if(error){
+                        console.log(error)
+                    }else{
+                        console.log(results)
+                        res.render('editTecnicoRegister', {
+                            data: results,
+                            login: true,
+                            name: req.session.name,
+                            role: req.session.role
+                        })
+        
+                    }
+                })
+            })
+        }
+    }
+}
 
 
 
@@ -1144,26 +1260,6 @@ controller.sendCorreoH1  = async(req, res)=>{
 //zona de pruebas 
 controller.pruebas = (req, res) => {
     req.getConnection((error, conn) => {
-        conn.query("SELECT * FROM herramienta WHERE estado = 'bodega'", (error, results) => {
-            if (error) {
-                console.log(error)
-            } else {
-                res.render('inventario1Herramientas', {
-                    results: results,
-                    login: true,
-                    name: req.session.name,
-                    role: req.session.role
-                })
-
-            }
-
-        })
-
-    })
-}
-
-controller.pruebas2 = (req, res) => {
-    req.getConnection((error, conn) => {
         conn.query("SELECT * FROM herramienta WHERE estado = 'prestado'", (error, results) => {
             if (error) {
                 console.log(error)
@@ -1180,6 +1276,11 @@ controller.pruebas2 = (req, res) => {
         })
 
     })
+}
+
+
+controller.pruebas2 = (req, res) => {
+    
 }
 
 

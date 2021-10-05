@@ -16,6 +16,9 @@ router.post('/sendRegister' , customerController.sendRegister)
 router.get('/registerUsersEdit/:id', customerController.registerUEdit)
 router.get('/registerUsersDelate/:id', customerController.deleteUser)
 router.post('/sendUpdateUser', customerController.sendUpdateUser)
+//register de tenicos al sistema 
+router.get('/registerTecnico', customerController.registrarTecnico)
+router.get('/editRegisterTecnicoRedline/:id', customerController.tecnicoEditTable)
 //update passwore
 router.get('/password/:id', customerController.passwordNew)
 router.post('/sendPassword', customerController.savePasssword)
@@ -49,13 +52,16 @@ router.get('/telecomunicacionesEstadisticasTable5', customerController.teleEstad
 router.post('/teleEstadisticasReportDiaGraficosSend', customerController.seleccionaFechaEstadisticas1);
 //inventarios 
 // inventario de herramientas 
-router.get('/invetarioHerramientasRedline', customerController.menuInventoryH1)
-
+router.get('/inventarioHerramientasRedline', customerController.menuInventoryH1)
+router.get('/inventarioHerramientasPRedline', customerController.herramientasPrestadasInventario)
+router.get('/inventarioHerramientasNPRedline', customerController.herramientasNoPrestadasInventario)
+router.post('/buscarQuienMeTiene', customerController.quienMeTieneh1);
+//correos electronicos
+router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 
 router.get('/pruebas', customerController.pruebas); 
 router.get('/pruebas2', customerController.pruebas2);
-router.post('/buscarQuienMeTiene', customerController.quienMeTieneh1);
-router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
+
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);
