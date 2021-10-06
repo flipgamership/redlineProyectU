@@ -19,6 +19,10 @@ router.post('/sendUpdateUser', customerController.sendUpdateUser)
 //register de tenicos al sistema 
 router.get('/registerTecnico', customerController.registrarTecnico)
 router.get('/editRegisterTecnicoRedline/:id', customerController.tecnicoEditTable)
+router.post('/registerTecnicoSend', customerController.tecnicoEditSendTable)
+router.get('/registerNewTecnicoRedline', customerController.TableNewTecnico)
+router.post('/registerNewTecnicoRedline', customerController.TableNewTecnicoSend)
+router.get('/registerTecnicoDelateRedline/:id', customerController.TableNewTecnicoDelate)
 //update passwore
 router.get('/password/:id', customerController.passwordNew)
 router.post('/sendPassword', customerController.savePasssword)
@@ -60,6 +64,7 @@ router.post('/buscarQuienMeTiene', customerController.quienMeTieneh1);
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 
 router.get('/pruebas', customerController.pruebas); 
+router.post('/imgpruebas', customerController.subirImange)
 router.get('/pruebas2', customerController.pruebas2);
 
 // router.post('/profile-upload-single', customerController.subirImagen)

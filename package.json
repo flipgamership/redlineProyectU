@@ -20,6 +20,7 @@
     "express-session": "^1.17.2",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
+    "multer": "^1.4.3",
     "mysql": "^2.18.1",
     "nodemailer": "^6.6.5",
     "nodemon": "^2.0.13",

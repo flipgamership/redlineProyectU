@@ -21,22 +21,19 @@
 <body class="login" >
     <header class="headerNav" >
         <nav class="navbarPrimary">
-            <a href="#" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
+            <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
             <ul class="navMenu">
                 <li class="navItem">
                     <a  href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i> Home</a>
                 </li>
                 <li class="navItem">
-                    <a href="/telecomunicaciones" class="navLink"> <i class='bx bxs-phone-outgoing' ></i> Telecomunicaciones</a>
+                    <a  href="/registerTecnico" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i>registrar tecnicos</a>
                 </li>
                 <li class="navItem">
-                    <a href="#" class="navLink"><i class='bx bxs-user'></i> Servicio al cliente</a>
-                </li>
-                <li class="navItem">
-                    <a href="#" class="navLink"> <i class='bx bxs-badge-dollar'></i> Registro de pagos</a>
+                    <a href="/register" class="navLink"><i class='bx bx-food-menu' ></i> Registrar nuevos Usuarios</a>
                 </li>
                 <li class="navItem" >
-                    <a style="margin-left:20px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Seccion</a>
+                    <a style="margin-left:20px;" href="loginAut" class="btn btn-danger" type="button">cerrar sesion</a>
                 </li>
                 
             </ul>
@@ -57,27 +54,27 @@
                     <h2 class="p-3"></h2>
                 </div>
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="/registerTecnicoSend" method="POST">
                         <input type="hidden" name="id" value="<%= data.id %> " hidden>
                         <div class="mb-3">
-                            <h5 for="usuario"></h5>
+                            <h5 for="usuario">Nombre</h5>
                             <input type="text" class="form-control" value="<%= data.miembro %>" name="nombre">
                         </div>
                         <div class="mb-3">
-                            <h5 for="usuario"></h5>
+                            <h5 for="usuario">Correo electronico</h5>
                             <input type="text" class="form-control" value="<%= data.correo %>" name="correo" required>
                         </div>
                         <div class="mb-3">
-                            <h5 for="usuario"></h5>
+                            <h5 for="usuario">Numero de cedula</h5>
                             <input type="text" class="form-control" value="<%= data.cc %>" name="cedula" required>
                         </div>
                         <div class="mb-3">
-                            <h5 for="usuario"></h5>
+                            <h5 for="usuario">Numero de Celular</h5>
                             <input type="text" class="form-control" value="<%= data.celular %>" name="celular" required>
                         </div>
                         <% } %>
                         <div class="d-grid">
-                            <a  style="font-size: 14px;" onclick="alert()" class="btn btn-primary"></a>
+                            <a  style="font-size: 14px;" onclick="alert()" class="btn btn-primary">editar tecnico</a>
                         </div>
                     </form>
                 </div>
@@ -90,7 +87,7 @@
 <script>
   function alert() {
     Swal.fire({
-      title: '¿Quieres actualizar los datos de este usuario?',
+      title: '¿Quieres actualizar los datos de este tecnico?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'NO',
@@ -100,7 +97,7 @@
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Usuario actualizado exitosamente', '', 'success')
+        Swal.fire('Tecnico actualizado exitosamente', '', 'success')
         const value = true
         setTimeout(timeUot, 2000, value);
       } 

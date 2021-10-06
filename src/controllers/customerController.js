@@ -224,6 +224,10 @@ controller.teleTableVerificDia = (req, res) => {
     }
 }
 //api nuevos usuario telecomunicaciones no confirmados
+
+
+
+
 controller.teleTableNewClientCP = (req, res) => {
     if (req.session.loggedin) {
         if (req.session.role == 'admin' || req.session.role == 'servicioCliente') {
@@ -1038,12 +1042,14 @@ controller.quienMeTieneh1 = (req, res) => {
                     }
                 })
             })
-        }else{
-        res.redirect('/home')}
-    }else{
-    res.render('login', {
-        login: false,
-    })}
+        } else {
+            res.redirect('/home')
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
 
 }
 // envio de correos 
@@ -1128,8 +1134,8 @@ controller.sendCorreoH1 = async (req, res) => {
 }
 
 controller.herramientasPrestadasInventario = (req, res) => {
-    if(req.session.loggedin){
-        if(req.session.role == 'admin' || req.session.role == 'tecnico'){
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'tecnico') {
             req.getConnection((error, conn) => {
                 conn.query("SELECT * FROM herramienta WHERE estado = 'prestado'", (error, results) => {
                     if (error) {
@@ -1141,24 +1147,25 @@ controller.herramientasPrestadasInventario = (req, res) => {
                             name: req.session.name,
                             role: req.session.role
                         })
-        
+
                     }
-        
+
                 })
-        
+
             })
-        }else{
+        } else {
             res.redirect('/home')
         }
-        
-    }else{
+
+    } else {
         res.render('login', {
-            login: false,})
+            login: false,
+        })
     }
 }
-controller.herramientasNoPrestadasInventario = (req, res) =>{
-    if (req.session.loggedin){
-        if(req.session.role == 'admin' || req.session.role == 'tecnico'){
+controller.herramientasNoPrestadasInventario = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin' || req.session.role == 'tecnico') {
             req.getConnection((error, conn) => {
                 conn.query("SELECT * FROM herramienta WHERE estado = 'bodega'", (error, results) => {
                     if (error) {
@@ -1170,18 +1177,19 @@ controller.herramientasNoPrestadasInventario = (req, res) =>{
                             name: req.session.name,
                             role: req.session.role
                         })
-        
+
                     }
-        
+
                 })
-        
+
             })
-        }else{
+        } else {
             res.redirect('/home')
         }
-    }else{
+    } else {
         res.render('login', {
-            login: false,})
+            login: false,
+        })
     }
 }
 //tecnicos register
@@ -1217,22 +1225,130 @@ controller.registrarTecnico = (req, res) => {
 }
 
 controller.tecnicoEditTable = (req, res) => {
-   const id = req.params.id
-    if (req.session.loggedin){
-        if(req.session.role == 'admin'){
-            req.getConnection((error, conn)=>{
-                conn.query('SELECT * FROM cuadrillas WHERE id = ?', [id], (error, results)=>{
-                    if(error){
+    const id = req.params.id
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin') {
+            req.getConnection((error, conn) => {
+                conn.query('SELECT * FROM cuadrillas WHERE id = ?', [id], (error, results) => {
+                    if (error) {
                         console.log(error)
-                    }else{
+                    } else {
                         console.log(results)
                         res.render('editTecnicoRegister', {
-                            data: results,
+                            data: results[0],
                             login: true,
                             name: req.session.name,
                             role: req.session.role
                         })
-        
+
+
+                    }
+                })
+            })
+        } else {
+            res.render('home', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+}
+controller.tecnicoEditSendTable = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin') {
+            const id = req.body.id
+            const name = req.body.nombre
+            const correo = req.body.correo
+            const cedula = req.body.cedula
+            const celular = req.body.celular
+
+            req.getConnection((error, conn) => {
+                conn.query('UPDATE cuadrillas SET ? WHERE id = ?', [{ miembro: name, correo: correo, cc: cedula, celular: celular }, id], (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.redirect('/registerTecnico')
+                    }
+                })
+
+            })
+        } else {
+            res.redirect('/home')
+        }
+    } else {
+        res.redirect('/login')
+    }
+}
+controller.TableNewTecnico = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin') {
+            res.render('newTecnicoTable', {
+                login: true,
+                name: req.session.name,
+                role: req.session.role
+            })
+
+        } else {
+            res.render('login', {
+                login: false,
+            })
+        }
+    } else {
+        res.render('login', {
+            login: false,
+        })
+    }
+
+}
+
+controller.TableNewTecnicoSend = async (req, res) => {
+    const name = req.body.nombre
+    const correo = req.body.correo
+    const cedula = req.body.cedula
+    const celular = req.body.celular
+    req.getConnection((error, conn) => {
+        conn.query('INSERT INTO cuadrillas SET ?', { miembro: name, correo: correo, cc: cedula, celular: celular }, async (error, results) => {
+            if (error) {
+                console.log(error)
+                res.render('newUserTele', {
+                    alert: true,
+                    alertTitle: 'Ups hubo algun problema',
+                    alertMessage: 'por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde ten en cuenta que si el usuario ya esta creado no lo podras agregar',
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    ruta: 'registerNewTecnicoRedline',
+                    timer: 15000
+
+                })
+            } else {
+                res.render('newUserTele', {
+                    alert: true,
+                    alertTitle: 'Registrado',
+                    alertMessage: 'Registro de tecnico Exitoso',
+                    alertIcon: 'success',
+                    showConfirmButton: true,
+                    ruta: 'registerTecnico',
+                    timer: 15000
+                })
+            }
+        })
+    })
+}
+controller.TableNewTecnicoDelate = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == 'admin') {
+            const id = req.params.id
+            req.getConnection((error, conn) => {
+                conn.query('DELETE FROM cuadrillas WHERE id= ?', [id], (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        res.redirect('/registerTecnico')
                     }
                 })
             })
@@ -1240,14 +1356,29 @@ controller.tecnicoEditTable = (req, res) => {
     }
 }
 
+const multer = require('multer')
 
+var storage = multer.diskStorage({
+    destination: function (req, file, cb){
+        cb (null, './uploads')
+    },
+    filename: function (req, file, cb){
+        cb (null, file.originalname)
+    },
+})
 
+var upload = multer({ storage })
 
-
-
-
-
-
+controller.subirImange = upload.single('file'), (req, res) =>{
+    if (!req.file) res.status(404).send( {
+        success: false,
+        error: 'file not fund'
+    })
+    return res.status(200).send({
+        success: true,
+        error: 'file uploaded'
+    })
+}
 
 
 
@@ -1259,28 +1390,12 @@ controller.tecnicoEditTable = (req, res) => {
 
 //zona de pruebas 
 controller.pruebas = (req, res) => {
-    req.getConnection((error, conn) => {
-        conn.query("SELECT * FROM herramienta WHERE estado = 'prestado'", (error, results) => {
-            if (error) {
-                console.log(error)
-            } else {
-                res.render('inventario2Herramientas', {
-                    results: results,
-                    login: true,
-                    name: req.session.name,
-                    role: req.session.role
-                })
-
-            }
-
-        })
-
-    })
+    res.render('pruebas')
 }
 
 
 controller.pruebas2 = (req, res) => {
-    
+
 }
 
 
