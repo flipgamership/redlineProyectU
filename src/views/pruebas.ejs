@@ -10,10 +10,10 @@
 
 <body>
 
-  <form method="POST" action="/imgpruebas" enctype="multipart/form-data">
+  <form  enctype="multipart/form-data">
     <div>
         <label>Upload profile picture</label>
-        <input type="file" name="profile-file" required/>
+        <input type="file" name="profile-file" onchange="eleccinarFoto()" required accept="image/jpg, image/png"/>
     </div>
     <div>
         <input type="submit" value="Upload" />
@@ -21,5 +21,20 @@
 </form>
 
 </body>
+<script>
+  eleccionarFoto(event): void {
+        let url = URL.createObjectURL(event.target.files[0]);
+        let name = randonName();
+        let type = event.target.files[0].type;
+        const file = new File([url], name , { type: type })
+        crear(file);
+    }
+crear(archivo: File){
+
+const formData = new FormData();
+formData.append('archivo', archivo);
+
+}
+</script>
 
 </html>

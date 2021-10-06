@@ -1356,29 +1356,34 @@ controller.TableNewTecnicoDelate = (req, res) => {
     }
 }
 
-const multer = require('multer')
+// const multer = require('multer')
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb){
-        cb (null, './uploads')
-    },
-    filename: function (req, file, cb){
-        cb (null, file.originalname)
-    },
-})
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb){
+//         cb (null, './uploads')
+//     },
+//     filename: function (req, file, cb){
+//         cb (null, file.originalname)
+//     },
+// })
 
-var upload = multer({ storage })
+// var upload = multer({ storage })
 
-controller.subirImange = upload.single('file'), (req, res) =>{
-    if (!req.file) res.status(404).send( {
-        success: false,
-        error: 'file not fund'
-    })
-    return res.status(200).send({
-        success: true,
-        error: 'file uploaded'
-    })
-}
+// controller.subirImange = upload.single('file'), (req, res) =>{
+//     if (!req.file) res.status(404).send( {
+//         success: false,
+//         error: 'file not fund'
+//     })
+//     return res.status(200).send({
+//         success: true,
+//         error: 'file uploaded'
+//     })
+// }
+
+
+
+
+
 
 
 

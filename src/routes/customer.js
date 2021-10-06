@@ -64,7 +64,6 @@ router.post('/buscarQuienMeTiene', customerController.quienMeTieneh1);
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 
 router.get('/pruebas', customerController.pruebas); 
-router.post('/imgpruebas', customerController.subirImange)
 router.get('/pruebas2', customerController.pruebas2);
 
 // router.post('/profile-upload-single', customerController.subirImagen)
