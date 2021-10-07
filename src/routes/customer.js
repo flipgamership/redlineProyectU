@@ -1,7 +1,19 @@
-const express = require('express');
+const express = require ('express');
 const router = express.Router();
-
+const multer = require ('multer')
+var upload = multer({storage})
 const customerController=require('../controllers/customerController')
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb){
+        cb (null, './src/public/uploads')
+    },
+    filename: function (req, file, cb){
+        cb (null, file.originalname)
+    },
+})
+
+router.post('/upload', upload.single('file'), customerController.uploader)
 //login
 router.get('/login', customerController.login);
 router.post('/loginAuth', customerController.loginAuth);
@@ -60,12 +72,13 @@ router.get('/inventarioHerramientasRedline', customerController.menuInventoryH1)
 router.get('/inventarioHerramientasPRedline', customerController.herramientasPrestadasInventario)
 router.get('/inventarioHerramientasNPRedline', customerController.herramientasNoPrestadasInventario)
 router.post('/buscarQuienMeTiene', customerController.quienMeTieneh1);
+// inventario de consumibles 
+// router.get('/inventarioConsumiblesRedline', customerController.InventarioC)
 //correos electronicos
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 
 router.get('/pruebas', customerController.pruebas); 
 router.get('/pruebas2', customerController.pruebas2);
-
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);

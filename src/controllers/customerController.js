@@ -6,6 +6,7 @@ const express = require('express');
 const moment = require('moment');
 const { text } = require('express');
 
+
 const controller = {}
 
 
@@ -1370,14 +1371,14 @@ controller.TableNewTecnicoDelate = (req, res) => {
 // var upload = multer({ storage })
 
 // controller.subirImange = upload.single('file'), (req, res) =>{
-//     if (!req.file) res.status(404).send( {
-//         success: false,
-//         error: 'file not fund'
-//     })
-//     return res.status(200).send({
-//         success: true,
-//         error: 'file uploaded'
-//     })
+    // if (!req.file) res.status(404).send( {
+    //     success: false,
+    //     error: 'file not fund'
+    // })
+    // return res.status(200).send({
+    //     success: true,
+    //     error: 'file uploaded'
+    // })
 // }
 
 
@@ -1412,9 +1413,16 @@ controller.pruebas2 = (req, res) => {
 // }else{
 //     res.send('not result')
 // }
-
-
-
+controller.uploader = (req, res)=>{
+    if (!req.file) res.status(404).send( {
+        success: false,
+        error: 'file not fund'
+    })
+    return res.status(200).send({
+        success: true,
+        error: 'file uploaded'
+    })
+}
 
 
 
