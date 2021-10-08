@@ -79,7 +79,7 @@
             <a href="//<%= user.id %>" class="btn btn-warning" style="font-size: 14px;" type="button"><i class='bx bx-pencil'></i></a>
             <a href="//<%= user.id %>" class="btn btn-success" style="font-size: 14px;" type="button"><i class='bx bx-archive-out' ></i></a>
             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-            <a onclick="alertDelate('<%= user.id %>')"  style="font-size: 14px;" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
+            <a onclick="alertDelate('<%= user.id %>')" style="font-size: 14px;" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
           </td>
         </tr>
         <% }) %>
@@ -112,28 +112,26 @@
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'NO',
-      cancelButtonColor: '#d33',
-      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33' ,
+      confirmButtonColor:'#3085d6' ,
       confirmButtonText: ` SI `,
     }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire('el producto se elimino permante de forma exitosa, '
-            ', '
-            success ', 1500)
-            const value = true
-            setTimeout(timeUot, 2000, value, id);
-          }
-        })
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('el producto se elimino permante de forma exitosa', '', 'success',1500)
+        const value = true
+        setTimeout(timeUot, 2000, value, id);
+      } 
+    })
+  }
+  function timeUot (values, id){
+    if(values){
+      window.location='//'+ id
     }
-
-    function timeUot(values, id) {
-      if (values) {
-        window.location = '//' + id
-      }
-
-    }
+    
+  }
 </script>
+
 <%- include('./partials/footer.ejs') %>
 
 <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>

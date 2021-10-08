@@ -66,6 +66,7 @@ router.get('/inventarioHerramientasNPRedline', customerController.herramientasNo
 router.post('/buscarQuienMeTiene', customerController.quienMeTieneh1);
 // inventario de consumibles 
 router.get('/inventarioConsumiblesRedline', customerController.InventarioCTable1)
+router.get('/inventarioConsumiblesnewConsumibleRedline', customerController.newInventoriC)
 //correos electronicos
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 
