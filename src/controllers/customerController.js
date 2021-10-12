@@ -7,6 +7,7 @@ const moment = require("moment");
 const { text } = require("express");
 
 const controller = {};
+//SELECT SUM(cantidad) AS total FROM consumibles WHERE id_consumibles = 'GUL02';
 
 controller.inicialPage = (req, res) => {
   res.render("index");
@@ -1496,10 +1497,11 @@ controller.InventarioCTable1 = (req, res) => {
     res.redirect("/login");
   }
 };
+
 controller.newInventoriC = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "admin" || req.session.role == "tecnico") {
-      res.render("", {
+      res.render("newInventarioC1", {
         login: true,
         name: req.session.name,
         role: req.session.role,
@@ -1520,39 +1522,258 @@ controller.newInventoriCSend = (req, res) => {
       const id_consumibles = req.body.id_consumibles;
       const name = req.body.nombre;
       const cantidad = req.body.cantidad;
-      const cantidad_min = req.body.cantidad_min
+      const cantidad_min = req.body.cantidad_min;
+      const precio_compra = req.body.precio_compra;
+      const medida = req.body.metrajeTotal;
+      const unidad_paquete = req.body.unidad_paquete;
+      const tipo_medida = req.body.tipo_medida;
+      const cantidad_semanal = req.body.cantidad_semanal;
+
+      if (tipo_medida == "U") {
+        const precio_unida = precio_compra / cantidad;
+
+        console.log(precio_unida);
+        req.getConnection((error, conn) => {
+          conn.query(
+            "INSERT INTO consumibles SET ?",
+            {
+              id_consumibles: id_consumibles,
+              nombre: name,
+              cantidad: cantidad,
+              cantidad_min: cantidad_min,
+              precio_compra: precio_compra,
+              precio_unidad: precio_unida,
+              gasto_semanal: cantidad_semanal,
+            },
+            async (error, results) => {
+              if (error) {
+                console.log(error);
+                res.render("newInventarioC1", {
+                  alert: true,
+                  alertTitle: "Ups hubo algun problema",
+                  alertMessage:
+                    "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde ten en cuenta que si el id del producto ya esta creado no lo podras agregar",
+                  alertIcon: "error",
+                  showConfirmButton: true,
+                  ruta: "inventarioConsumiblesnewConsumibleRedline",
+                  timer: 15000,
+                });
+              } else {
+                res.render("newInventarioC1", {
+                  alert: true,
+                  alertTitle: "Registrado",
+                  alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                  alertIcon: "success",
+                  showConfirmButton: true,
+                  ruta: "inventarioConsumiblesRedline",
+                  timer: 15000,
+                });
+              }
+            }
+          );
+        });
+      } else if (tipo_medida == "M") {
+        const precio_unida = precio_compra / medida;
+
+        console.log(precio_unida);
+        req.getConnection((error, conn) => {
+          conn.query(
+            "INSERT INTO consumibles SET ?",
+            {
+              id_consumibles: id_consumibles,
+              nombre: name,
+              cantidad: cantidad,
+              cantidad_min: cantidad_min,
+              precio_compra: precio_compra,
+              precio_unidad: precio_unida,
+              gasto_semanal: cantidad_semanal,
+            },
+            async (error, results) => {
+              if (error) {
+                console.log(error);
+                res.render("newInventarioC1", {
+                  alert: true,
+                  alertTitle: "Ups hubo algun problema",
+                  alertMessage:
+                    "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde ten en cuenta que si el id del producto ya esta creado no lo podras agregar",
+                  alertIcon: "error",
+                  showConfirmButton: true,
+                  ruta: "inventarioConsumiblesnewConsumibleRedline",
+                  timer: 15000,
+                });
+              } else {
+                res.render("newInventarioC1", {
+                  alert: true,
+                  alertTitle: "Registrado",
+                  alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                  alertIcon: "success",
+                  showConfirmButton: true,
+                  ruta: "inventarioConsumiblesRedline",
+                  timer: 15000,
+                });
+              }
+            }
+          );
+        });
+      } else if (tipo_medida == "P") {
+        const precio_unida = precio_compra / (cantidad * unidad_paquete);
+
+        console.log(precio_unida);
+        req.getConnection((error, conn) => {
+          conn.query(
+            "INSERT INTO consumibles SET ?",
+            {
+              id_consumibles: id_consumibles,
+              nombre: name,
+              cantidad: cantidad * unidad_paquete,
+              cantidad_min: cantidad_min,
+              precio_compra: precio_compra,
+              precio_unidad: precio_unida,
+              gasto_semanal: cantidad_semanal,
+            },
+            async (error, results) => {
+              if (error) {
+                console.log(error);
+                res.render("newInventarioC1", {
+                  alert: true,
+                  alertTitle: "Ups hubo algun problema",
+                  alertMessage:
+                    "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde ten en cuenta que si el id del producto ya esta creado no lo podras agregar",
+                  alertIcon: "error",
+                  showConfirmButton: true,
+                  ruta: "inventarioConsumiblesnewConsumibleRedline",
+                  timer: 15000,
+                });
+              } else {
+                res.render("newInventarioC1", {
+                  alert: true,
+                  alertTitle: "Registrado",
+                  alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                  alertIcon: "success",
+                  showConfirmButton: true,
+                  ruta: "inventarioConsumiblesRedline",
+                  timer: 15000,
+                });
+              }
+            }
+          );
+        });
+      } else {
+        res.render("newInventarioC1", {
+          alert: true,
+          alertTitle: "Ups hubo algun problema",
+          alertMessage:
+            "no ingresaste ningun tipo de metrica lo que causo que sus datos no se puedan ingresar",
+          alertIcon: "error",
+          showConfirmButton: true,
+          ruta: "inventarioConsumiblesnewConsumibleRedline",
+          timer: 15000,
+        });
+      }
+    }
+  }
+};
+controller.informacionProductoInventarioC = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
       req.getConnection((error, conn) => {
         conn.query(
-          "INSERT INTO consumibles SET ?",
-          {
-            id_consumibles: id_consumibles,
-            nombre: name,
-            cantidad: cantidad,
-            cantidad_min:cantidad_min
-          },
-          async (error, results) => {
+          "SELECT * FROM consumibles WHERE id = ?",
+          [id],
+          (error, results) => {
             if (error) {
               console.log(error);
-              res.render("", {
-                alert: true,
-                alertTitle: "Ups hubo algun problema",
-                alertMessage:
-                  "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde ten en cuenta que si el id del producto ya esta creado no lo podras agregar",
-                alertIcon: "error",
-                showConfirmButton: true,
-                ruta: "",
-                timer: 15000,
-              });
             } else {
-              res.render("registerUser", {
-                alert: true,
-                alertTitle: "Registrado",
-                alertMessage: "Registro de nuevo producto exitoso Exitosa",
-                alertIcon: "success",
-                showConfirmButton: true,
-                ruta: "inventarioConsumiblesRedline",
-                timer: 15000,
+              console.log(results);
+              res.render("informacionProductoInventarioC", {
+                data: results[0],
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
               });
+            }
+          }
+        );
+      });
+    }
+  }
+};
+
+controller.editInventarioC1 = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM consumibles WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(results);
+              res.render("editInventoriConsumible", {
+                data: results[0],
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    }
+  }
+};
+controller.editInventarioC1Send = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.body.id;
+      const id_consumibles = req.body.id_consumibles;
+      const name = req.body.nombre;
+      const cantidad = req.body.cantidad;
+      const cantidad_min = req.body.cantidad_min;
+
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE consumibles SET ? WHERE id = ?",
+          [
+            {
+              nombre: name,
+              id_consumibles: id_consumibles,
+              cantidad: cantidad,
+              cantidad_min: cantidad_min,
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("se realizo el envio de datos ");
+              res.redirect("/inventarioConsumiblesRedline");
+            }
+          }
+        );
+      });
+    }
+  }
+};
+
+controller.delateConsumibleInvetario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "DELETE FROM consumibles WHERE id= ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.redirect("/inventarioConsumiblesRedline");
             }
           }
         );
@@ -1563,7 +1784,7 @@ controller.newInventoriCSend = (req, res) => {
 
 //zona de pruebas
 controller.pruebas = (req, res) => {
-  res.render("pruebas");
+  res.render("pruebas2");
 };
 
 controller.pruebas2 = (req, res) => {};

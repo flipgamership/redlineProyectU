@@ -46,7 +46,7 @@
     <h5 style="font-size: 20px; margin-bottom: 10px;">inventario de consumibles</h5>
     <hr>
     <div class="row">
-        <a href="" style="margin-bottom: 10px; margin-left: 8px;" class="btn btn-outline-secondary col-md-1 " type="button">Agregar Tecnico</a>
+        <a href="/inventarioConsumiblesnewConsumibleRedline" style="margin-bottom: 10px; margin-left: 8px;" class="btn btn-outline-secondary col-md-2 " type="button">Agregar consumible</a>
       </div>
     <table id="users" class="table table-light table-striped table-hover table-bordered text-center  " style="font-size: 14px;">
       <thead>
@@ -76,8 +76,10 @@
             <% } %>
           </td>
           <td>
-            <a href="//<%= user.id %>" class="btn btn-warning" style="font-size: 14px;" type="button"><i class='bx bx-pencil'></i></a>
+            <a href="/informacionConsumiblesRedline/<%= user.id %>" class="btn btn-warning" style="font-size: 14px;" type="button"><i class='bx bxs-error-circle'></i></a>
+            <a href="/inventarioConsumiblesnewConsumiblesEditRedline/<%= user.id %>" class="btn btn-info" style="font-size: 14px;" type="button"><i class='bx bx-pencil'></i></a>
             <a href="//<%= user.id %>" class="btn btn-success" style="font-size: 14px;" type="button"><i class='bx bx-archive-out' ></i></a>
+            <a href="//<%= user.id %>" class="btn btn-warning" style="font-size: 14px;" type="button"><i class='bx bx-archive-in' ></i></a>
             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
             <a onclick="alertDelate('<%= user.id %>')" style="font-size: 14px;" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
           </td>
@@ -126,7 +128,7 @@
   }
   function timeUot (values, id){
     if(values){
-      window.location='//'+ id
+      window.location='/inventarioConsumibleDelateRedline/'+ id
     }
     
   }

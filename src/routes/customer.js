@@ -3,9 +3,6 @@ const router = express.Router();
 
 const customerController=require('../controllers/customerController')
 
-
-
-
 //login
 router.get('/login', customerController.login);
 router.post('/loginAuth', customerController.loginAuth);
@@ -67,6 +64,11 @@ router.post('/buscarQuienMeTiene', customerController.quienMeTieneh1);
 // inventario de consumibles 
 router.get('/inventarioConsumiblesRedline', customerController.InventarioCTable1)
 router.get('/inventarioConsumiblesnewConsumibleRedline', customerController.newInventoriC)
+router.post('/inventarioConsumiblesnewConsumiblesSendRedline', customerController.newInventoriCSend)
+router.get('/inventarioConsumiblesnewConsumiblesEditRedline/:id', customerController.editInventarioC1)
+router.post('/inventarioConsumiblesnewConsumiblesEditSendRedline', customerController.editInventarioC1Send)
+router.get('/inventarioConsumibleDelateRedline/:id', customerController.delateConsumibleInvetario)
+router.get('/informacionConsumiblesRedline/:id', customerController.informacionProductoInventarioC)
 //correos electronicos
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 
