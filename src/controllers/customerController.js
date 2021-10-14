@@ -8,7 +8,9 @@ const { text } = require("express");
 
 const controller = {};
 //SELECT SUM(cantidad) AS total FROM consumibles WHERE id_consumibles = 'GUL02';
-
+//SELECT * FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70');
+//SELECT SUM(cantidad_nueva_ingresada) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70';
+//SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70');
 controller.inicialPage = (req, res) => {
   res.render("index");
 };
@@ -1516,6 +1518,26 @@ controller.newInventoriC = (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 controller.newInventoriCSend = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "admin" || req.session.role == "tecnico") {
@@ -1544,6 +1566,7 @@ controller.newInventoriCSend = (req, res) => {
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
               gasto_semanal: cantidad_semanal,
+              tipo_unidad: tipo_medida
             },
             async (error, results) => {
               if (error) {
@@ -1573,8 +1596,9 @@ controller.newInventoriCSend = (req, res) => {
           );
         });
       } else if (tipo_medida == "M") {
-        const precio_unida = precio_compra / medida;
-
+        
+        const cantidad2 = medida * cantidad 
+        const precio_unida = precio_compra / cantidad2;
         console.log(precio_unida);
         req.getConnection((error, conn) => {
           conn.query(
@@ -1582,11 +1606,12 @@ controller.newInventoriCSend = (req, res) => {
             {
               id_consumibles: id_consumibles,
               nombre: name,
-              cantidad: cantidad,
+              cantidad:cantidad2 ,
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
               gasto_semanal: cantidad_semanal,
+              tipo_unidad: tipo_medida
             },
             async (error, results) => {
               if (error) {
@@ -1630,6 +1655,7 @@ controller.newInventoriCSend = (req, res) => {
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
               gasto_semanal: cantidad_semanal,
+              tipo_unidad: tipo_medida
             },
             async (error, results) => {
               if (error) {
@@ -1673,6 +1699,157 @@ controller.newInventoriCSend = (req, res) => {
     }
   }
 };
+
+
+
+
+
+
+controller.ingresarInventarioConsumibles = (req, res) => {
+  if (req.session.loggedin){
+    if(req.session.role == 'admin' || req.session.role == 'tecnico'){
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM consumibles WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(results);
+              res.render("ingresarInventarioConsumibles1", {
+                data: results[0],
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    }
+  }
+}
+
+
+controller.ingresarInventarioConsumiblesSend = (req, res)=>{
+  if(req.session.loggedin){
+    if(req.session.role == 'admin' || req.session.role == 'tecnico'){
+      const nombre = req.body.nombre
+      const id = req.body.id
+      const id_consumibles = req.body.id_consumibles
+      const cantidad_vieja = parseFloat(req.body.cantidad) 
+      const precio_compra_viejo = parseFloat(req.body.precio_compra) 
+      const precio_compra_nuevo = parseFloat(req.body.precio_compra_nuevo) 
+      const cantidad_nueva = parseFloat(req.body.cantidad_nueva) 
+      const tipo_unidad = req.body.tipo_unidad
+      const metraje = parseFloat(req.body.metraje) 
+      const unidad_paquete = parseFloat(req.body.unidades_paquetes) 
+      const fecha = req.body.fecha
+      
+      if (tipo_unidad == 'U'){
+        const cantidad = cantidad_vieja + cantidad_nueva 
+        const precio_compra = precio_compra_viejo + precio_compra_nuevo
+        const precio_unida = precio_compra / cantidad 
+        req.getConnection((error, conn) => {
+          conn.query(
+            "UPDATE consumibles SET ? WHERE id = ?",
+            [{ cantidad: cantidad, precio_compra: precio_compra, precio_unidad:precio_unida }, id],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_ingresada: cantidad_nueva, id_consumibles:id_consumibles }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.redirect('/inventarioConsumiblesRedline')
+                      }
+                    }
+                  )
+                })
+              }
+            }
+          );
+        });
+      }else if (tipo_unidad == 'M'){
+        const precio_compra = precio_compra_viejo + precio_compra_nuevo
+        const cantidad = (cantidad_nueva * metraje) + cantidad_vieja
+        const precio_unida = precio_compra / cantidad 
+        const cantidad_ingreso = cantidad_nueva * metraje
+        console.log(precio_unida)
+        req.getConnection((error, conn) => {
+          conn.query(
+            "UPDATE consumibles SET ? WHERE id = ?",
+            [{ cantidad: cantidad, precio_compra: precio_compra, precio_unidad:precio_unida }, id],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_ingresada: cantidad_ingreso, id_consumibles:id_consumibles }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.redirect('/inventarioConsumiblesRedline')
+                      }
+                    }
+                  )
+                })
+              }
+            }
+          );
+        });
+      }else if (tipo_unidad == 'P'){
+        const precio_compra = precio_compra_viejo + precio_compra_nuevo
+        const cantidad = (cantidad_nueva * unidad_paquete )+ cantidad_vieja
+        const precio_unida = precio_compra / cantidad 
+        const cantidad_ingreso = cantidad_nueva * unidad_paquete
+        req.getConnection((error, conn) => {
+          conn.query(
+            "UPDATE consumibles SET ? WHERE id = ?",
+            [{ cantidad: cantidad, precio_compra: precio_compra, precio_unidad:precio_unida }, id],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_ingresada: cantidad_ingreso, id_consumibles:id_consumibles }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.redirect('/inventarioConsumiblesRedline')
+                      }
+                    }
+                  )
+                })
+              }
+            }
+          );
+        });
+      }
+      
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+}
+
+ 
+
+
+
+
+
+
+
 controller.informacionProductoInventarioC = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "admin" || req.session.role == "tecnico") {
@@ -1685,13 +1862,65 @@ controller.informacionProductoInventarioC = (req, res) => {
             if (error) {
               console.log(error);
             } else {
+              const data = results[0]
               console.log(results);
-              res.render("informacionProductoInventarioC", {
-                data: results[0],
-                login: true,
-                name: req.session.name,
-                role: req.session.role,
-              });
+              const id_consumibles = results[0].id_consumibles
+              console.log(results[0].id_consumibles)
+              function compararHoras(fecha1, fecha2){
+                var now = moment(fecha1); //todays date
+                var end = moment(fecha2); // another date
+                var duration = moment.duration(now.diff(end));
+                var days = duration.asDays();
+                return days
+              }
+              req.getConnection((error, conn)=>{
+                conn.query( 
+                  "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = ?);", [id_consumibles], (error, results)=>{
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      const fecha_max = results[0].fecha
+                    
+                      req.getConnection((error, conn)=>{
+                        conn.query(
+                        "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT min(id) FROM logs_inventario_consumibles WHERE id_consumibles = ?);", [id_consumibles], (error, results)=>{
+                          if (error) {
+                            console.log(error);
+                          } else {
+                            const fecha_min = results[0].fecha
+                            console.log(compararHoras(fecha_max, fecha_min))
+                            
+                            const fecha_new = compararHoras(fecha_max, fecha_min)
+                            req.getConnection((error, conn)=>{
+                              conn.query(
+                                "SELECT SUM(cantidad_nueva_ingresada)AS suma FROM logs_inventario_consumibles WHERE id_consumibles = ?;", [id_consumibles], (error, results)=>{
+                                  if (error) {
+                                    console.log(error);
+                                  } else {
+                                    const diasApro = results[0].suma / fecha_new
+                                    // const diasApro = diasApro1.toFixed(0)
+                                    console.log(diasApro.toFixed(0))
+                                    res.render("informacionProductoInventarioC", {
+                                      data: data,
+                                      login: true,
+                                      name: req.session.name,
+                                      role: req.session.role,
+                                      dias: diasApro
+                                    });
+                                    
+                                  }
+                                }
+                              )
+                            })
+                            
+                          }
+                        })
+                      })
+                      
+                    }
+                  }
+                )
+              })
             }
           }
         );
@@ -1699,6 +1928,25 @@ controller.informacionProductoInventarioC = (req, res) => {
     }
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 controller.editInventarioC1 = (req, res) => {
   if (req.session.loggedin) {
@@ -1734,7 +1982,8 @@ controller.editInventarioC1Send = (req, res) => {
       const name = req.body.nombre;
       const cantidad = req.body.cantidad;
       const cantidad_min = req.body.cantidad_min;
-
+      const precio_compra = req.body.precio_compra
+      const precio_unidad = precio_compra / cantidad
       req.getConnection((error, conn) => {
         conn.query(
           "UPDATE consumibles SET ? WHERE id = ?",
@@ -1744,6 +1993,8 @@ controller.editInventarioC1Send = (req, res) => {
               id_consumibles: id_consumibles,
               cantidad: cantidad,
               cantidad_min: cantidad_min,
+              precio_compra: precio_compra,
+              precio_unidad: precio_unidad
             },
             id,
           ],
@@ -1781,10 +2032,62 @@ controller.delateConsumibleInvetario = (req, res) => {
     }
   }
 };
+ 
+
 
 //zona de pruebas
 controller.pruebas = (req, res) => {
-  res.render("pruebas2");
+  function compararHoras(fecha1, fecha2){
+    var now = moment(fecha1); //todays date
+    var end = moment(fecha2); // another date
+    var duration = moment.duration(now.diff(end));
+    var days = duration.asDays();
+    return days
+  }
+  req.getConnection((error, conn)=>{
+    conn.query( 
+      "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70')", (error, results)=>{
+        if (error) {
+          console.log(error);
+        } else {
+          const fecha_max = results[0].fecha
+        
+          req.getConnection((error, conn)=>{
+            conn.query(
+            "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT min(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70')", (error, results)=>{
+              if (error) {
+                console.log(error);
+              } else {
+                const fecha_min = results[0].fecha
+                console.log(compararHoras(fecha_max, fecha_min))
+                
+                const fecha_new = compararHoras(fecha_max, fecha_min)
+                req.getConnection((error, conn)=>{
+                  conn.query(
+                    "SELECT SUM(cantidad_nueva_ingresada)AS suma FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70';", (error, results)=>{
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        const diasApro1 = results[0].suma / fecha_new
+                        const diasApro = diasApro1.toFixed(0)
+                        console.log(diasApro.toFixed(0))
+                        res.render('pruebas2',{
+                          dias: diasApro
+                        })
+                        
+                      }
+                    }
+                  )
+                })
+                
+              }
+            })
+          })
+          
+        }
+      }
+    )
+  })
 };
 
 controller.pruebas2 = (req, res) => {};

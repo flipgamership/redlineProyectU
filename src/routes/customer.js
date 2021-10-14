@@ -69,6 +69,8 @@ router.get('/inventarioConsumiblesnewConsumiblesEditRedline/:id', customerContro
 router.post('/inventarioConsumiblesnewConsumiblesEditSendRedline', customerController.editInventarioC1Send)
 router.get('/inventarioConsumibleDelateRedline/:id', customerController.delateConsumibleInvetario)
 router.get('/informacionConsumiblesRedline/:id', customerController.informacionProductoInventarioC)
+router.get('/inventarioConsumiblesIngresoConsumiblesRedline/:id', customerController.ingresarInventarioConsumibles)
+router.post('/inventarioConsumiblesIngresoConsumiblesSendRedline', customerController.ingresarInventarioConsumiblesSend)
 //correos electronicos
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 
@@ -81,5 +83,6 @@ router.get('/pruebas2', customerController.pruebas2);
 // router.post('/update/:ID', customerController.update);
 // router.post('/auth', customerController.auth)
 // router.get('/listrestring', customerController.list2);
+
 
 module.exports = router; 

@@ -66,7 +66,13 @@
         <tr>
           <td><%= user.id_consumibles %> </td>
           <td><%= user.nombre %> </td>
-          <td><%= user.cantidad %></td>
+
+          <td><% if(user.tipo_unidad=='M'){ %> 
+            <%= user.cantidad %> Metros
+          <% }else{ %> 
+            <%= user.cantidad %> unidades
+            <% } %> 
+          </td>
           <td class="visor_imagenes" ><% if (user.cantidad <= 0) {%>
             <p class="blanco-rojo3"> Agotado </p>
             <% }else if( user.cantidad >= 1 && user.cantidad <= user.cantidad_min ){%>
@@ -79,7 +85,7 @@
             <a href="/informacionConsumiblesRedline/<%= user.id %>" class="btn btn-warning" style="font-size: 14px;" type="button"><i class='bx bxs-error-circle'></i></a>
             <a href="/inventarioConsumiblesnewConsumiblesEditRedline/<%= user.id %>" class="btn btn-info" style="font-size: 14px;" type="button"><i class='bx bx-pencil'></i></a>
             <a href="//<%= user.id %>" class="btn btn-success" style="font-size: 14px;" type="button"><i class='bx bx-archive-out' ></i></a>
-            <a href="//<%= user.id %>" class="btn btn-warning" style="font-size: 14px;" type="button"><i class='bx bx-archive-in' ></i></a>
+            <a href="/inventarioConsumiblesIngresoConsumiblesRedline/<%= user.id %>" class="btn btn-warning" style="font-size: 14px;" type="button"><i class='bx bx-archive-in' ></i></a>
             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
             <a onclick="alertDelate('<%= user.id %>')" style="font-size: 14px;" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
           </td>
