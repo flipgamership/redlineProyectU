@@ -71,6 +71,8 @@ router.get('/inventarioConsumibleDelateRedline/:id', customerController.delateCo
 router.get('/informacionConsumiblesRedline/:id', customerController.informacionProductoInventarioC)
 router.get('/inventarioConsumiblesIngresoConsumiblesRedline/:id', customerController.ingresarInventarioConsumibles)
 router.post('/inventarioConsumiblesIngresoConsumiblesSendRedline', customerController.ingresarInventarioConsumiblesSend)
+router.get('/inventarioConsumiblesSalidaConsumiblesRedline/:id', customerController.sacarInventarioConsumiblesRedline)
+router.post('/inventarioConsumiblesSalidaConsumiblesSendRedline', customerController.sacarInventarioConsumiblesSendRedline)
 //correos electronicos
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 

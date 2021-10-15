@@ -23,17 +23,17 @@
       <a href="/home" class="navLogo"><img src="/img/2logo.png" alt="" width="100px"></a>
       <ul class="navMenu">
         <li class="navItem">
-          <a  href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i> Home</a>
-      </li>
-      <li class="navItem">
-          <a  href="/registerTecnico" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i>registrar tecnicos</a>
-      </li>
-      <li class="navItem">
-          <a href="/register" class="navLink"><i class='bx bx-food-menu' ></i> Registrar nuevos Usuarios</a>
-      </li>
-      <li class="navItem" >
+          <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
+        </li>
+        <li class="navItem">
+          <a href="/registerTecnico" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i>registrar tecnicos</a>
+        </li>
+        <li class="navItem">
+          <a href="/register" class="navLink"><i class='bx bx-food-menu'></i> inventario consumibles</a>
+        </li>
+        <li class="navItem">
           <a style="margin-left:20px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Sesion</a>
-      </li>
+        </li>
 
 
       </ul>
@@ -51,69 +51,66 @@
         <div class="card">
           <%if (data){ %>
           <div class="card-title text-center border-bottom">
-            <h2 class="p-3">agregar productos</h2>
+            <h2 class="p-3">retirar productos</h2>
           </div>
           <div class="card-body">
-            <form action="/inventarioConsumiblesIngresoConsumiblesSendRedline" method="POST">
-                <input type="hidden" name="id" value="<%= data.id %>" hidden>
-                <input type="hidden" name="id_consumibles" value="<%= data.id_consumibles %>" hidden>
-                 <input type="hidden" name="cantidad" value="<%= data.cantidad %>" hidden> 
-                 <input type="number" name="precio_compra" value="<%= data.precio_compra %>" hidden> 
-                 <input type="number" name="gasto_semanal" value="<%= data.gasto_semanal %>" hidden>
-                 <input type="text" name="tipo_unidad" value="<%= data.tipo_unidad %>" hidden>
-                 <input type="hidden" name="fecha" id="fechaActual" hidden>
+            <form action="/inventarioConsumiblesSalidaConsumiblesSendRedline" method="POST">
+              <input type="hidden" name="id" value="<%= data.id %>" hidden>
+              <input type="hidden" name="id_consumibles" value="<%= data.id_consumibles %>" hidden>
+              <input type="hidden" name="cantidad" value="<%= data.cantidad %>" hidden>
+              <input type="number" name="precio_compra" value="<%= data.precio_compra %>" hidden>
+              <input type="number" name="precio_unidad" value="<%= data.precio_unidad %>" hidden>
+              <input type="number" name="gasto_semanal" value="<%= data.gasto_semanal %>" hidden>
+              <input type="text" name="tipo_unidad" value="<%= data.tipo_unidad %>" hidden>
+              <input type="text" name="name" value="<%= name %>" hidden>
+              <input type="hidden" name="fecha" id="fechaActual" hidden>
               <div class="mb-3">
                 <h5 for="usuario">Nombre del consumible</h5>
                 <input type="text" style="font-size: 14px;" class="form-control" name="nombre" value="<%= data.nombre %> " readonly>
               </div>
               <div class="mb-3">
-                <h5 for="usuario">precio de compra</h5>
-                <input type="number" style="font-size: 14px;" class="form-control" name="precio_compra_nuevo"  required>
+                <% if (data.tipo_unidad == 'U'){%>
+                <p style="font-size: 10px;">Unidades disponibles: <%= data.cantidad %> </p>
+                <h5 for="usuario">cantidad de unidades que vas a retirar</h5>
+                <input type="number" style="font-size: 14px;" class="form-control" name="cantidad_retirada" required>
               </div>
+              <%}else if (data.tipo_unidad == 'M'){ %>
               <div class="mb-3">
-                <% if (data.tipo_unidad == 'U'){%> 
-                        <h5 for="usuario">cantidad de unidades</h5>
-                        <input type="number" style="font-size: 14px;" class="form-control" name="cantidad_nueva"  required>
-                      </div>
-                <%}else if (data.tipo_unidad == 'M'){ %> 
-                    <div class="mb-3">
-                        <h5 for="usuario">cantidad de carretas</h5>
-                        <input type="number" min="0" value="0" style="font-size: 14px;" class="form-control" name="cantidad_nueva" value="" required>
-                        <h5 for="usuario">cantidad de metros por carreta</h5>
-                        <input type="number" style="font-size: 14px;" class="form-control" name="metraje"  required>
-                      </div>
-                <% }else if (data.tipo_unidad == 'P'){ %>
-                    <div class="mb-3">
-                        <h5 for="usuario">cantidad de paquetes</h5>
-                        <input type="number" min="0" value="0" style="font-size: 14px;" class="form-control" name="cantidad_nueva" value="" required>
-                        <h5 for="usuario">cantidad de unidades por paquete</h5>
-                        <input type="number" style="font-size: 14px;" class="form-control" name="unidades_paquetes"  required>
-                      </div>
-               <% } %> 
-              
+                <p style="font-size: 13px;">metros disponibles: <%= data.cantidad %> </p>
+                <h5 for="usuario">cantidad de metros que vas a retirar</h5>
+                <input type="number" style="font-size: 14px;" class="form-control" name="metraje" required>
+              </div>
+              <% }else if (data.tipo_unidad == 'P'){ %>
+              <div class="mb-3">
+                <p>unidades disponibles: <%= data.cantidad %> </p>
+                <h5 for="usuario">cantidad de unidades que vas a retirar</h5>
+                <input type="number" style="font-size: 14px;" class="form-control" name="unidades_paquetes" required>
+              </div>
+              <% } %>
+              <hr>
+          </div>
+          <% } %>
+          <div class="d-grid">
+            <a style="font-size: 14px;" onclick="alert()" class="btn btn-primary">enviar retiro de productos a mi inventario</a>
+          </div>
+          </form>
         </div>
-        <% } %>
-        <div class="d-grid">
-          <a style="font-size: 14px;" onclick="alert()" class="btn btn-primary">enviar ingreso de productos a mi inventario</a>
-        </div>
-        </form>
       </div>
     </div>
   </div>
   </div>
-  </div>
   <script>
-      window.onload = function(){
-  var fecha = new Date(); //Fecha actual
-  var mes = fecha.getMonth()+1; //obteniendo mes
-  var dia = fecha.getDate(); //obteniendo dia
-  var ano = fecha.getFullYear(); //obteniendo año
-  if(dia<10)
-    dia='0'+dia; //agrega cero si el menor de 10
-  if(mes<10)
-    mes='0'+mes //agrega cero si el menor de 10
-  document.getElementById('fechaActual').value=ano+"-"+mes+"-"+dia;
-}
+    window.onload = function() {
+      var fecha = new Date(); //Fecha actual
+      var mes = fecha.getMonth() + 1; //obteniendo mes
+      var dia = fecha.getDate(); //obteniendo dia
+      var ano = fecha.getFullYear(); //obteniendo año
+      if (dia < 10)
+        dia = '0' + dia; //agrega cero si el menor de 10
+      if (mes < 10)
+        mes = '0' + mes //agrega cero si el menor de 10
+      document.getElementById('fechaActual').value = ano + "-" + mes + "-" + dia;
+    }
   </script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <% if(typeof alert != "undefined") { %>
@@ -145,8 +142,8 @@
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'NO',
-        cancelButtonColor: '#d33' ,
-        confirmButtonColor:'#3085d6' ,
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#3085d6',
         confirmButtonText: ` SI `,
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
@@ -154,14 +151,15 @@
           Swal.fire('informacion actualizado exitosamente', '', 'success')
           const value = true
           setTimeout(timeUot, 2000, value);
-        } 
+        }
       })
     }
-    function timeUot (values){
-      if(values){
+
+    function timeUot(values) {
+      if (values) {
         document.forms[0].submit()
       }
-      
+
     }
   </script>
 

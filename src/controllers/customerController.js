@@ -1550,10 +1550,10 @@ controller.newInventoriCSend = (req, res) => {
       const unidad_paquete = req.body.unidad_paquete;
       const tipo_medida = req.body.tipo_medida;
       const cantidad_semanal = req.body.cantidad_semanal;
+      const fecha = req.body.fecha
 
       if (tipo_medida == "U") {
         const precio_unida = precio_compra / cantidad;
-
         console.log(precio_unida);
         req.getConnection((error, conn) => {
           conn.query(
@@ -1565,7 +1565,6 @@ controller.newInventoriCSend = (req, res) => {
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
-              gasto_semanal: cantidad_semanal,
               tipo_unidad: tipo_medida
             },
             async (error, results) => {
@@ -1582,21 +1581,30 @@ controller.newInventoriCSend = (req, res) => {
                   timer: 15000,
                 });
               } else {
-                res.render("newInventarioC1", {
-                  alert: true,
-                  alertTitle: "Registrado",
-                  alertMessage: "Registro de nuevo producto exitoso Exitosa",
-                  alertIcon: "success",
-                  showConfirmButton: true,
-                  ruta: "inventarioConsumiblesRedline",
-                  timer: 15000,
-                });
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:name, fecha:fecha, cantidad_anterior: cantidad, cantidad_actual: cantidad, cantidad_nueva_ingresada: cantidad, id_consumibles:id_consumibles }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.render("newInventarioC1", {
+                          alert: true,
+                          alertTitle: "Registrado",
+                          alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                          alertIcon: "success",
+                          showConfirmButton: true,
+                          ruta: "inventarioConsumiblesRedline",
+                          timer: 15000,
+                        });
+                      }
+                    }
+                  )
+                }) 
               }
             }
           );
         });
       } else if (tipo_medida == "M") {
-        
         const cantidad2 = medida * cantidad 
         const precio_unida = precio_compra / cantidad2;
         console.log(precio_unida);
@@ -1610,7 +1618,6 @@ controller.newInventoriCSend = (req, res) => {
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
-              gasto_semanal: cantidad_semanal,
               tipo_unidad: tipo_medida
             },
             async (error, results) => {
@@ -1627,22 +1634,32 @@ controller.newInventoriCSend = (req, res) => {
                   timer: 15000,
                 });
               } else {
-                res.render("newInventarioC1", {
-                  alert: true,
-                  alertTitle: "Registrado",
-                  alertMessage: "Registro de nuevo producto exitoso Exitosa",
-                  alertIcon: "success",
-                  showConfirmButton: true,
-                  ruta: "inventarioConsumiblesRedline",
-                  timer: 15000,
-                });
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:name, fecha:fecha, cantidad_anterior: cantidad2, cantidad_actual: cantidad2, cantidad_nueva_ingresada: cantidad2, id_consumibles:id_consumibles }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.render("newInventarioC1", {
+                          alert: true,
+                          alertTitle: "Registrado",
+                          alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                          alertIcon: "success",
+                          showConfirmButton: true,
+                          ruta: "inventarioConsumiblesRedline",
+                          timer: 15000,
+                        });
+                      }
+                    }
+                  )
+                }) 
               }
             }
           );
         });
       } else if (tipo_medida == "P") {
         const precio_unida = precio_compra / (cantidad * unidad_paquete);
-
+        const cantidad2 = cantidad * unidad_paquete
         console.log(precio_unida);
         req.getConnection((error, conn) => {
           conn.query(
@@ -1654,7 +1671,6 @@ controller.newInventoriCSend = (req, res) => {
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
-              gasto_semanal: cantidad_semanal,
               tipo_unidad: tipo_medida
             },
             async (error, results) => {
@@ -1671,15 +1687,25 @@ controller.newInventoriCSend = (req, res) => {
                   timer: 15000,
                 });
               } else {
-                res.render("newInventarioC1", {
-                  alert: true,
-                  alertTitle: "Registrado",
-                  alertMessage: "Registro de nuevo producto exitoso Exitosa",
-                  alertIcon: "success",
-                  showConfirmButton: true,
-                  ruta: "inventarioConsumiblesRedline",
-                  timer: 15000,
-                });
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:name, fecha:fecha, cantidad_anterior: cantidad2, cantidad_actual: cantidad2, cantidad_nueva_ingresada: cantidad2, id_consumibles:id_consumibles }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.render("newInventarioC1", {
+                          alert: true,
+                          alertTitle: "Registrado",
+                          alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                          alertIcon: "success",
+                          showConfirmButton: true,
+                          ruta: "inventarioConsumiblesRedline",
+                          timer: 15000,
+                        });
+                      }
+                    }
+                  )
+                }) 
               }
             }
           );
@@ -1762,7 +1788,7 @@ controller.ingresarInventarioConsumiblesSend = (req, res)=>{
               } else {
                 req.getConnection(()=>{
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_ingresada: cantidad_nueva, id_consumibles:id_consumibles }, (error, results)=>{
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_nueva_ingresada: cantidad_nueva, id_consumibles:id_consumibles }, (error, results)=>{
                       if (error){
                         console.log(error)
                       }else{
@@ -1791,7 +1817,7 @@ controller.ingresarInventarioConsumiblesSend = (req, res)=>{
               } else {
                 req.getConnection(()=>{
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_ingresada: cantidad_ingreso, id_consumibles:id_consumibles }, (error, results)=>{
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_nueva_ingresada: cantidad_ingreso, id_consumibles:id_consumibles }, (error, results)=>{
                       if (error){
                         console.log(error)
                       }else{
@@ -1819,7 +1845,7 @@ controller.ingresarInventarioConsumiblesSend = (req, res)=>{
               } else {
                 req.getConnection(()=>{
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_ingresada: cantidad_ingreso, id_consumibles:id_consumibles }, (error, results)=>{
+                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_nueva_ingresada: cantidad_ingreso, id_consumibles:id_consumibles }, (error, results)=>{
                       if (error){
                         console.log(error)
                       }else{
@@ -1843,6 +1869,167 @@ controller.ingresarInventarioConsumiblesSend = (req, res)=>{
 }
 
  
+
+
+controller.sacarInventarioConsumiblesRedline = (req, res) =>{
+  if (req.session.loggedin){
+    if(req.session.role == 'admin' || req.session.role == 'tecnico' ){
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM consumibles WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(results);
+              res.render("sacarInvemtarioConsumibles1", {
+                data: results[0],
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    }else {
+      res.redirect("/home");}
+  }else {
+    res.redirect("/login");
+  }
+}
+
+
+controller.sacarInventarioConsumiblesSendRedline = (req, res) =>{
+  if (req.session.loggedin){
+    if(req.session.role == 'admin' || req.session.role == 'tecnico' ){
+      //nombre de la cuenta del usuario que inicio seccion y qie tiene aceso a este apartado 
+      const nameUser = req.body.name
+      //id de los productos
+      const nombre = req.body.nombre
+      const id = req.body.id
+      const id_consumibles = req.body.id_consumibles
+      //precio de los productos 
+      const precio_venta = parseFloat(req.body.precio_compra)
+      const precio_unidad = parseFloat(req.body.precio_unidad)
+      // unidades
+      const cantidad_vieja = parseFloat(req.body.cantidad) 
+      const cantidad_retirada = parseFloat(req.body.cantidad_retirada) 
+      const metraje = parseFloat(req.body.metraje) 
+      const unidad_paquete = parseFloat(req.body.unidades_paquetes) 
+      //inportante
+      const tipo_unidad = req.body.tipo_unidad
+      const fecha = req.body.fecha
+      
+
+      if (tipo_unidad == 'U'){
+        const precio_total_retiro = precio_unidad * cantidad_retirada
+        const precio_actual = precio_venta - precio_total_retiro
+        console.log(precio_total_retiro)
+        console.log(precio_actual)
+        const cantidad = cantidad_vieja - cantidad_retirada
+        const precio_unidad_nuevo = precio_actual / cantidad 
+        req.getConnection((error, conn) => {
+          conn.query(
+            "UPDATE consumibles SET ? WHERE id = ?",
+            [{ cantidad: cantidad, precio_compra: precio_actual, precio_unidad:precio_unidad_nuevo }, id],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles_2 SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_retirada: cantidad_retirada, id_consumibles:id_consumibles, precio_total_antes:precio_venta, precio_total_despues:precio_actual, precio_gasto: precio_total_retiro, quien_retiro:nameUser }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.redirect('/inventarioConsumiblesRedline')
+                      }
+                    }
+                  )
+                })
+              }
+            }
+          );
+        });
+
+      }else if (tipo_unidad == 'M'){
+        const precio_total_retiro = precio_unidad * metraje
+        const precio_actual = precio_venta - precio_total_retiro
+        console.log(precio_total_retiro)
+        console.log(precio_actual)
+        const cantidad = cantidad_vieja - metraje
+        const precio_unidad_nuevo = precio_actual / cantidad 
+        req.getConnection((error, conn) => {
+          conn.query(
+            "UPDATE consumibles SET ? WHERE id = ?",
+            [{ cantidad: cantidad, precio_compra: precio_actual, precio_unidad:precio_unidad_nuevo }, id],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles_2 SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_retirada: metraje, id_consumibles:id_consumibles, precio_total_antes:precio_venta, precio_total_despues:precio_actual, precio_gasto: precio_total_retiro, quien_retiro:nameUser }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.redirect('/inventarioConsumiblesRedline')
+                      }
+                    }
+                  )
+                })
+              }
+            }
+          );
+        });
+      }else if (tipo_unidad == 'P'){
+        const precio_total_retiro = precio_unidad * unidad_paquete
+        const precio_actual = precio_venta - precio_total_retiro
+        console.log(precio_total_retiro)
+        console.log(precio_actual)
+        const cantidad = cantidad_vieja - unidad_paquete
+        const precio_unidad_nuevo = precio_actual / cantidad 
+        req.getConnection((error, conn) => {
+          conn.query(
+            "UPDATE consumibles SET ? WHERE id = ?",
+            [{ cantidad: cantidad, precio_compra: precio_actual, precio_unidad:precio_unidad_nuevo }, id],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                req.getConnection(()=>{
+                  conn.query(
+                    "INSERT INTO logs_inventario_consumibles_2 SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_retirada: unidad_paquete, id_consumibles:id_consumibles, precio_total_antes:precio_venta, precio_total_despues:precio_actual, precio_gasto: precio_total_retiro, quien_retiro:nameUser }, (error, results)=>{
+                      if (error){
+                        console.log(error)
+                      }else{
+                        res.redirect('/inventarioConsumiblesRedline')
+                      }
+                    }
+                  )
+                })
+              }
+            }
+          );
+        });
+      }
+    }else {
+      res.redirect("/home");}
+  }else {
+    res.redirect("/login");
+  }
+}
+
+
+
+
+
+
+
+
 
 
 
