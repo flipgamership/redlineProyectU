@@ -1,7 +1,18 @@
 const express = require ('express');
 const router = express.Router();
-
+const multer  = require('multer');
+const path = require('path');
+const uuid = require('uuid');
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, '../public/uploads/'),
+    filename:(req, file, cb)=>{
+        cb(null, uuid.v4() + path.extname(file.originalname));
+    }
+})
+const upload = multer({ storage, dest: path.join(__dirname, '../public/uploads/') }).single('imagen')
 const customerController=require('../controllers/customerController')
+
+
 
 //login
 router.get('/login', customerController.login);
@@ -57,6 +68,18 @@ router.get('/telecomunicacionesEstadisticasTable5', customerController.teleEstad
 router.post('/teleEstadisticasReportDiaGraficosSend', customerController.seleccionaFechaEstadisticas1);
 //inventarios 
 // inventario de herramientas 
+//img y inventario de herramientas
+router.get('/devolverInventarioHerramientasRedline/:id', customerController.devolverInventarioHerramientas)
+router.post('/devolverInventarioHerramientasSendRedline', customerController.devolverInventarioHerramientasSend)
+router.get('/sacarInventarioHerramientasRedline/:id', customerController.sacarInventarioHerramientas)
+router.post('/sacarInventarioHerramientasSendRedline', customerController.sacarInventarioHerramientasSend)
+router.post('/newHerramientaInventarioSendRedline', upload, customerController.agregarNewHerramientaInventarioSend)
+router.get('/newHerramientaInventarioRedline', customerController.agregarNewHerramientaInventario)
+router.get('/editarHerramientaInventarioRedline/:id', customerController.editarHerramientaInventario); 
+router.get('/imgInventarioHerramienta/:id',customerController.editarImagenHerramienta);
+router.post('/imgInventarioHerramientaSend', upload ,customerController.editarImagenHerramientaSend);
+router.post('/editarHerramientaInventarioSendRedline', customerController.editarHerramientaInventarioSend);
+router.get('/delateHerramientaInventarioRedline/:id', customerController.delateHerramientaInvetario);
 router.get('/inventarioHerramientasRedline', customerController.menuInventoryH1)
 router.get('/inventarioHerramientasPRedline', customerController.herramientasPrestadasInventario)
 router.get('/inventarioHerramientasNPRedline', customerController.herramientasNoPrestadasInventario)
@@ -76,8 +99,7 @@ router.post('/inventarioConsumiblesSalidaConsumiblesSendRedline', customerContro
 //correos electronicos
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
 //codigo de pruebas 
-router.get('/pruebas', customerController.pruebas); 
-router.get('/pruebas2', customerController.pruebas2);
+
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);

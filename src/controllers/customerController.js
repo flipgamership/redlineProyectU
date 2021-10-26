@@ -5,7 +5,6 @@ const session = require("express-session");
 const express = require("express");
 const moment = require("moment");
 const { text } = require("express");
-
 const controller = {};
 //SELECT SUM(cantidad) AS total FROM consumibles WHERE id_consumibles = 'GUL02';
 //SELECT * FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70');
@@ -1184,11 +1183,17 @@ controller.sendCorreoH1 = async (req, res) => {
         <!--Copia desde aquí-->
         <table style="max-width: 600px; padding: 10px; margin:0 auto; border-collapse: collapse;">
             <tr>
-                <td style="background-color: #ecf0f1; text-align: left; padding: 0">
-                    <a href="https://redline.net.co/">
-                        <img width="20%" style="display:block; margin: 1.5% 3%" src="https://redline.net.co/wp-content/uploads/2020/01/cropped-LOGOREDLINE-2.png">
-                    </a>
-                </td>
+            <td style="background-color: #ecf0f1; text-align: left; padding: 0; display: inline-block; ">
+            <div style="display: inline-block;" >
+                <a href="https://redline.net.co/" >
+                    <img width="20%" style="display:inline-block; margin: 1.5% 3%" src="https://redline.net.co/wp-content/uploads/2020/01/cropped-LOGOREDLINE-2.png">
+                </a>
+                <a href="https://github.com/flipgamership" >
+                    <img width="10%" style="display:inline-block; margin: 2% 3%" src="https://lh3.googleusercontent.com/Qm964MvlThDWpO2G8sD2B339Z3Y1WPUuddC4dJpWjwhlrleLdxVmRypBTLxuXOtWofe6lopRd4r1BiBf_bHf1ZBweMLrBaP-jiHwWEulIRre_47CRDS4Anx2-JX0NMZLMLsNK5EO6Ztfd9ywb1ZsGYtF_oCFrZAikAUH3hj8OXD2V4jwFE4HZwj-m4NgDN7kYgSrSGH7M4TjaXuvmLcHAETa_x8kkBR7P8A2i3UQbBNVVGJeLN9mEOqWKcw2dGatg19-9CD-FNRaTBYi8sLLKybKP2ptpXnCfIbs2n1IW2LAEthVuZP-I3hlbpVw4LgJjXvxVvsgPn09DdotCahjMcGeuDjHJC7ZQFxRJZyvPM5g4ZOKGV8GzolzQdUFXuGFOyFqMpNAxQjcKdofi-J1RALPD9FAn4qRP47LNPdreMCwFwWITFDRGtrLO6qnPUPNjFjGFFGklVTcw67qtvw1WWLG7yeUjipm2j1wlTwz6v3zy3EXLLfzNWEOW9QkQ-wIOQe1C5-wbZ6Yt4eaCkIz0P4zLB58fkMt_2SNJJ6rRyfqvor58owEAxobsOlo8txPNE-Ck3_cVoCMpizPbSC57xe1rOEqrHE8C-M6CwT4RKlXBCIoxV32SHRD40hkVvmiELJIOW-F72zNow2vYtNAjnmYCxz6kglFZY70iR5OaBkzPtNqYnu9s-iKHqtdM2swmAdi63TXdBfrZ8LT4ghQAks=w603-h438-no?authuser=0">
+                </a>
+            </div>
+            
+        </td>
             </tr>
         
             <tr>
@@ -1244,7 +1249,7 @@ controller.herramientasPrestadasInventario = (req, res) => {
     if (req.session.role == "admin" || req.session.role == "tecnico") {
       req.getConnection((error, conn) => {
         conn.query(
-          "SELECT * FROM herramienta WHERE estado = 'prestado'",
+          "SELECT * FROM herramienta WHERE estado = 'P'",
           (error, results) => {
             if (error) {
               console.log(error);
@@ -1273,7 +1278,7 @@ controller.herramientasNoPrestadasInventario = (req, res) => {
     if (req.session.role == "admin" || req.session.role == "tecnico") {
       req.getConnection((error, conn) => {
         conn.query(
-          "SELECT * FROM herramienta WHERE estado = 'bodega'",
+          "SELECT * FROM herramienta WHERE estado = 'B'",
           (error, results) => {
             if (error) {
               console.log(error);
@@ -1297,6 +1302,493 @@ controller.herramientasNoPrestadasInventario = (req, res) => {
     });
   }
 };
+
+controller.agregarNewHerramientaInventario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "tecnico" || req.session.role == "admin") {
+      res.render("newHerramientaInventario", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.agregarNewHerramientaInventarioSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "tecnico" || req.session.role == "admin") {
+      const file = req.file;
+      const imgName = file.filename;
+      const name = req.body.nombre;
+      const codigoH = req.body.codigoH;
+      const estado = req.body.estado;
+      const descripcion = req.body.descripcion;
+      const fecha = req.body.fecha;
+      const id_tecnico = req.body.id_tecnico;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "INSERT INTO herramienta SET ?",
+          {
+            codigo_herramienta: codigoH,
+            img: imgName,
+            nombre: name,
+            estado: estado,
+            descripcion: descripcion,
+            fecha: fecha,
+            id_tecnico: id_tecnico,
+          },
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("ingreso correcto");
+              res.render("menu1InventarioHerramientas", {
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.editarHerramientaInventario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role) {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM herramienta WHERE codigo_herramienta = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("editInventarioHerrramientas", {
+                data: results[0],
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.editarHerramientaInventarioSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "tecnico" || req.session.role == "admin") {
+      const name = req.body.nombre;
+      const codigoH = req.body.codigoH;
+      const estado = req.body.estado;
+      const descripcion = req.body.descripcion;
+      const fecha = req.body.fecha;
+      const id_tecnico = req.body.id_tecnico;
+      const id = codigoH;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE herramienta SET ? WHERE codigo_herramienta = ?;",
+          [{ nombre: name, descripcion: descripcion }, id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("menu1InventarioHerramientas", {
+                data: results[0],
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.editarImagenHerramienta = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM herramienta WHERE codigo_herramienta = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("editImgInventarioHerramientas", {
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+                data: results[0],
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.editarImagenHerramientaSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const imgName = req.file.filename;
+      const codigoH = req.body.codigoH;
+      const id = codigoH;
+      req.getConnection((error, conn) => {
+        conn.query(
+          " UPDATE herramienta SET ? WHERE codigo_herramienta = ? ",
+          [
+            {
+              img: imgName,
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("ingreso correcto", results);
+              res.render("menu1InventarioHerramientas", {
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+controller.delateHerramientaInvetario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "DELETE FROM herramienta WHERE codigo_herramienta= ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.redirect("/inventarioHerramientasRedline");
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+// pasar a a salida de herramientas o entrada
+
+controller.sacarInventarioHerramientas = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM herramienta WHERE codigo_herramienta = ? ;",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              const dataH = results[0];
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "SELECT id, miembro FROM cuadrillas;",
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log({
+                        data: results[0],
+                        dataH: dataH,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                      res.render("sacarInventarioPHerraminetas", {
+                        data: results,
+                        dataH: dataH,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.sacarInventarioHerramientasSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const estado = "P";
+      const codigoH = req.body.codigoH;
+      const descripcion = req.body.descripcion;
+      const nombreH = req.body.nombre;
+      const id_tecnico = req.body.id_tecnico;
+      const fecha = req.body.fecha;
+      const id = codigoH;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE herramienta SET ? WHERE codigo_herramienta = ? ",
+          [
+            {
+              id_tecnico: id_tecnico,
+              estado: estado,
+              fecha: fecha,
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "INSERT INTO logs_inventario_herramientas SET ?",
+                  {
+                    id_herramienta: id,
+                    herramienta: nombreH,
+                    descripción_reportada: descripcion,
+                    fecha: fecha,
+                    tecnico: id_tecnico,
+                  },
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.redirect("/inventarioHerramientasPRedline");
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+controller.devolverInventarioHerramientasSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const estado = "B";
+      const codigoH = req.body.codigoH;
+      const descripcion = req.body.descripcion;
+      const nombreH = req.body.nombre;
+      const id_tecnico = req.body.id_tecnico;
+      const fecha = req.body.fecha;
+      const id = codigoH;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE herramienta SET ? WHERE codigo_herramienta = ? ",
+          [
+            {
+              id_tecnico: 999999999,
+              estado: estado,
+              descripcion: descripcion,
+              fecha: fecha,
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "INSERT INTO logs_inventario_herramientas SET ?",
+                  {
+                    id_herramienta: id,
+                    herramienta: nombreH,
+                    descripción_reportada: descripcion,
+                    fecha: fecha,
+                    tecnico: id_tecnico,
+                  },
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.redirect("/inventarioHerramientasNPRedline");
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+controller.devolverInventarioHerramientas = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM herramienta WHERE codigo_herramienta = ? ;",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              const dataH = results[0];
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "SELECT id, miembro FROM cuadrillas;",
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log({
+                        data: results[0],
+                        dataH: dataH,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                      res.render("devolverInventarioH", {
+                        data: results,
+                        dataH: dataH,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
 //tecnicos register
 controller.registrarTecnico = (req, res) => {
   if (req.session.loggedin) {
@@ -1475,7 +1967,7 @@ controller.TableNewTecnicoDelate = (req, res) => {
 
 controller.InventarioCTable1 = (req, res) => {
   if (req.session.loggedin) {
-    if (req.session.role == "admin" || req.session.rolem == "tecnico") {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
       req.getConnection((error, conn) => {
         conn.query("SELECT * FROM consumibles ", (error, results) => {
           if (error) {
@@ -1518,26 +2010,6 @@ controller.newInventoriC = (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 controller.newInventoriCSend = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "admin" || req.session.role == "tecnico") {
@@ -1550,14 +2022,14 @@ controller.newInventoriCSend = (req, res) => {
       const unidad_paquete = req.body.unidad_paquete;
       const tipo_medida = req.body.tipo_medida;
       const cantidad_semanal = req.body.cantidad_semanal;
-      const fecha = req.body.fecha
+      const fecha = req.body.fecha;
 
       if (tipo_medida == "U") {
         const precio_unida = precio_compra / cantidad;
         console.log(precio_unida);
         req.getConnection((error, conn) => {
           conn.query(
-            "INSERT INTO consumibles SET ?",
+            "INSERT INTO consumibles SET ?  WHERE id = ?",
             {
               id_consumibles: id_consumibles,
               nombre: name,
@@ -1565,7 +2037,7 @@ controller.newInventoriCSend = (req, res) => {
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
-              tipo_unidad: tipo_medida
+              tipo_unidad: tipo_medida,
             },
             async (error, results) => {
               if (error) {
@@ -1581,16 +2053,26 @@ controller.newInventoriCSend = (req, res) => {
                   timer: 15000,
                 });
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:name, fecha:fecha, cantidad_anterior: cantidad, cantidad_actual: cantidad, cantidad_nueva_ingresada: cantidad, id_consumibles:id_consumibles }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
+                    "INSERT INTO logs_inventario_consumibles SET ? ",
+                    {
+                      objeto: name,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad,
+                      cantidad_actual: cantidad,
+                      cantidad_nueva_ingresada: cantidad,
+                      id_consumibles: id_consumibles,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
                         res.render("newInventarioC1", {
                           alert: true,
                           alertTitle: "Registrado",
-                          alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                          alertMessage:
+                            "Registro de nuevo producto exitoso Exitosa",
                           alertIcon: "success",
                           showConfirmButton: true,
                           ruta: "inventarioConsumiblesRedline",
@@ -1598,14 +2080,14 @@ controller.newInventoriCSend = (req, res) => {
                         });
                       }
                     }
-                  )
-                }) 
+                  );
+                });
               }
             }
           );
         });
       } else if (tipo_medida == "M") {
-        const cantidad2 = medida * cantidad 
+        const cantidad2 = medida * cantidad;
         const precio_unida = precio_compra / cantidad2;
         console.log(precio_unida);
         req.getConnection((error, conn) => {
@@ -1614,11 +2096,11 @@ controller.newInventoriCSend = (req, res) => {
             {
               id_consumibles: id_consumibles,
               nombre: name,
-              cantidad:cantidad2 ,
+              cantidad: cantidad2,
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
-              tipo_unidad: tipo_medida
+              tipo_unidad: tipo_medida,
             },
             async (error, results) => {
               if (error) {
@@ -1634,16 +2116,26 @@ controller.newInventoriCSend = (req, res) => {
                   timer: 15000,
                 });
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:name, fecha:fecha, cantidad_anterior: cantidad2, cantidad_actual: cantidad2, cantidad_nueva_ingresada: cantidad2, id_consumibles:id_consumibles }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
+                    "INSERT INTO logs_inventario_consumibles SET ? ",
+                    {
+                      objeto: name,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad2,
+                      cantidad_actual: cantidad2,
+                      cantidad_nueva_ingresada: cantidad2,
+                      id_consumibles: id_consumibles,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
                         res.render("newInventarioC1", {
                           alert: true,
                           alertTitle: "Registrado",
-                          alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                          alertMessage:
+                            "Registro de nuevo producto exitoso Exitosa",
                           alertIcon: "success",
                           showConfirmButton: true,
                           ruta: "inventarioConsumiblesRedline",
@@ -1651,15 +2143,15 @@ controller.newInventoriCSend = (req, res) => {
                         });
                       }
                     }
-                  )
-                }) 
+                  );
+                });
               }
             }
           );
         });
       } else if (tipo_medida == "P") {
         const precio_unida = precio_compra / (cantidad * unidad_paquete);
-        const cantidad2 = cantidad * unidad_paquete
+        const cantidad2 = cantidad * unidad_paquete;
         console.log(precio_unida);
         req.getConnection((error, conn) => {
           conn.query(
@@ -1671,7 +2163,7 @@ controller.newInventoriCSend = (req, res) => {
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
               precio_unidad: precio_unida,
-              tipo_unidad: tipo_medida
+              tipo_unidad: tipo_medida,
             },
             async (error, results) => {
               if (error) {
@@ -1687,16 +2179,26 @@ controller.newInventoriCSend = (req, res) => {
                   timer: 15000,
                 });
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:name, fecha:fecha, cantidad_anterior: cantidad2, cantidad_actual: cantidad2, cantidad_nueva_ingresada: cantidad2, id_consumibles:id_consumibles }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
+                    "INSERT INTO logs_inventario_consumibles SET ? ",
+                    {
+                      objeto: name,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad2,
+                      cantidad_actual: cantidad2,
+                      cantidad_nueva_ingresada: cantidad2,
+                      id_consumibles: id_consumibles,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
                         res.render("newInventarioC1", {
                           alert: true,
                           alertTitle: "Registrado",
-                          alertMessage: "Registro de nuevo producto exitoso Exitosa",
+                          alertMessage:
+                            "Registro de nuevo producto exitoso Exitosa",
                           alertIcon: "success",
                           showConfirmButton: true,
                           ruta: "inventarioConsumiblesRedline",
@@ -1704,8 +2206,8 @@ controller.newInventoriCSend = (req, res) => {
                         });
                       }
                     }
-                  )
-                }) 
+                  );
+                });
               }
             }
           );
@@ -1726,14 +2228,9 @@ controller.newInventoriCSend = (req, res) => {
   }
 };
 
-
-
-
-
-
 controller.ingresarInventarioConsumibles = (req, res) => {
-  if (req.session.loggedin){
-    if(req.session.role == 'admin' || req.session.role == 'tecnico'){
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
       const id = req.params.id;
       req.getConnection((error, conn) => {
         conn.query(
@@ -1756,124 +2253,167 @@ controller.ingresarInventarioConsumibles = (req, res) => {
       });
     }
   }
-}
+};
 
+controller.ingresarInventarioConsumiblesSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const nombre = req.body.nombre;
+      const id = req.body.id;
+      const id_consumibles = req.body.id_consumibles;
+      const cantidad_vieja = parseFloat(req.body.cantidad);
+      const precio_compra_viejo = parseFloat(req.body.precio_compra);
+      const precio_compra_nuevo = parseFloat(req.body.precio_compra_nuevo);
+      const cantidad_nueva = parseFloat(req.body.cantidad_nueva);
+      const tipo_unidad = req.body.tipo_unidad;
+      const metraje = parseFloat(req.body.metraje);
+      const unidad_paquete = parseFloat(req.body.unidades_paquetes);
+      const fecha = req.body.fecha;
 
-controller.ingresarInventarioConsumiblesSend = (req, res)=>{
-  if(req.session.loggedin){
-    if(req.session.role == 'admin' || req.session.role == 'tecnico'){
-      const nombre = req.body.nombre
-      const id = req.body.id
-      const id_consumibles = req.body.id_consumibles
-      const cantidad_vieja = parseFloat(req.body.cantidad) 
-      const precio_compra_viejo = parseFloat(req.body.precio_compra) 
-      const precio_compra_nuevo = parseFloat(req.body.precio_compra_nuevo) 
-      const cantidad_nueva = parseFloat(req.body.cantidad_nueva) 
-      const tipo_unidad = req.body.tipo_unidad
-      const metraje = parseFloat(req.body.metraje) 
-      const unidad_paquete = parseFloat(req.body.unidades_paquetes) 
-      const fecha = req.body.fecha
-      
-      if (tipo_unidad == 'U'){
-        const cantidad = cantidad_vieja + cantidad_nueva 
-        const precio_compra = precio_compra_viejo + precio_compra_nuevo
-        const precio_unida = precio_compra / cantidad 
+      if (tipo_unidad == "U") {
+        const cantidad = cantidad_vieja + cantidad_nueva;
+        const precio_compra = precio_compra_viejo + precio_compra_nuevo;
+        const precio_unida = precio_compra / cantidad;
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
-            [{ cantidad: cantidad, precio_compra: precio_compra, precio_unidad:precio_unida }, id],
+            [
+              {
+                cantidad: cantidad,
+                precio_compra: precio_compra,
+                precio_unidad: precio_unida,
+              },
+              id,
+            ],
             (error, results) => {
               if (error) {
                 console.log(error);
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_nueva_ingresada: cantidad_nueva, id_consumibles:id_consumibles }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
-                        res.redirect('/inventarioConsumiblesRedline')
+                    "INSERT INTO logs_inventario_consumibles SET ? ",
+                    {
+                      objeto: nombre,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad_vieja,
+                      cantidad_actual: cantidad,
+                      cantidad_nueva_ingresada: cantidad_nueva,
+                      id_consumibles: id_consumibles,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.redirect("/inventarioConsumiblesRedline");
                       }
                     }
-                  )
-                })
+                  );
+                });
               }
             }
           );
         });
-      }else if (tipo_unidad == 'M'){
-        const precio_compra = precio_compra_viejo + precio_compra_nuevo
-        const cantidad = (cantidad_nueva * metraje) + cantidad_vieja
-        const precio_unida = precio_compra / cantidad 
-        const cantidad_ingreso = cantidad_nueva * metraje
-        console.log(precio_unida)
+      } else if (tipo_unidad == "M") {
+        const precio_compra = precio_compra_viejo + precio_compra_nuevo;
+        const cantidad = cantidad_nueva * metraje + cantidad_vieja;
+        const precio_unida = precio_compra / cantidad;
+        const cantidad_ingreso = cantidad_nueva * metraje;
+        console.log(precio_unida);
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
-            [{ cantidad: cantidad, precio_compra: precio_compra, precio_unidad:precio_unida }, id],
+            [
+              {
+                cantidad: cantidad,
+                precio_compra: precio_compra,
+                precio_unidad: precio_unida,
+              },
+              id,
+            ],
             (error, results) => {
               if (error) {
                 console.log(error);
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_nueva_ingresada: cantidad_ingreso, id_consumibles:id_consumibles }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
-                        res.redirect('/inventarioConsumiblesRedline')
+                    "INSERT INTO logs_inventario_consumibles SET ? ",
+                    {
+                      objeto: nombre,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad_vieja,
+                      cantidad_actual: cantidad,
+                      cantidad_nueva_ingresada: cantidad_ingreso,
+                      id_consumibles: id_consumibles,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.redirect("/inventarioConsumiblesRedline");
                       }
                     }
-                  )
-                })
+                  );
+                });
               }
             }
           );
         });
-      }else if (tipo_unidad == 'P'){
-        const precio_compra = precio_compra_viejo + precio_compra_nuevo
-        const cantidad = (cantidad_nueva * unidad_paquete )+ cantidad_vieja
-        const precio_unida = precio_compra / cantidad 
-        const cantidad_ingreso = cantidad_nueva * unidad_paquete
+      } else if (tipo_unidad == "P") {
+        const precio_compra = precio_compra_viejo + precio_compra_nuevo;
+        const cantidad = cantidad_nueva * unidad_paquete + cantidad_vieja;
+        const precio_unida = precio_compra / cantidad;
+        const cantidad_ingreso = cantidad_nueva * unidad_paquete;
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
-            [{ cantidad: cantidad, precio_compra: precio_compra, precio_unidad:precio_unida }, id],
+            [
+              {
+                cantidad: cantidad,
+                precio_compra: precio_compra,
+                precio_unidad: precio_unida,
+              },
+              id,
+            ],
             (error, results) => {
               if (error) {
                 console.log(error);
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_nueva_ingresada: cantidad_ingreso, id_consumibles:id_consumibles }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
-                        res.redirect('/inventarioConsumiblesRedline')
+                    "INSERT INTO logs_inventario_consumibles SET ? ",
+                    {
+                      objeto: nombre,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad_vieja,
+                      cantidad_actual: cantidad,
+                      cantidad_nueva_ingresada: cantidad_ingreso,
+                      id_consumibles: id_consumibles,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.redirect("/inventarioConsumiblesRedline");
                       }
                     }
-                  )
-                })
+                  );
+                });
               }
             }
           );
         });
       }
-      
     } else {
       res.redirect("/home");
     }
   } else {
     res.redirect("/login");
   }
-}
+};
 
- 
-
-
-controller.sacarInventarioConsumiblesRedline = (req, res) =>{
-  if (req.session.loggedin){
-    if(req.session.role == 'admin' || req.session.role == 'tecnico' ){
+controller.sacarInventarioConsumiblesRedline = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
       const id = req.params.id;
       req.getConnection((error, conn) => {
         conn.query(
@@ -1894,148 +2434,193 @@ controller.sacarInventarioConsumiblesRedline = (req, res) =>{
           }
         );
       });
-    }else {
-      res.redirect("/home");}
-  }else {
+    } else {
+      res.redirect("/home");
+    }
+  } else {
     res.redirect("/login");
   }
-}
+};
 
-
-controller.sacarInventarioConsumiblesSendRedline = (req, res) =>{
-  if (req.session.loggedin){
-    if(req.session.role == 'admin' || req.session.role == 'tecnico' ){
-      //nombre de la cuenta del usuario que inicio seccion y qie tiene aceso a este apartado 
-      const nameUser = req.body.name
+controller.sacarInventarioConsumiblesSendRedline = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      //nombre de la cuenta del usuario que inicio seccion y qie tiene aceso a este apartado
+      const nameUser = req.body.name;
       //id de los productos
-      const nombre = req.body.nombre
-      const id = req.body.id
-      const id_consumibles = req.body.id_consumibles
-      //precio de los productos 
-      const precio_venta = parseFloat(req.body.precio_compra)
-      const precio_unidad = parseFloat(req.body.precio_unidad)
+      const nombre = req.body.nombre;
+      const id = req.body.id;
+      const id_consumibles = req.body.id_consumibles;
+      //precio de los productos
+      const precio_venta = parseFloat(req.body.precio_compra);
+      const precio_unidad = parseFloat(req.body.precio_unidad);
       // unidades
-      const cantidad_vieja = parseFloat(req.body.cantidad) 
-      const cantidad_retirada = parseFloat(req.body.cantidad_retirada) 
-      const metraje = parseFloat(req.body.metraje) 
-      const unidad_paquete = parseFloat(req.body.unidades_paquetes) 
+      const cantidad_vieja = parseFloat(req.body.cantidad);
+      const cantidad_retirada = parseFloat(req.body.cantidad_retirada);
+      const metraje = parseFloat(req.body.metraje);
+      const unidad_paquete = parseFloat(req.body.unidades_paquetes);
       //inportante
-      const tipo_unidad = req.body.tipo_unidad
-      const fecha = req.body.fecha
-      
+      const tipo_unidad = req.body.tipo_unidad;
+      const fecha = req.body.fecha;
 
-      if (tipo_unidad == 'U'){
-        const precio_total_retiro = precio_unidad * cantidad_retirada
-        const precio_actual = precio_venta - precio_total_retiro
-        console.log(precio_total_retiro)
-        console.log(precio_actual)
-        const cantidad = cantidad_vieja - cantidad_retirada
-        const precio_unidad_nuevo = precio_actual / cantidad 
+      if (tipo_unidad == "U") {
+        const precio_total_retiro = precio_unidad * cantidad_retirada;
+        const precio_actual = precio_venta - precio_total_retiro;
+        console.log(precio_total_retiro);
+        console.log(precio_actual);
+        const cantidad = cantidad_vieja - cantidad_retirada;
+        const precio_unidad_nuevo = precio_actual / cantidad;
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
-            [{ cantidad: cantidad, precio_compra: precio_actual, precio_unidad:precio_unidad_nuevo }, id],
+            [
+              {
+                cantidad: cantidad,
+                precio_compra: precio_actual,
+                precio_unidad: precio_unidad_nuevo,
+              },
+              id,
+            ],
             (error, results) => {
               if (error) {
                 console.log(error);
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles_2 SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_retirada: cantidad_retirada, id_consumibles:id_consumibles, precio_total_antes:precio_venta, precio_total_despues:precio_actual, precio_gasto: precio_total_retiro, quien_retiro:nameUser }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
-                        res.redirect('/inventarioConsumiblesRedline')
+                    "INSERT INTO logs_inventario_consumibles_2 SET ? ",
+                    {
+                      objeto: nombre,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad_vieja,
+                      cantidad_actual: cantidad,
+                      cantidad_retirada: cantidad_retirada,
+                      id_consumibles: id_consumibles,
+                      precio_total_antes: precio_venta,
+                      precio_total_despues: precio_actual,
+                      precio_gasto: precio_total_retiro,
+                      quien_retiro: nameUser,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.redirect("/inventarioConsumiblesRedline");
                       }
                     }
-                  )
-                })
+                  );
+                });
               }
             }
           );
         });
-
-      }else if (tipo_unidad == 'M'){
-        const precio_total_retiro = precio_unidad * metraje
-        const precio_actual = precio_venta - precio_total_retiro
-        console.log(precio_total_retiro)
-        console.log(precio_actual)
-        const cantidad = cantidad_vieja - metraje
-        const precio_unidad_nuevo = precio_actual / cantidad 
+      } else if (tipo_unidad == "M") {
+        const precio_total_retiro = precio_unidad * metraje;
+        const precio_actual = precio_venta - precio_total_retiro;
+        console.log(precio_total_retiro);
+        console.log(precio_actual);
+        const cantidad = cantidad_vieja - metraje;
+        const precio_unidad_nuevo = precio_actual / cantidad;
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
-            [{ cantidad: cantidad, precio_compra: precio_actual, precio_unidad:precio_unidad_nuevo }, id],
+            [
+              {
+                cantidad: cantidad,
+                precio_compra: precio_actual,
+                precio_unidad: precio_unidad_nuevo,
+              },
+              id,
+            ],
             (error, results) => {
               if (error) {
                 console.log(error);
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles_2 SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_retirada: metraje, id_consumibles:id_consumibles, precio_total_antes:precio_venta, precio_total_despues:precio_actual, precio_gasto: precio_total_retiro, quien_retiro:nameUser }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
-                        res.redirect('/inventarioConsumiblesRedline')
+                    "INSERT INTO logs_inventario_consumibles_2 SET ? ",
+                    {
+                      objeto: nombre,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad_vieja,
+                      cantidad_actual: cantidad,
+                      cantidad_retirada: metraje,
+                      id_consumibles: id_consumibles,
+                      precio_total_antes: precio_venta,
+                      precio_total_despues: precio_actual,
+                      precio_gasto: precio_total_retiro,
+                      quien_retiro: nameUser,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.redirect("/inventarioConsumiblesRedline");
                       }
                     }
-                  )
-                })
+                  );
+                });
               }
             }
           );
         });
-      }else if (tipo_unidad == 'P'){
-        const precio_total_retiro = precio_unidad * unidad_paquete
-        const precio_actual = precio_venta - precio_total_retiro
-        console.log(precio_total_retiro)
-        console.log(precio_actual)
-        const cantidad = cantidad_vieja - unidad_paquete
-        const precio_unidad_nuevo = precio_actual / cantidad 
+      } else if (tipo_unidad == "P") {
+        const precio_total_retiro = precio_unidad * unidad_paquete;
+        const precio_actual = precio_venta - precio_total_retiro;
+        console.log(precio_total_retiro);
+        console.log(precio_actual);
+        const cantidad = cantidad_vieja - unidad_paquete;
+        const precio_unidad_nuevo = precio_actual / cantidad;
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
-            [{ cantidad: cantidad, precio_compra: precio_actual, precio_unidad:precio_unidad_nuevo }, id],
+            [
+              {
+                cantidad: cantidad,
+                precio_compra: precio_actual,
+                precio_unidad: precio_unidad_nuevo,
+              },
+              id,
+            ],
             (error, results) => {
               if (error) {
                 console.log(error);
               } else {
-                req.getConnection(()=>{
+                req.getConnection(() => {
                   conn.query(
-                    "INSERT INTO logs_inventario_consumibles_2 SET ? ", { objeto:nombre, fecha:fecha, cantidad_anterior: cantidad_vieja, cantidad_actual: cantidad, cantidad_retirada: unidad_paquete, id_consumibles:id_consumibles, precio_total_antes:precio_venta, precio_total_despues:precio_actual, precio_gasto: precio_total_retiro, quien_retiro:nameUser }, (error, results)=>{
-                      if (error){
-                        console.log(error)
-                      }else{
-                        res.redirect('/inventarioConsumiblesRedline')
+                    "INSERT INTO logs_inventario_consumibles_2 SET ? ",
+                    {
+                      objeto: nombre,
+                      fecha: fecha,
+                      cantidad_anterior: cantidad_vieja,
+                      cantidad_actual: cantidad,
+                      cantidad_retirada: unidad_paquete,
+                      id_consumibles: id_consumibles,
+                      precio_total_antes: precio_venta,
+                      precio_total_despues: precio_actual,
+                      precio_gasto: precio_total_retiro,
+                      quien_retiro: nameUser,
+                    },
+                    (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.redirect("/inventarioConsumiblesRedline");
                       }
                     }
-                  )
-                })
+                  );
+                });
               }
             }
           );
         });
       }
-    }else {
-      res.redirect("/home");}
-  }else {
+    } else {
+      res.redirect("/home");
+    }
+  } else {
     res.redirect("/login");
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
 
 controller.informacionProductoInventarioC = (req, res) => {
   if (req.session.loggedin) {
@@ -2049,65 +2634,76 @@ controller.informacionProductoInventarioC = (req, res) => {
             if (error) {
               console.log(error);
             } else {
-              const data = results[0]
+              const data = results[0];
               console.log(results);
-              const id_consumibles = results[0].id_consumibles
-              console.log(results[0].id_consumibles)
-              function compararHoras(fecha1, fecha2){
+              const id_consumibles = results[0].id_consumibles;
+              console.log(results[0].id_consumibles);
+              function compararHoras(fecha1, fecha2) {
                 var now = moment(fecha1); //todays date
                 var end = moment(fecha2); // another date
                 var duration = moment.duration(now.diff(end));
                 var days = duration.asDays();
-                return days
+                return days;
               }
-              req.getConnection((error, conn)=>{
-                conn.query( 
-                  "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = ?);", [id_consumibles], (error, results)=>{
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = ?);",
+                  [id_consumibles],
+                  (error, results) => {
                     if (error) {
                       console.log(error);
                     } else {
-                      const fecha_max = results[0].fecha
-                    
-                      req.getConnection((error, conn)=>{
+                      const fecha_max = results[0].fecha;
+
+                      req.getConnection((error, conn) => {
                         conn.query(
-                        "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT min(id) FROM logs_inventario_consumibles WHERE id_consumibles = ?);", [id_consumibles], (error, results)=>{
-                          if (error) {
-                            console.log(error);
-                          } else {
-                            const fecha_min = results[0].fecha
-                            console.log(compararHoras(fecha_max, fecha_min))
-                            
-                            const fecha_new = compararHoras(fecha_max, fecha_min)
-                            req.getConnection((error, conn)=>{
-                              conn.query(
-                                "SELECT SUM(cantidad_nueva_ingresada)AS suma FROM logs_inventario_consumibles WHERE id_consumibles = ?;", [id_consumibles], (error, results)=>{
-                                  if (error) {
-                                    console.log(error);
-                                  } else {
-                                    const diasApro = results[0].suma / fecha_new
-                                    // const diasApro = diasApro1.toFixed(0)
-                                    console.log(diasApro.toFixed(0))
-                                    res.render("informacionProductoInventarioC", {
-                                      data: data,
-                                      login: true,
-                                      name: req.session.name,
-                                      role: req.session.role,
-                                      dias: diasApro
-                                    });
-                                    
+                          "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT min(id) FROM logs_inventario_consumibles WHERE id_consumibles = ?);",
+                          [id_consumibles],
+                          (error, results) => {
+                            if (error) {
+                              console.log(error);
+                            } else {
+                              const fecha_min = results[0].fecha;
+                              console.log(compararHoras(fecha_max, fecha_min));
+
+                              const fecha_new = compararHoras(
+                                fecha_max,
+                                fecha_min
+                              );
+                              req.getConnection((error, conn) => {
+                                conn.query(
+                                  "SELECT SUM(cantidad_nueva_ingresada)AS suma FROM logs_inventario_consumibles WHERE id_consumibles = ?;",
+                                  [id_consumibles],
+                                  (error, results) => {
+                                    if (error) {
+                                      console.log(error);
+                                    } else {
+                                      const diasApro =
+                                        results[0].suma / fecha_new;
+                                      // const diasApro = diasApro1.toFixed(0)
+                                      console.log(diasApro.toFixed(0));
+                                      res.render(
+                                        "informacionProductoInventarioC",
+                                        {
+                                          data: data,
+                                          login: true,
+                                          name: req.session.name,
+                                          role: req.session.role,
+                                          dias: diasApro,
+                                        }
+                                      );
+                                    }
                                   }
-                                }
-                              )
-                            })
-                            
+                                );
+                              });
+                            }
                           }
-                        })
-                      })
-                      
+                        );
+                      });
                     }
                   }
-                )
-              })
+                );
+              });
             }
           }
         );
@@ -2115,25 +2711,6 @@ controller.informacionProductoInventarioC = (req, res) => {
     }
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 controller.editInventarioC1 = (req, res) => {
   if (req.session.loggedin) {
@@ -2169,8 +2746,8 @@ controller.editInventarioC1Send = (req, res) => {
       const name = req.body.nombre;
       const cantidad = req.body.cantidad;
       const cantidad_min = req.body.cantidad_min;
-      const precio_compra = req.body.precio_compra
-      const precio_unidad = precio_compra / cantidad
+      const precio_compra = req.body.precio_compra;
+      const precio_unidad = precio_compra / cantidad;
       req.getConnection((error, conn) => {
         conn.query(
           "UPDATE consumibles SET ? WHERE id = ?",
@@ -2181,7 +2758,7 @@ controller.editInventarioC1Send = (req, res) => {
               cantidad: cantidad,
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
-              precio_unidad: precio_unidad
+              precio_unidad: precio_unidad,
             },
             id,
           ],
@@ -2219,65 +2796,99 @@ controller.delateConsumibleInvetario = (req, res) => {
     }
   }
 };
- 
-
 
 //zona de pruebas
 controller.pruebas = (req, res) => {
-  function compararHoras(fecha1, fecha2){
+  function compararHoras(fecha1, fecha2) {
     var now = moment(fecha1); //todays date
     var end = moment(fecha2); // another date
     var duration = moment.duration(now.diff(end));
     var days = duration.asDays();
-    return days
+    return days;
   }
-  req.getConnection((error, conn)=>{
-    conn.query( 
-      "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70')", (error, results)=>{
+  req.getConnection((error, conn) => {
+    conn.query(
+      "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70')",
+      (error, results) => {
         if (error) {
           console.log(error);
         } else {
-          const fecha_max = results[0].fecha
-        
-          req.getConnection((error, conn)=>{
+          const fecha_max = results[0].fecha;
+
+          req.getConnection((error, conn) => {
             conn.query(
-            "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT min(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70')", (error, results)=>{
-              if (error) {
-                console.log(error);
-              } else {
-                const fecha_min = results[0].fecha
-                console.log(compararHoras(fecha_max, fecha_min))
-                
-                const fecha_new = compararHoras(fecha_max, fecha_min)
-                req.getConnection((error, conn)=>{
-                  conn.query(
-                    "SELECT SUM(cantidad_nueva_ingresada)AS suma FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70';", (error, results)=>{
-                      if (error) {
-                        console.log(error);
-                      } else {
-                        const diasApro1 = results[0].suma / fecha_new
-                        const diasApro = diasApro1.toFixed(0)
-                        console.log(diasApro.toFixed(0))
-                        res.render('pruebas2',{
-                          dias: diasApro
-                        })
-                        
+              "SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT min(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70')",
+              (error, results) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  const fecha_min = results[0].fecha;
+                  console.log(compararHoras(fecha_max, fecha_min));
+
+                  const fecha_new = compararHoras(fecha_max, fecha_min);
+                  req.getConnection((error, conn) => {
+                    conn.query(
+                      "SELECT SUM(cantidad_nueva_ingresada)AS suma FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70';",
+                      (error, results) => {
+                        if (error) {
+                          console.log(error);
+                        } else {
+                          const diasApro1 = results[0].suma / fecha_new;
+                          const diasApro = diasApro1.toFixed(0);
+                          console.log(diasApro.toFixed(0));
+                          res.render("pruebas2", {
+                            dias: diasApro,
+                          });
+                        }
                       }
-                    }
-                  )
-                })
-                
+                    );
+                  });
+                }
               }
-            })
-          })
-          
+            );
+          });
         }
       }
-    )
-  })
+    );
+  });
 };
 
-controller.pruebas2 = (req, res) => {};
+controller.img = (req, res) => {
+  const file = req.file;
+  const imgName = file.filename;
+  const name = req.body.nombre;
+  const codigoH = req.body.codigoH;
+  const estado = req.body.estado;
+  const descripcion = req.body.descripcion;
+  const fecha = req.body.fecha;
+  const id_tecnico = req.body.id_tecnico;
+  req.getConnection((error, conn) => {
+    conn.query(
+      "INSERT INTO herramienta SET ?",
+      {
+        codigo_herramienta: codigoH,
+        img: imgName,
+        nombre: name,
+        estado: estado,
+        descripcion: descripcion,
+        fecha: fecha,
+        id_tecnico: id_tecnico,
+      },
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("ingreso correcto");
+          // res.render('menu1InventarioHerramientas', {
+          //   login: true,
+          //   name: req.session.name,
+          //   role: req.session.role,
+          // })
+        }
+      }
+    );
+  });
+};
 
 controller.disaing = (req, res) => {
   res.render("menuEstadisticasReportDia", {

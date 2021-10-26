@@ -1,11 +1,12 @@
 <%- include('./partials/nav.ejs') %>
 
 <head>
-  
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <title>admin tecnicos</title>
   <link rel="stylesheet" href="styleTables.css">
- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap5.min.css">
- <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <br>
@@ -23,13 +24,13 @@
     <table id="users" class="table table-light table-striped table-hover table-bordered text-center  " style="font-size: 14px;">
       <thead>
         <tr>
-        <th>ID</th>
-        <th>Miembro</th>
-        <th>Numero de documento de identidad</th>
-        <th>Celular</th>
-        <th>Correo</th>
-        <th>administrar datos</th>
-      </tr>
+          <th>ID</th>
+          <th>Miembro</th>
+          <th>Numero de documento de identidad</th>
+          <th>Celular</th>
+          <th>Correo</th>
+          <th>administrar datos</th>
+        </tr>
       </thead>
 
       <tbody>
@@ -37,19 +38,44 @@
 
 
         <tr>
-          <td><%= user.id %> </td>
-          <td><%= user.miembro %> </td>
-          <td><%= user.cc %></td>
-          <td><%= user.celular %></td>
-          <td><%= user.correo %></td>
           <td>
-              <% if(user.id=='999999999') {%> 
-                <p>----</p>
-                <% }else{ %> 
+            <% if(user.id=='999999999') {%>
+            <p>----</p>
+            <% }else{ %>
+            <%= user.id %>
+            <% } %>
+          </td>
+          <td>
+            <% if(user.id=='999999999') {%>
+              <p>----</p>
+              <% }else{ %>
+                <%= user.miembro %>
+              <% } %> </td>
+          <td><% if(user.id=='999999999') {%>
+            <p>----</p>
+            <% }else{ %>
+              <%= user.cc %>
+            <% } %></td>
+          <td><% if(user.id=='999999999') {%>
+            <p>----</p>
+            <% }else{ %>
+              <%= user.celular %>
+            <% } %>
+            </td>
+          <td><% if(user.id=='999999999') {%>
+            <p>----</p>
+            <% }else{ %>
+              <%= user.correo %>
+            <% } %>
+            </td>
+          <td>
+            <% if(user.id=='999999999') {%>
+            <p>----</p>
+            <% }else{ %>
             <a href="/editRegisterTecnicoRedline/<%= user.id %>" class="btn btn-warning" type="button"><i class='bx bx-pencil'></i></a>
             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
             <a onclick="alertDelate('<%= user.id %>')" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
-            <% } %> 
+            <% } %>
           </td>
         </tr>
         <% }) %>
@@ -60,20 +86,19 @@
 </div>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"  ></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js" defer></script>
 <script src="https://cdn.datatables.net/1.11.1/js/dataTables.bootstrap5.min.js" defer></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js" defer></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js" defer></script>
 <script>
- $(document).ready(function() {
-    var table = $('#users').DataTable( {
-        responsive: true
-    } );
- 
-    new $.fn.dataTable.FixedHeader( table );
-} );
-    
+  $(document).ready(function() {
+    var table = $('#users').DataTable({
+      responsive: true
+    });
+
+    new $.fn.dataTable.FixedHeader(table);
+  });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
 <script>
@@ -83,23 +108,24 @@
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'NO',
-      cancelButtonColor: '#d33' ,
-      confirmButtonColor:'#3085d6' ,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6',
       confirmButtonText: ` SI `,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Usuario eliminado exitosamente', '', 'success',1500)
+        Swal.fire('Usuario eliminado exitosamente', '', 'success', 1500)
         const value = true
         setTimeout(timeUot, 2000, value, id);
-      } 
+      }
     })
   }
-  function timeUot (values, id){
-    if(values){
-      window.location='/registerTecnicoDelateRedline/'+ id
+
+  function timeUot(values, id) {
+    if (values) {
+      window.location = '/registerTecnicoDelateRedline/' + id
     }
-    
+
   }
 </script>
 <%- include('./partials/footer.ejs') %>

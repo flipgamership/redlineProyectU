@@ -7,6 +7,31 @@
  <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    .visor_imagenes {
+      text-align: center;
+    }
+
+    .blanco-rojo {
+      color: black;
+      background-color: rgb(255, 237, 148);
+      border: 1px solid rgb(232, 208, 92);
+      border-radius: 2px;
+    }
+
+    .blanco-rojo2 {
+      color: black;
+      background-color: rgb(162, 255, 148);
+      border: 1px solid rgb(100, 213, 82);
+      border-radius: 2px;
+    }
+    .blanco-rojo3 {
+      color: black;
+      background-color: rgb(255, 148, 148);
+      border: 1px solid rgb(232, 97, 97);
+      border-radius: 2px;
+    }
+  </style>
 </head>
 <br>
 <br>
@@ -40,8 +65,15 @@
         <tr>
           <td><%= user.codigo_herramienta %> </td>
           <td><%= user.nombre %> </td>
-          <td><%= user.img %></td>
-          <td><%= user.estado %></td>
+          <td><img style="width: 100px; height: 100px;" src="./uploads/<%= user.img %>" alt=""></td>
+          <td class="visor_imagenes" ><% if (user.estado == 'P') {%>
+            <p class="blanco-rojo"> PRESTADO </p>
+            <% }else if( user.estado == 'B' ){%>
+            <p class=" blanco-rojo2"> BODEGA </p>
+            <% }else{%>
+            <p class="blanco-rojo3"> ESTA DAÑADO O EXTRAVIADO </p>
+            <% } %>
+          </td>
           <td><%= user.descripcion %></td>
           <td><%= user.fecha %></td>
           <td>
@@ -54,10 +86,10 @@
             
           </td>
           <td>
-            <a href="/editTeletrabajoClient/<%= user.id %>" class="btn btn-warning" type="button"><i class='bx bx-pencil'></i></a>
-            <a href="/telecomunicacionesValidarUsuario/<%= user.id %>" class="btn btn-success" type="button"><i class='bx bx-user-check'></i></a>
+            <a href="/editarHerramientaInventarioRedline/<%= user.codigo_herramienta %>" class="btn btn-warning" type="button"><i class='bx bx-pencil'></i></a>
+            <a href="/devolverInventarioHerramientasRedline/<%= user.codigo_herramienta%>" class="btn btn-success" type="button"><i class='bx bx-user-check'></i></a>
             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-            <a onclick="alertDelate('<%= user.id %>')" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
+            <a onclick="alertDelate('<%= user.codigo_herramienta %>')" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
           </td>
         </tr>
         <% }) %>
@@ -87,7 +119,7 @@
 <script>
   function alertDelate(id) {
     Swal.fire({
-      title: '¿Quieres eliminar este usuario?',
+      title: '¿Quieres eliminar esta herrameinta de forma permanente del inventario?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'NO',
@@ -97,7 +129,7 @@
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Usuario eliminado exitosamente', '', 'success',1500)
+        Swal.fire('Herramienta eliminada exitosamente', '', 'success',1500)
         const value = true
         setTimeout(timeUot, 2000, value, id);
       } 
@@ -105,7 +137,7 @@
   }
   function timeUot (values, id){
     if(values){
-      window.location='/telecomunicacionesUsersDelate/'+ id
+      window.location = '/delateHerramientaInventarioRedline/' + id
     }
     
   }

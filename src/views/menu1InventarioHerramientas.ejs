@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <title>Document</title>
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <title>inventario de Herramientas redline</title>
 </head>
 <%- include('./partials/nav.ejs') %>
 
@@ -25,13 +26,14 @@
             </div>
           </div>
         </div>
+
          <!-- log de la salida y entrada de herramientas -->
         <div class="col-sm-6">
           <div class="card" >
             <img src="https://drscdn.500px.org/photo/1037665317/m%3D900/v2?sig=c2e65b0fcdd6d6c131888add19aa979d07330784c7e4040feaf55e11198fa970" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Debolver herramientas a la bodega</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">aca podras devolver la herramienta al sistema y a la bodega </p>
               <a href="/inventarioHerramientasPRedline" class="btn btn-primary">Devolver herramientas prestadas</a>
             </div>
           </div>
@@ -39,6 +41,18 @@
       </div>
     </div>
     <hr>
+    <div class="col-sm-15">
+      <div class="card" >
+        <img src="https://drscdn.500px.org/photo/1038790662/m%3D900/v2?sig=3d355794f933a99d0cb03cdb18140a8b1d18d657c40cb4d204f14e03bf4793ca" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Ingresar herramientas nuevas</h5>
+          <p class="card-text">aca podras agregar llenando la informacion la nueva herramienta al inventario</p>
+          <a href="/newHerramientaInventarioRedline" class="btn btn-primary">Nueva herramienta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 
   <%- include('./partials/footer.ejs') %>

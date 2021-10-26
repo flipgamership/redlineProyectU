@@ -1,71 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styleNavar.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    
-    <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
-</head>
-<body>
-    <header class="headerNav" >
-        <nav class="navbarPrimary">
-            <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
-            <ul class="navMenu">
-                <% if (role == 'admin') {%> 
-                <li class="navItem">
-                    <a  href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i> Home</a>
-                </li>
-                <li class="navItem">
-                    <a  href="/registerTecnico" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i>registrar tecnicos</a>
-                </li>
-                <li class="navItem">
-                    <a href="/register" class="navLink"><i class='bx bx-food-menu' ></i> Registrar nuevos Usuarios</a>
-                </li>
 
-                    
-                    <% }else if(role == 'tecnico'){%> 
-                        <li class="navItem">
-                            <a  href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i> Home</a>
-                        </li>
-                        <li class="navItem">
-                            <a href="" class="navLink"><i class='bx bxs-box'></i> Inventorio Herramientas y equipo</a>
-                        </li>
-                        <li class="navItem">
-                            <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de material</a>
-                        </li>
-                        <li class="navItem">
-                            <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipos</a>
-                        </li>
-                        <% }else if(role == 'servicioCliente'){%> 
-                            <li class="navItem">
-                                <a  href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i> Home</a>
-                            </li>
-                            <li class="navItem">
-                                <a href="/telecomunicaciones" class="navLink"> <i class='bx bxs-phone-outgoing' ></i> Telecomunicaciones</a>
-                            </li>
-                            <li class="navItem">
-                                <a href="#" class="navLink"><i class='bx bxs-user'></i> Servicio al cliente</a>
-                            </li>
-                            <li class="navItem">
-                                <a href="#" class="navLink"> <i class='bx bxs-badge-dollar'></i> Registro de pagos</a>
-                            </li>
-                            <% } %> 
-                </li class="navItem" >
-                    <a style="margin-left:20px; font-size: 12px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Sesion</a>
-                <li>
-                    
-                </li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </nav>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styleNavar.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+  <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
+</head>
+
+<body>
+  <header class="headerNav">
+    <nav class="navbarPrimary">
+      <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
+      <ul class="navMenu">
+          
+        <% if (role == 'admin') {%>
+        <li class="navItem">
+          <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
+        </li>
+        <li class="navItem">
+          <a href="/registerTecnico" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i>registrar tecnicos</a>
+        </li>
+        <li class="navItem">
+          <a href="/register" class="navLink"><i class='bx bx-food-menu'></i> Registrar nuevos Usuarios</a>
+        </li>
+
+
+        <% }else if(role == 'tecnico'){%>
+        
+          <li class="navItem">
+            <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
+          </li>
+          <li class="navItem">
+            <a href="/inventarioHerramientasRedline" class="navLink"><i class='bx bxs-box'></i> Inventorio de herramientas</a>
+          </li>
+          <li class="navItem">
+            <a href="/inventarioConsumiblesRedline" class="navLink"><i class='bx bxs-box'></i> inventario de consumibles</a>
+          </li>
+          <li class="navItem">
+            <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipo de seguridad</a>
+          </li>
+        
+
+        <% }else if(role == 'servicioCliente'){%>
+        <li class="navItem">
+          <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
+        </li>
+        <li class="navItem">
+          <a href="/telecomunicaciones" class="navLink"> <i class='bx bxs-phone-outgoing'></i> Telecomunicaciones</a>
+        </li>
+        <li class="navItem">
+          <a href="#" class="navLink"><i class='bx bxs-user'></i> Servicio al cliente</a>
+        </li>
+        <li class="navItem">
+          <a href="#" class="navLink"> <i class='bx bxs-badge-dollar'></i> Registro de pagos</a>
+        </li>
+        <% } %>
+        </li class="navItem">
+        <a style="margin-left:20px; font-size: 12px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Sesion</a>
+        <li>
+
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </header>
