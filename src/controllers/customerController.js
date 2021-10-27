@@ -2468,8 +2468,12 @@ controller.sacarInventarioConsumiblesSendRedline = (req, res) => {
         const precio_actual = precio_venta - precio_total_retiro;
         console.log(precio_total_retiro);
         console.log(precio_actual);
-        const cantidad = cantidad_vieja - cantidad_retirada;
-        const precio_unidad_nuevo = precio_actual / cantidad;
+        const cantidad = cantidad_vieja - cantidad_retirada
+        if (cantidad == 0 ){
+          precio_unidad_nuevo = 0
+        }else{
+          const precio_unidad_nuevo = precio_actual / cantidad;
+        }
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
@@ -2519,7 +2523,11 @@ controller.sacarInventarioConsumiblesSendRedline = (req, res) => {
         console.log(precio_total_retiro);
         console.log(precio_actual);
         const cantidad = cantidad_vieja - metraje;
-        const precio_unidad_nuevo = precio_actual / cantidad;
+        if (cantidad == 0 ){
+          precio_unidad_nuevo = 0
+        }else{
+          const precio_unidad_nuevo = precio_actual / cantidad;
+        }
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
@@ -2569,7 +2577,11 @@ controller.sacarInventarioConsumiblesSendRedline = (req, res) => {
         console.log(precio_total_retiro);
         console.log(precio_actual);
         const cantidad = cantidad_vieja - unidad_paquete;
-        const precio_unidad_nuevo = precio_actual / cantidad;
+        if (cantidad == 0 ){
+          precio_unidad_nuevo = 0
+        }else{
+          const precio_unidad_nuevo = precio_actual / cantidad;
+        }
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
@@ -2747,7 +2759,11 @@ controller.editInventarioC1Send = (req, res) => {
       const cantidad = req.body.cantidad;
       const cantidad_min = req.body.cantidad_min;
       const precio_compra = req.body.precio_compra;
-      const precio_unidad = precio_compra / cantidad;
+      if (cantidad == 0 ){
+        precio_unidad = 0
+      }else{
+        const precio_unidad = precio_compra / cantidad;
+      }
       req.getConnection((error, conn) => {
         conn.query(
           "UPDATE consumibles SET ? WHERE id = ?",
