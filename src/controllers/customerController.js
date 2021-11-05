@@ -1070,52 +1070,7 @@ controller.menuInventoryH1 = (req, res) => {
     });
   }
 };
-controller.inventarioH1 = (req, res) => {
-  if (req.session.loggedin) {
-    if (req.session.role == "admin" || req.session.role == "tecnico") {
-      req.getConnection((error, conn) => {
-        conn.query(
-          "SELECT * FROM herramienta WHERE estado = 'bodega'",
-          (error, results) => {
-            if (error) {
-              console.log(error);
-            } else {
-              res.render("inventario1Herramientas", {
-                results: results,
-                login: true,
-                name: req.session.name,
-                role: req.session.role,
-              });
-            }
-          }
-        );
-      });
-    }
-  }
-};
-controller.inventarioH2 = (req, res) => {
-  if (req.session.loggedin) {
-    if (req.session.role == "admin" || req.session.role == "tecnico") {
-      req.getConnection((error, conn) => {
-        conn.query(
-          "SELECT * FROM herramienta WHERE estado = 'prestado'",
-          (error, results) => {
-            if (error) {
-              console.log(error);
-            } else {
-              res.render("inventario2Herramientas", {
-                results: results,
-                login: true,
-                name: req.session.name,
-                role: req.session.role,
-              });
-            }
-          }
-        );
-      });
-    }
-  }
-};
+
 controller.quienMeTieneh1 = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "admin" || req.session.role == "tecnico") {
@@ -1210,16 +1165,26 @@ controller.sendCorreoH1 = async (req, res) => {
                             espero que este teniendo un hermoso dia somos el servicio de notificaciones a 
                             correo del sistema de inventario de redline el dia de hoy te escirbimos para solicitar la debolucion de :</p>
                         <ul style="font-size: 15px;  margin: 10px 0">
-                            <li>Herramienta: </li>` +
-      name_herramienta +
-      `
-                            <li>Codigo de herramienta: </li>` +
-      codigoH +
-      `
+                            <li>Herramienta: </li>
+                            <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
+                            ` +
+                            name_herramienta +
+                            `
+                            
+                            
+                            <li>Codigo de herramienta: </li>
+                            <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
+                            ` +
+                            codigoH +
+                            `
+                            </p>
                             <li>¿Quien me tiene?</li>
-                            <li>tecnico que me tiene: </li>` +
-      name +
-      `
+                            <li>tecnico que me tiene: </li>
+                            <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
+                            ` +
+                            name +
+                            `
+                            </p>
                             <li>Espero que la devuelvas a la bodega y el ingreso en la plataforma</li>
                         </ul>
                         <p style="color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0">redline || <a href="https://github.com/flipgamership">Juan Felipe Correa Rios</a></p>
@@ -2029,7 +1994,7 @@ controller.newInventoriCSend = (req, res) => {
         console.log(precio_unida);
         req.getConnection((error, conn) => {
           conn.query(
-            "INSERT INTO consumibles SET ?  WHERE id = ?",
+            "INSERT INTO consumibles SET ?",
             {
               id_consumibles: id_consumibles,
               nombre: name,
@@ -2468,12 +2433,8 @@ controller.sacarInventarioConsumiblesSendRedline = (req, res) => {
         const precio_actual = precio_venta - precio_total_retiro;
         console.log(precio_total_retiro);
         console.log(precio_actual);
-        const cantidad = cantidad_vieja - cantidad_retirada
-        if (cantidad == 0 ){
-          precio_unidad_nuevo = 0
-        }else{
-          const precio_unidad_nuevo = precio_actual / cantidad;
-        }
+        const cantidad = cantidad_vieja - cantidad_retirada;
+        const precio_unidad_nuevo = unidad(precio_actual, cantidad);
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
@@ -2523,11 +2484,7 @@ controller.sacarInventarioConsumiblesSendRedline = (req, res) => {
         console.log(precio_total_retiro);
         console.log(precio_actual);
         const cantidad = cantidad_vieja - metraje;
-        if (cantidad == 0 ){
-          precio_unidad_nuevo = 0
-        }else{
-          const precio_unidad_nuevo = precio_actual / cantidad;
-        }
+        const precio_unidad_nuevo = unidad(precio_actual, cantidad);
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
@@ -2577,11 +2534,7 @@ controller.sacarInventarioConsumiblesSendRedline = (req, res) => {
         console.log(precio_total_retiro);
         console.log(precio_actual);
         const cantidad = cantidad_vieja - unidad_paquete;
-        if (cantidad == 0 ){
-          precio_unidad_nuevo = 0
-        }else{
-          const precio_unidad_nuevo = precio_actual / cantidad;
-        }
+        const precio_unidad_nuevo = unidad(precio_actual, cantidad);
         req.getConnection((error, conn) => {
           conn.query(
             "UPDATE consumibles SET ? WHERE id = ?",
@@ -2750,6 +2703,17 @@ controller.editInventarioC1 = (req, res) => {
     }
   }
 };
+function unidad(precio_compra, cantidad) {
+  if (cantidad == 0) {
+    let precio_unidad = 0;
+    return precio_unidad;
+  } else if (cantidad > 0) {
+    let precio_unidad = precio_compra / cantidad;
+    return precio_unidad;
+  }
+  return precio_unidad;
+}
+
 controller.editInventarioC1Send = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "admin" || req.session.role == "tecnico") {
@@ -2759,11 +2723,7 @@ controller.editInventarioC1Send = (req, res) => {
       const cantidad = req.body.cantidad;
       const cantidad_min = req.body.cantidad_min;
       const precio_compra = req.body.precio_compra;
-      if (cantidad == 0 ){
-        precio_unidad = 0
-      }else{
-        const precio_unidad = precio_compra / cantidad;
-      }
+
       req.getConnection((error, conn) => {
         conn.query(
           "UPDATE consumibles SET ? WHERE id = ?",
@@ -2774,7 +2734,7 @@ controller.editInventarioC1Send = (req, res) => {
               cantidad: cantidad,
               cantidad_min: cantidad_min,
               precio_compra: precio_compra,
-              precio_unidad: precio_unidad,
+              precio_unidad: unidad(precio_compra, cantidad),
             },
             id,
           ],
@@ -2867,6 +2827,703 @@ controller.pruebas = (req, res) => {
       }
     );
   });
+};
+
+//inventario de equipo de seguridad
+controller.menuInventoryEQ1 = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      res.render("menu1InventarioEquipoSeguridad", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.equipoPrestadasInventario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM equipo_seguridad WHERE estado = 'P'",
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("inventario2EquipoSeguridad", {
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+controller.equipoNoPrestadosInventario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM equipo_seguridad WHERE estado = 'B'",
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("inventario1EquipoSeguridad", {
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+controller.quienMeTieneEQ1 = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.body.id;
+      const nameE1 = req.body.nameEQ;
+      const codigoE1 = req.body.codigoEQ;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM `cuadrillas` WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(results);
+              res.render("quienMeTieneES1", {
+                results: results,
+                nameE1: nameE1,
+                codigoE1: codigoE1,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+// envio de correos
+controller.sendCorreEQ1 = async (req, res) => {
+  const correo = req.body.correo;
+  const name = req.body.nombre;
+  const name_equipo = req.body.nombre_equipo;
+  const codigoEQ = req.body.codigo_equipo;
+  var transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: "maisanmailer@gmail.com",
+      pass: "231215maisanmailer",
+    },
+  });
+  var mailOptions = {
+    from: "Remitente",
+    to: correo,
+    subject: "Por favor debuelva el equipo ",
+    html:
+      `<!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="utf-8">
+            <title>holi</title>
+        </head>
+        <body style="background-color: white ">
+        
+        <!--Copia desde aquí-->
+        <table style="max-width: 600px; padding: 10px; margin:0 auto; border-collapse: collapse;">
+            <tr>
+            <td style="background-color: #ecf0f1; text-align: left; padding: 0; display: inline-block; ">
+            <div style="display: inline-block;" >
+                <a href="https://redline.net.co/" >
+                    <img width="20%" style="display:inline-block; margin: 1.5% 3%" src="https://redline.net.co/wp-content/uploads/2020/01/cropped-LOGOREDLINE-2.png">
+                </a>
+                <a href="https://github.com/flipgamership" >
+                    <img width="10%" style="display:inline-block; margin: 2% 3%" src="https://lh3.googleusercontent.com/Qm964MvlThDWpO2G8sD2B339Z3Y1WPUuddC4dJpWjwhlrleLdxVmRypBTLxuXOtWofe6lopRd4r1BiBf_bHf1ZBweMLrBaP-jiHwWEulIRre_47CRDS4Anx2-JX0NMZLMLsNK5EO6Ztfd9ywb1ZsGYtF_oCFrZAikAUH3hj8OXD2V4jwFE4HZwj-m4NgDN7kYgSrSGH7M4TjaXuvmLcHAETa_x8kkBR7P8A2i3UQbBNVVGJeLN9mEOqWKcw2dGatg19-9CD-FNRaTBYi8sLLKybKP2ptpXnCfIbs2n1IW2LAEthVuZP-I3hlbpVw4LgJjXvxVvsgPn09DdotCahjMcGeuDjHJC7ZQFxRJZyvPM5g4ZOKGV8GzolzQdUFXuGFOyFqMpNAxQjcKdofi-J1RALPD9FAn4qRP47LNPdreMCwFwWITFDRGtrLO6qnPUPNjFjGFFGklVTcw67qtvw1WWLG7yeUjipm2j1wlTwz6v3zy3EXLLfzNWEOW9QkQ-wIOQe1C5-wbZ6Yt4eaCkIz0P4zLB58fkMt_2SNJJ6rRyfqvor58owEAxobsOlo8txPNE-Ck3_cVoCMpizPbSC57xe1rOEqrHE8C-M6CwT4RKlXBCIoxV32SHRD40hkVvmiELJIOW-F72zNow2vYtNAjnmYCxz6kglFZY70iR5OaBkzPtNqYnu9s-iKHqtdM2swmAdi63TXdBfrZ8LT4ghQAks=w603-h438-no?authuser=0">
+                </a>
+            </div>
+            
+        </td>
+            </tr>
+        
+            <tr>
+                <td style="padding: 0">
+                    <img style="padding: 0; display: block" src="https://p4.wallpaperbetter.com/wallpaper/335/895/657/wind-farm-wallpaper-preview.jpg" width="100%">
+                </td>
+            </tr>
+            
+            <tr>
+                <td style="background-color: #ecf0f1">
+                    <div style="color: #34495e; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif">
+                        <h2 style="color: #e67e22; margin: 0 0 7px">Hola tecnico de Redline!</h2>
+                        <p style="margin: 2px; font-size: 15px">
+                            espero que este teniendo un hermoso dia somos el servicio de notificaciones a 
+                            correo del sistema de inventario de redline el dia de hoy te escirbimos para solicitar la debolucion de :</p>
+                        <ul style="font-size: 15px;  margin: 10px 0">
+                            <li>Equipo de seguridad: </li>
+                            <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
+                            ` +
+                            name_equipo +
+                            `
+                            </p>
+                            
+                            <li>Codigo del equipo de seguridad: </li>
+                            <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
+                            ` +
+                            codigoEQ +
+                            `
+                            </p>
+                            
+                            <li>¿Quien me tiene?</li>
+                            <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
+                            ` +
+                            name +
+                            `
+                            </p>
+                            
+      
+      
+                            <li>Espero que la devuelvas a la bodega y el ingreso en la plataforma</li>
+                        </ul>
+                        <p style="color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0">redline || <a href="https://github.com/flipgamership">Juan Felipe Correa Rios</a></p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--hasta aquí-->
+        
+        </body>
+        </html>
+        
+        `,
+  };
+  const info = await transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("mail enviado");
+      res.redirect("/inventoriTableEquipoSeguridadPrestadoRedline");
+    }
+  });
+};
+controller.agregarNewEquipoSeguridadNewEInventario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "tecnico" || req.session.role == "admin") {
+      res.render("newEquipoSeguridadInventario", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.agregarNewEquipoSeguridadInventarioSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "tecnico" || req.session.role == "admin") {
+      const file = req.file;
+      const imgName = file.filename;
+      const name = req.body.nombre;
+      const codigoEQ = req.body.codigoEQ;
+      const estado = req.body.estado;
+      const descripcion = req.body.descripcion;
+      const fecha = req.body.fecha;
+      const id_tecnico = req.body.id_tecnico;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "INSERT INTO equipo_seguridad SET ?",
+          {
+            id: codigoEQ,
+            img: imgName,
+            nombre: name,
+            estado: estado,
+            descripcion: descripcion,
+            fecha: fecha,
+            id_tecnico: id_tecnico,
+          },
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("ingreso correcto");
+              res.redirect("/inventoriTableEquipoSeguridadNoPrestadoRedline");
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.editarEquipoSeguridadInventario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role) {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM equipo_seguridad WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("editInventorioEquipoSeguridad", {
+                data: results[0],
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.editarEquipoSeguridadInventarioSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "tecnico" || req.session.role == "admin") {
+      const name = req.body.nombre;
+      const id = req.body.codigoEQ;
+      const estado = req.body.estado;
+      const descripcion = req.body.descripcion;
+      const fecha = req.body.fecha;
+      const id_tecnico = req.body.id_tecnico;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE equipo_seguridad SET ? WHERE id = ?;",
+          [{ nombre: name, descripcion: descripcion, estado: estado }, id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("menu1InventarioEquipoSeguridad", {
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.editarImagenEquipoSeguridad = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM equipo_seguridad WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("editImgInventarioEquipoSeguridad", {
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+                data: results[0],
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.editarImagenEquipoSeguridadSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const imgName = req.file.filename;
+      const codigoEQ = req.body.codigoEQ;
+      const id = codigoEQ;
+      req.getConnection((error, conn) => {
+        conn.query(
+          " UPDATE equipo_seguridad SET ? WHERE id = ? ",
+          [
+            {
+              img: imgName,
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("ingreso correcto", results);
+              res.render("menu1InventarioEquipoSeguridad", {
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+controller.delateEquipoSeguridadInvetario = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "DELETE FROM equipo_seguridad WHERE id= ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.redirect("/menuInventarioEquipoSeduridadRedline");
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+// pasar a a salida de herramientas o entrada
+
+controller.sacarInventarioEquipoSeguridad = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM equipo_seguridad WHERE id = ? ;",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              const dataH = results[0];
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "SELECT id, miembro FROM cuadrillas;",
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log({
+                        data: results[0],
+                        dataH: dataH,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                      res.render("sacarInventarioPEquipoSeguridad", {
+                        data: results,
+                        dataH: dataH,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+controller.sacarInventarioEquipoSeguridadSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const estado = "P";
+      const id = req.body.codigoEQ;
+      const descripcion = req.body.descripcion;
+      const nombreE = req.body.nombre;
+      const id_tecnico = req.body.id_tecnico;
+      const fecha = req.body.fecha;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE equipo_seguridad SET ? WHERE id = ? ",
+          [
+            {
+              id_tecnico: id_tecnico,
+              estado: estado,
+              fecha: fecha,
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "INSERT INTO logs_inventario_equipo_seguridad SET ?",
+                  {
+                    id_equipo_seguridad: id,
+                    equipo_seguridad: nombreE,
+                    descripción_reportada: descripcion,
+                    fecha: fecha,
+                    tecnico: id_tecnico,
+                  },
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.redirect(
+                        "/inventoriTableEquipoSeguridadPrestadoRedline"
+                      );
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+controller.devolverInventarioEquipoSeguridadSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const estado = "B";
+      const codigoH = req.body.codigoEQ;
+      const descripcion = req.body.descripcion;
+      const nombreH = req.body.nombre;
+      const id_tecnico = req.body.id_tecnico;
+      const fecha = req.body.fecha;
+      const id = codigoH;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE equipo_seguridad SET ? WHERE id = ? ",
+          [
+            {
+              id_tecnico: 999999999,
+              estado: estado,
+              descripcion: descripcion,
+              fecha: fecha,
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "INSERT INTO logs_inventario_herramientas SET ?",
+                  {
+                    id_herramienta: id,
+                    herramienta: nombreH,
+                    descripción_reportada: descripcion,
+                    fecha: fecha,
+                    tecnico: id_tecnico,
+                  },
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.redirect("/inventoriTableEquipoSeguridadNoPrestadoRedline");
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+controller.devolverInventarioEquipoSeguridad = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM equipo_seguridad WHERE id = ? ;",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              const dataH = results[0];
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "SELECT id, miembro FROM cuadrillas;",
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log({
+                        data: results[0],
+                        dataH: dataH,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                      res.render("devolverInventarioEquipoSeguridad", {
+                        data: results,
+                        dataH: dataH,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
 };
 
 controller.img = (req, res) => {

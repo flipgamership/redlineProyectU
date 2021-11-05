@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <title>inventario de Herramientas redline</title>
+  <link rel="icon" href="/imgs/logo-white.ico">
+  <link rel="stylesheet" href="/css/styleRegister.css">
+  <link rel="stylesheet" href="/css/styleLogin.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styleNavar.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <script>
+    import 'boxicons';
+  </script>
+  <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
+</head>
+</head>
+
+<body class="login">
+  <header class="headerNav">
+    <nav class="navbarPrimary">
+      <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
+      <ul class="navMenu">
+        <li class="navItem">
+          <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
+        </li>
+        <li class="navItem">
+          <a href="" class="navLink"><i class='bx bxs-box'></i> Inventorio de herramientas</a>
+        </li>
+        <li class="navItem">
+          <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de consumibles</a>
+        </li>
+        <li class="navItem">
+          <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipo de seguridad</a>
+        </li>
+
+
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </header>
+
+
+
+  <div class="container" style="margin-top: 80px; ">
+    <div class="row justify-content-center mt-5 ">
+      <div class="col-lg-5 col-md-8 col-sm-8">
+        <div class="card">
+          <div class="card-title text-center border-bottom">
+            <h2 class="p-3">editar equipo de seguridad inventario</h2>
+          </div>
+          <div class="card-body">
+            <P>HOLA MUNDO</P>
+            <form action="/EditarInventarioEquipoDeSeguridadSendRedline" method="post">
+                <% if(data){ %> 
+              <input type="text" name="fecha" id="fechaActual" hidden>
+              <input type="text" name="estado" value="B" hidden>
+              <input type="text" name="id_tecnico" value="999999999" hidden>
+              <div class="mb-3">
+                <input type="text" class="form-control" value="<%= data.id %>" name="codigoEQ" hidden>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">nombre del equipo de seguridad</h5>
+                <input type="text" class="form-control" value="<%= data.nombre %>" name="nombre" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">descripcion del equipo de seguridad</h5>
+                <p>tenga en cuenta que esta descripcion hace referencia al estado en el que se encuentra el equipo de seguridad esta descripcion cambia segun las salidas y entradas para saber el estado en que se encuentra el equipo de seguridad</p>
+                <input type="text" class="form-control" value="<%= data.descripcion %>" name="descripcion" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">¿Quieres cambiar la foto?</h5> 
+                  <a class="btn btn-primary" href="/editarImagenEquipoDeSeguridadReline/<%= data.id %> " role="button">Cambiar foto</a>
+              </div>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Agregar equipo de seguridad</button>
+        </div>
+      </div>
+      
+      <% } %> 
+      </form>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <script>
+    window.onload = function() {
+      var fecha = new Date(); //Fecha actual
+      var mes = fecha.getMonth() + 1; //obteniendo mes
+      var dia = fecha.getDate(); //obteniendo dia
+      var ano = fecha.getFullYear(); //obteniendo año
+      if (dia < 10)
+        dia = '0' + dia; //agrega cero si el menor de 10
+      if (mes < 10)
+        mes = '0' + mes //agrega cero si el menor de 10
+      document.getElementById('fechaActual').value = ano + "-" + mes + "-" + dia;
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <% if(typeof alert != "undefined") { %>
+  <script>
+    Swal.fire({
+      title: '<%=alertTitle %>',
+      text: '<%= alertMessage%>',
+      icon: '<%=alertIcon %>',
+      showConfirmButton: '<%= showConfirmButton %>',
+      timer: '<%= timer %>'
+    }).then(() => {
+      window.location = '/<%= ruta %>'
+    })
+  </script>
+  <% } %>
+  <script>
+    var inputs = $("input[type=text]");
+    for (var i = 0; i < inputs.length; i++) {
+      var aux = $(inputs[i]).val().trim();
+      $(inputs[i]).val(aux);
+    }
+  </script>
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    function seleccionado() {
+      var opt = $('#opcion').val();
+
+      // alert(opt);
+      if (opt == "U") {
+        $('#categoria').show();
+        $('#subcategoria').hide();
+        $('#producto').hide();
+      } else {
+        if (opt == "M") {
+          $('#categoria').hide();
+          $('#subcategoria').show();
+          $('#producto').hide();
+        } else {
+          $('#categoria').hide();
+          $('#subcategoria').hide();
+          $('#producto').show();
+        }
+      }
+    }
+  </script>
+  <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

@@ -51,21 +51,21 @@
         <div class="card">
           <%if (dataH){ %>
           <div class="card-title text-center border-bottom">
-            <h2 class="p-3">retirar productos</h2>
+            <h2 class="p-3">Retirar Equipo de seguridad</h2>
           </div>
           <div class="card-body">
-            <form action="/sacarInventarioHerramientasSendRedline" method="POST">
+            <form action="/sacarInventarioEquipoDeSeguridadSendRedline" method="POST">
               <input type="hidden" name="fecha" id="fechaActual" hidden>
               <div class="mb-3">
-                <h5 for="usuario">Codigo de la herramienta que vas a retirar</h5>
-                <input type="text" class="form-control input-sm" name="codigoH" value="<%= dataH.codigo_herramienta%>" readonly>
+                <h5 for="usuario">Codigo del equipo de seguridad que vas a retirar</h5>
+                <input type="text" class="form-control input-sm" name="codigoEQ" value="<%= dataH.id%>" readonly>
               </div>
               <div class="mb-3">
-                <h5 for="usuario">La herramienta que vas a retirar</h5>
+                <h5 for="usuario">Equipo de seguridad que vas a retirar</h5>
                 <input type="text" class="form-control input-sm" name="nombre" value="<%= dataH.nombre %>" readonly>
               </div>
               <div class="mb-3">
-                <h5 for="usuario">La descripcion de la herrameinta</h5>
+                <h5 for="usuario">La descripcion del equipo de seguridad</h5>
                 <input type="text" class="form-control input-sm" name="descripcion" value="<%= dataH.descripcion %>" readonly>
               </div>
 
@@ -86,7 +86,7 @@
         </div>
 
         <div class="d-grid">
-          <a style="font-size: 14px;" onclick="alert()" class="btn btn-primary">Enviar retiro de la herramienta</a>
+          <a style="font-size: 14px;" onclick="alert()" class="btn btn-primary">Enviar retiro del equipo de seguridad</a>
         </div>
         </form>
       </div>
@@ -133,7 +133,7 @@
   <script>
     function alert() {
       Swal.fire({
-        title: '¿estas seguro que quieres pedir prestada esta herramienta?',
+        title: '¿estas seguro que quieres pedir prestado este equipo de seguridad?',
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'NO',

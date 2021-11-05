@@ -66,7 +66,7 @@
               </div>
               <div class="mb-3">
                 <h5 for="usuario">la descripcion de la herrameinta</h5>
-                <p> por favor ingrese el estado en que se devolvio la herramienta como describcion fisica de la herrameinta</p>
+                <p style="border: 2px rgba(187, 186, 186, 0.823) solid; border-radius: 3px; margin-top: 10px; margin-bottom: 10px; text-align: center; font-size: 12px;"> por favor ingrese el estado en que se devolvio la herramienta como describcion fisica de la herrameinta</p>
                 <input type="text" class="form-control input-sm" name="descripcion"  required>
               </div>
 
@@ -87,7 +87,7 @@
         </div>
 
         <div class="d-grid">
-          <a style="font-size: 14px;" onclick="alert()" class="btn btn-primary">enviar retiro de productos a mi inventario</a>
+          <a style="font-size: 14px;" onclick="alert()" class="btn btn-primary">devolver herramienta a la bodega</a>
         </div>
         </form>
       </div>
@@ -134,7 +134,7 @@
   <script>
     function alert() {
       Swal.fire({
-        title: '¿estas seguro que quieres pedir prestada esta herramienta?',
+        title: '¿estas seguro que quieres devolver  esta herramienta?',
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'NO',

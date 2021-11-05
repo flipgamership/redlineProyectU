@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-  <link rel="shortcut icon" href="/img/favicon.png">
-  <title>inventario de herramientas redline</title>
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <title>inventario de Herramientas redline</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,25 +51,26 @@
         <div class="card">
           <%if (dataH){ %>
           <div class="card-title text-center border-bottom">
-            <h2 class="p-3">retirar productos</h2>
+            <h2 class="p-3">devolver equipo de seguridad</h2>
           </div>
           <div class="card-body">
-            <form action="/sacarInventarioHerramientasSendRedline" method="POST">
+            <form action="/inventarioEquipoDeSeguridadDevolverSendRedline" method="POST">
               <input type="hidden" name="fecha" id="fechaActual" hidden>
               <div class="mb-3">
-                <h5 for="usuario">Codigo de la herramienta que vas a retirar</h5>
-                <input type="text" class="form-control input-sm" name="codigoH" value="<%= dataH.codigo_herramienta%>" readonly>
+                <h5 for="usuario">codigo del equipo de seguridad que vas a devolver</h5>
+                <input type="text" class="form-control input-sm" name="codigoEQ" value="<%= dataH.id%>" readonly>
               </div>
               <div class="mb-3">
-                <h5 for="usuario">La herramienta que vas a retirar</h5>
+                <h5 for="usuario">equipo de seguridad que vas a devolver</h5>
                 <input type="text" class="form-control input-sm" name="nombre" value="<%= dataH.nombre %>" readonly>
               </div>
               <div class="mb-3">
-                <h5 for="usuario">La descripcion de la herrameinta</h5>
-                <input type="text" class="form-control input-sm" name="descripcion" value="<%= dataH.descripcion %>" readonly>
+                <h5 for="usuario">la descripcion del equipo de seguridad</h5>
+                <p style="border: 2px rgba(187, 186, 186, 0.823) solid; border-radius: 3px; margin-top: 10px; margin-bottom: 10px; text-align: center; font-size: 12px;">por favor ingrese el estado en que se devolvio el equipio de seguridad como descripcion fisica del equipo de seguridad</p>
+                <input type="text" class="form-control input-sm" name="descripcion"  required>
               </div>
 
-              <h5 for="usuario">Quien me va a retirar</h5>
+              <h5 for="usuario">quien devolvio el equipo de seguridad</h5>
               <% } %>
               <select name="id_tecnico" id="" class="form-control input-sm">
                 <% for (let i = 0; i < data.length; i++) { %>
@@ -86,7 +87,7 @@
         </div>
 
         <div class="d-grid">
-          <a style="font-size: 14px;" onclick="alert()" class="btn btn-primary">Enviar retiro de la herramienta</a>
+          <a style="font-size: 14px;" onclick="alert()" class="btn btn-primary">regresar equipo de seguridad a la bodega</a>
         </div>
         </form>
       </div>
@@ -133,7 +134,7 @@
   <script>
     function alert() {
       Swal.fire({
-        title: '¿estas seguro que quieres pedir prestada esta herramienta?',
+        title: '¿estas seguro que quieres devolver prestado esta equipo de equipo de seguridad?',
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'NO',

@@ -98,13 +98,31 @@ router.get('/inventarioConsumiblesSalidaConsumiblesRedline/:id', customerControl
 router.post('/inventarioConsumiblesSalidaConsumiblesSendRedline', customerController.sacarInventarioConsumiblesSendRedline)
 //correos electronicos
 router.post('/QuienMeTieneMail', customerController.sendCorreoH1)
+router.post('/QuienMeTieneMailEQ', customerController.sendCorreEQ1)
+//inventario de equipo de seguridad
+router.get('/menuInventarioEquipoSeduridadRedline', customerController.menuInventoryEQ1)
+router.get('/inventoriTableEquipoSeguridadNoPrestadoRedline', customerController.equipoNoPrestadosInventario)
+router.get('/inventoriTableEquipoSeguridadPrestadoRedline', customerController.equipoPrestadasInventario)
+router.get('/newEquipoDeSeguridadInventarioRedline', customerController.agregarNewEquipoSeguridadNewEInventario)
+router.post('/newEquipoDeSeguridadInventarioRedlineSend', upload, customerController.agregarNewEquipoSeguridadInventarioSend)
+router.get('/inventarioEquipoDeSeguridadDelateRedline/:id', customerController.delateConsumibleInvetario)
+router.get('/EditarInventarioEquipoDeSeguridadRedline/:id', customerController.editarEquipoSeguridadInventario)
+router.post('/EditarInventarioEquipoDeSeguridadSendRedline', customerController.editarEquipoSeguridadInventarioSend)
+router.get('/editarImagenEquipoDeSeguridadReline/:id', customerController.editarImagenEquipoSeguridad)
+router.post('/editarImagenEquipoDeSeguridadSendReline', upload, customerController.editarImagenEquipoSeguridadSend)
+router.get('/delateInvetarioEquipoDeSeguridadRedline/:id', customerController.delateEquipoSeguridadInvetario)
+router.get('/sacarInventarioEquipoDeSeguridadRedline/:id', customerController.sacarInventarioEquipoSeguridad)
+router.post('/sacarInventarioEquipoDeSeguridadSendRedline', customerController.sacarInventarioEquipoSeguridadSend)
+router.get('/inventarioEquipoDeSeguridadDevolverRedline/:id', customerController.devolverInventarioEquipoSeguridad)
+router.post('/inventarioEquipoDeSeguridadDevolverSendRedline', customerController.devolverInventarioEquipoSeguridadSend)
+router.post('/buscarQuienMeTieneEQ', customerController.quienMeTieneEQ1);
 //codigo de pruebas 
 
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);
 // router.get('/update/:ID', customerController.edit);
-// router.post('/update/:ID', customerController.update);
+// router.post('/update/:ID', customerController.update); 
 // router.post('/auth', customerController.auth)
 // router.get('/listrestring', customerController.list2);
 
