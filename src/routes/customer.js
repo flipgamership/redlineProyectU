@@ -1,3 +1,4 @@
+const { Router } = require('express');
 const express = require ('express');
 const router = express.Router();
 const multer  = require('multer');
@@ -116,6 +117,22 @@ router.post('/sacarInventarioEquipoDeSeguridadSendRedline', customerController.s
 router.get('/inventarioEquipoDeSeguridadDevolverRedline/:id', customerController.devolverInventarioEquipoSeguridad)
 router.post('/inventarioEquipoDeSeguridadDevolverSendRedline', customerController.devolverInventarioEquipoSeguridadSend)
 router.post('/buscarQuienMeTieneEQ', customerController.quienMeTieneEQ1);
+// inventario de dispositivos
+router.get('/menuDeInventarioDeDispositivos', customerController.menuInventarioDeDispositivos)
+router.get('/inventarioDeDispositivosTablaSinFiltros', customerController.inventarioDispositivosSinFiltros)
+router.get('/inventarioDispositivosFiltroDeRouters', customerController.inventarioDispositivosFiltro1)
+router.get('/inventarioDispositivosFiltroDeOnts', customerController.inventarioDispositivosFiltro2)
+router.get('/inventarioDispositivosFiltroDeAntenas', customerController.inventarioDispositivosFiltro3)
+router.get('/inventarioDispositivosFiltroDeRouterboards', customerController.inventarioDispositivosFiltro4)
+router.get('/inventarioDispositivosFiltroDeSwitch', customerController.inventarioDispositivosFiltro5)
+router.get('/newInventarioDispositivosRedline', customerController.newInventarioDispositivos)
+router.post('/newInventarioDispositivosRedlineSend', customerController.newInventarioDispositivosSend)
+router.get('/inventarioDispositivosEditarRedline/:id', customerController.editInventarioDispositivos)
+router.post('/inventarioDispositivosEditarsendRedline', customerController.editInventarioDispositivosSend)
+router.get ('/delateInventarioDispositivosRedline/:id', customerController.delateDispositivosInventario)
+router.get('/SacarInventarioDispositivosRedline/:id', customerController.sacarInventarioDispositivos)
+router.post('/SacarInventarioDispositivosSendRedline', customerController.sacarInventarioDispositivosSend)
+router.get ('/inventarioDispositivosVendidosRedline', customerController.inventarioDispositivosVendidos)
 //codigo de pruebas 
 
 // router.post('/profile-upload-single', customerController.subirImagen)

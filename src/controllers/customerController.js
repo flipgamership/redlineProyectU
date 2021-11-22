@@ -1125,7 +1125,7 @@ controller.sendCorreoH1 = async (req, res) => {
   var mailOptions = {
     from: "Remitente",
     to: correo,
-    subject: "Por favor debuelva el equipo ",
+    subject: "Redline Por favor debuelva la herrameinta ",
     html:
       `<!DOCTYPE html>
         <html lang="es">
@@ -1168,22 +1168,22 @@ controller.sendCorreoH1 = async (req, res) => {
                             <li>Herramienta: </li>
                             <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
                             ` +
-                            name_herramienta +
-                            `
+      name_herramienta +
+      `
                             
                             
                             <li>Codigo de herramienta: </li>
                             <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
                             ` +
-                            codigoH +
-                            `
+      codigoH +
+      `
                             </p>
                             <li>¿Quien me tiene?</li>
                             <li>tecnico que me tiene: </li>
                             <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
                             ` +
-                            name +
-                            `
+      name +
+      `
                             </p>
                             <li>Espero que la devuelvas a la bodega y el ingreso en la plataforma</li>
                         </ul>
@@ -2959,7 +2959,7 @@ controller.sendCorreEQ1 = async (req, res) => {
   var mailOptions = {
     from: "Remitente",
     to: correo,
-    subject: "Por favor debuelva el equipo ",
+    subject: "Por favor debuelva el equipo de seguridad ",
     html:
       `<!DOCTYPE html>
         <html lang="es">
@@ -3002,22 +3002,22 @@ controller.sendCorreEQ1 = async (req, res) => {
                             <li>Equipo de seguridad: </li>
                             <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
                             ` +
-                            name_equipo +
-                            `
+      name_equipo +
+      `
                             </p>
                             
                             <li>Codigo del equipo de seguridad: </li>
                             <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
                             ` +
-                            codigoEQ +
-                            `
+      codigoEQ +
+      `
                             </p>
                             
                             <li>¿Quien me tiene?</li>
                             <p style="color: #eebbf8; margin-top: 3px; margin-left: 2px; text-align: center;">
                             ` +
-                            name +
-                            `
+      name +
+      `
                             </p>
                             
       
@@ -3449,7 +3449,9 @@ controller.devolverInventarioEquipoSeguridadSend = (req, res) => {
                     if (error) {
                       console.log(error);
                     } else {
-                      res.redirect("/inventoriTableEquipoSeguridadNoPrestadoRedline");
+                      res.redirect(
+                        "/inventoriTableEquipoSeguridadNoPrestadoRedline"
+                      );
                     }
                   }
                 );
@@ -3525,7 +3527,459 @@ controller.devolverInventarioEquipoSeguridad = (req, res) => {
     });
   }
 };
+// inventario de equipo
+controller.menuInventarioDeDispositivos = (req, res) => {
+  if (req.session.loggedin) {
+    res.render("menuInventarioDispositivos", {
+      login: true,
+      name: req.session.name,
+      role: req.session.role,
+    });
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+controller.inventarioDispositivosSinFiltros = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM dispositivos", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("inventarioTableDispositivos", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.inventarioDispositivosFiltro1 = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM dispositivos WHERE tipo_dispositivo = 'ROUTER'",
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("inventarioTableDispositivos", {
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.inventarioDispositivosFiltro2 = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM dispositivos WHERE tipo_dispositivo = 'ONT'",
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("inventarioTableDispositivos", {
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.inventarioDispositivosFiltro3 = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM dispositivos WHERE tipo_dispositivo = 'ANTENA'",
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("inventarioTableDispositivos", {
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.inventarioDispositivosFiltro4 = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM dispositivos WHERE tipo_dispositivo = 'ROUTERBOARD'",
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("inventarioTableDispositivos", {
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.inventarioDispositivosFiltro5 = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM dispositivos WHERE tipo_dispositivo = 'SWITCH'",
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("inventarioTableDispositivos", {
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
 
+controller.newInventarioDispositivos = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      res.render("newInvetarioDispositivos", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+controller.newInventarioDispositivosSend = async (req, res) => {
+  const nombre = req.body.NAME;
+  const dispositivo = req.body.DISPOSITIVOS;
+  const mac = req.body.MAC;
+  const cerial = req.body.CERIAL;
+  const fecha = req.body.fecha;
+  const estado = req.body.ESTADO;
+  console.log(nombre, dispositivo, mac, cerial, fecha, estado);
+  req.getConnection((error, conn) => {
+    conn.query(
+      "INSERT INTO dispositivos SET ?",
+      {
+        nombre: nombre,
+        tipo_dispositivo: dispositivo,
+        estado: estado,
+        mac: mac,
+        cereal: cerial,
+        fecha: fecha,
+      },
+      async (error, results) => {
+        if (error) {
+          console.log(error);
+          res.render("newInvetarioDispositivos", {
+            alert: true,
+            alertTitle: "Ups hubo algun problema",
+            alertMessage:
+              "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas ",
+            alertIcon: "error",
+            showConfirmButton: true,
+            ruta: "newInventarioDispositivosRedlineSend",
+            timer: 15000,
+          });
+        } else {
+          res.render("newInvetarioDispositivos", {
+            alert: true,
+            alertTitle: "Registrado",
+            alertMessage: "Registro de" + nombre + "exitoso",
+            alertIcon: "success",
+            showConfirmButton: true,
+            ruta: "inventarioDeDispositivosTablaSinFiltros",
+            timer: 15000,
+          });
+        }
+      }
+    );
+  });
+};
+
+controller.editInventarioDispositivos = (req, res)=>{
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM dispositivos WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("editDispositivosRedline", {
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+                data: results[0],
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+}
+
+
+controller.editInventarioDispositivosSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.body.id
+      const nombre = req.body.NAME;
+      const dispositivo = req.body.DISPOSITIVOS;
+      const mac = req.body.MAC;
+      const cerial = req.body.CERIAL;
+      const fecha = req.body.fecha;
+      const estado = req.body.ESTADO;
+      console.log(nombre, dispositivo, mac, cerial, fecha, estado);
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE dispositivos SET ? WHERE id = ? ",
+          [{
+            nombre: nombre,
+            tipo_dispositivo: dispositivo,
+            estado: estado,
+            mac: mac,
+            cereal: cerial,
+            fecha: fecha,
+          },id,], 
+          
+          async (error, results) => {
+            if (error) {
+              console.log(error);
+              res.send(error)
+            } else {
+              res.redirect("/inventarioDeDispositivosTablaSinFiltros");
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+controller.delateDispositivosInventario = (req, res)=>{
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "DELETE FROM dispositivos WHERE id= ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.redirect("/inventarioDeDispositivosTablaSinFiltros");
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+}
+controller.sacarInventarioDispositivos = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM dispositivos WHERE id = ? ;",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("sacarInventarioDispositivos", {
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+                data: results[0],
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("home", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.sacarInventarioDispositivosSend = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      const id = req.body.id
+      const nombre = req.body.nombre;
+      const mac = req.body.mac;
+      const cerial = req.body.cereal;
+      const fecha = req.body.fecha;
+      const estado = req.body.tipo;
+      console.log(nombre, mac, cerial, fecha, estado);
+      req.getConnection((error, conn) => {
+        conn.query(
+          "INSERT INTO dispositivos_vendidos SET ?",
+          {
+            nombre: nombre,
+            tipo_dispositivo: estado,
+            mac: mac,
+            cereal: cerial,
+            fecha: fecha,
+          },
+          async (error, results) => {
+            if (error) {
+              console.log(error);
+              res.send(error)
+            } else {
+              req.getConnection((error, conn) => {
+                conn.query(
+                  "DELETE FROM dispositivos WHERE id= ?",
+                  [id],
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.redirect("/inventarioDeDispositivosTablaSinFiltros");
+                    }
+                  }
+                );
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.inventarioDispositivosVendidos = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM dispositivos_vendidos", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("inventarioTabledispositivosVendido", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+//sona de pruebas
 controller.img = (req, res) => {
   const file = req.file;
   const imgName = file.filename;

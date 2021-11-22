@@ -1,39 +1,40 @@
 <%- include('./partials/nav.ejs') %>
 
 <head>
-
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <title>tabla de dispositivos</title>
   <link rel="stylesheet" href="styleTables.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <style>
-    .visor_imagenes {
+    .tipo_dispositivo {
       text-align: center;
+      color: black;
+      background-color: rgb(148, 255, 241);
+      border: 1px solid rgb(115, 199, 255);
     }
 
-    .blanco-rojo {
+    .tipo_N {
+      text-align: center;
+      color: black;
+      background-color: rgb(162, 255, 148);
+      border: 1px solid rgb(100, 213, 82);
+    }
+
+    .tipo_S {
+      text-align: center;
       color: black;
       background-color: rgb(255, 237, 148);
       border: 1px solid rgb(232, 208, 92);
-      border-radius: 2px;
-      margin-top: 30px;
     }
 
-    .blanco-rojo2 {
-      color: black;
-      margin-top: 30px;
-      background-color: rgb(162, 255, 148);
-      border: 1px solid rgb(100, 213, 82);
-      border-radius: 2px;
-    }
-
-    .blanco-rojo3 {
+    .tipo_R {
+      text-align: center;
       color: black;
       background-color: rgb(255, 148, 148);
-      border: 1px solid rgb(232, 97, 97);
-      border-radius: 2px;
-      margin-top: 30px;
+      border: 1px solid rgb(232, 92, 92);
     }
   </style>
 </head>
@@ -45,53 +46,66 @@
 <br>
 <br>
 <div class="container">
-  <div class="row">
-    <h5 style="font-size: 20px; margin-bottom: 10px;">equipo de seguridad que se encuentra disponible</h5>
-    <hr>
-    <table id="users" class="table table-light table-striped table-hover table-bordered text-center  " style="font-size: 14px;">
-      <thead>
-        <tr>
-          <th>codigo de herramienta</th>
-          <th>img</th>
-          <th>nombre</th>
-          
-          <th>donde esta</th>
-          <th>descripcion del estado de la herramienta</th>
-          <th>fecha</th>
-          <th>utilidades</th>
-        </tr>
-      </thead>
+  <h5 style="font-size: 20px; margin-bottom: 10px;">Tabla de inventario de dispositivos</h5>
+  <hr>
+  <table id="users" class="table table-light table-striped table-hover table-bordered text-center  " style="font-size: 14px;">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>nombre</th>
+        <th>tipo de dispositivo</th>
+        <th>Estado</th>
+        <th>mac</th>
+        <th>cereal</th>
+        <th>Utilidades</th>
 
-      <tbody>
-        <% results.forEach((user) => {%>
+      </tr>
+    </thead>
+    <!-- <a class="btn btn-outline-warning" type="button"><i class='bx bxs-customize' ></i></a> -->
+    <tbody>
+      <% results.forEach((user) => {%>
+      <tr>
+        <td><%= user.id %> </td>
+        <td><%= user.nombre %></td>
+        <td><% if(user.tipo_dispositivo=='ONT'){ %>
+          <p class="tipo_dispositivo">ONT</p>
+          <%    }else  %>
+          <% if(user.tipo_dispositivo=='ROUTER'){ %>
+          <p class="tipo_dispositivo">ROUTER</p>
+          <%    }else  %>
+          <% if(user.tipo_dispositivo=='ANTENA'){ %>
+          <p class="tipo_dispositivo">ANTENA</p>
+          <%    }else  %>
+          <% if(user.tipo_dispositivo=='ROUTERBOARD'){ %>
+          <p class="tipo_dispositivo">ROUTERBOARD</p>
+          <%    }else  %>
+          <% if(user.tipo_dispositivo=='SWITCH'){ %>
+          <p class="tipo_dispositivo">SWITCH</p>
+          <%    } %>
+        </td>
+        <td>
+          <% if(user.estado=='N'){ %>
+          <p class="tipo_N">NUEVO</p>
+          <%    }else  %>
+          <% if(user.estado=='S'){ %>
+          <p class="tipo_S">SEGUNDA MANO</p>
+          <%   }else if(user.estado=='R'){%>
+          <p class="tipo_R">REPARADO</p>
+          <%  } %>
+        </td>
+        <td><%= user.mac %></td>
+        <td><%= user.cereal %></td>
+        <td>
+          <a href="/inventarioDispositivosEditarRedline/<%= user.id %>" class="btn btn-warning" type="button"><i class='bx bx-pencil'></i></a>
+          <a href="/SacarInventarioDispositivosRedline/<%= user.id %>" class="btn btn-success" type="button"><i class='bx bx-archive-out' ></i></a>
+          <a onclick="alertDelate('<%= user.id %>')" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
 
-
-        <tr>
-          <td><p style=" text-align: center; margin-top: 32px;"><%= user.id %></p></td>
-          <td><img style="width: 100px; height: 100px;" src="./uploads/<%= user.img %>" alt=""></td>
-          <td><p style=" text-align: center; margin-top: 30px;"><%= user.nombre %></p></td>
-          <td class="visor_imagenes"><% if (user.estado == 'P') {%>
-            <p class="blanco-rojo"> PRESTADO </p>
-            <% }else if( user.estado == 'B' ){%>
-            <p class=" blanco-rojo2"> BODEGA </p>
-            <% }else{%>
-            <p class="blanco-rojo3"> ESTA DAÑADO O EXTRAVIADO </p>
-            <% } %>
-          </td>
-          <td><p style=" text-align: center; margin-top: 30px;"><%= user.descripcion %></p></td>
-          <td><p style=" text-align: center; margin-top: 30px;"><%= user.fecha %></p></td>
-          <td>
-            <a href="/EditarInventarioEquipoDeSeguridadRedline/<%= user.id %>" class="btn btn-warning" style="margin-top: 30px;" type="button"><i class='bx bx-pencil'></i></a>
-            <a href="/sacarInventarioEquipoDeSeguridadRedline/<%= user.id %>" class="btn btn-success"  style="margin-top: 30px;" type="button"><i class='bx bx-archive-out' ></i></a>
-            <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-            <a onclick="alertDelate('<%= user.id %>')" style="margin-top: 30px;" class="btn btn-danger" type="button"><i class='bx bxs-trash'></i></a>
-          </td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
-
-  </div>
+</div>
 </div>
 </body>
 
@@ -113,7 +127,7 @@
 <script>
   function alertDelate(id) {
     Swal.fire({
-      title: '¿Quieres eliminar este equipo de seguridad de forma permanente del inventario?',
+      title: '¿Quieres eliminar este dispositivo del inventario?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'NO',
@@ -123,7 +137,7 @@
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('equipo de seguridad eliminada exitosamente', '', 'success', 1500)
+        Swal.fire(' ', '', 'success', 1500)
         const value = true
         setTimeout(timeUot, 2000, value, id);
       }
@@ -132,7 +146,7 @@
 
   function timeUot(values, id) {
     if (values) {
-      window.location = '/delateInvetarioEquipoDeSeguridadRedline/' + id
+      window.location = '/delateInventarioDispositivosRedline/' + id
     }
 
   }

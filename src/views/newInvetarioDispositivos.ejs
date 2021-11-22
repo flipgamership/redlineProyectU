@@ -40,7 +40,9 @@
         <li class="navItem">
           <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipo de seguridad</a>
         </li>
-
+        <li class="navItem">
+          <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de dispositivos</a>
+        </li>
 
       </ul>
       <div class="hamburger">
@@ -58,37 +60,46 @@
       <div class="col-lg-5 col-md-8 col-sm-8">
         <div class="card">
           <div class="card-title text-center border-bottom">
-            <h2 class="p-3">agregar un equipo de seguridad nuevo al inventario</h2>
+            <h2 class="p-3">Agregar dispositivos </h2>
           </div>
           <div class="card-body">
-            <form action="/newEquipoDeSeguridadInventarioRedlineSend" method="post" enctype= 'multipart/form-data'>
+            <form action="/newInventarioDispositivosRedlineSend" method="post">
               <input type="text" name="fecha" id="fechaActual" hidden>
-              <input type="text" name="estado" value="B" hidden>
-              <input type="text" name="id_tecnico" value="999999999" hidden>
               <div class="mb-3">
-                <h5 for="usuario">id de equipo de seguridad</h5>
-                <p>
-                  !Ojo porfavor tenga en cuenta que si el id que ingresa ya existe este equipo de seguridad no se agregara
-                </p>
-                <input type="text" class="form-control" name="codigoEQ" required>
+                <h5 for="usuario">Nombre del dispositivo</h5>
+                <input type="text" class="form-control" name="NAME" required>
               </div>
               <div class="mb-3">
-                <h5 for="usuario">nombre del equipo de seguridad </h5>
-                <input type="text" class="form-control" name="nombre" required>
+                <h5 for="usuario">Tipo de dispositivo</h5>
+                <select name="DISPOSITIVOS" id="" class="form-control">
+                  <option value="ONT">Ont</option>
+                  <option value="ROUTER">Router</option>
+                  <option value="ANTENA">Antena</option>
+                  <option value="ROUTERBOARD">RouterBoard</option>
+                  <option value="SWITCH">Switch de red</option>
+                </select>
+              
               </div>
               <div class="mb-3">
-                <h5 for="usuario">descripcion del equipo de seguridad</h5>
-                <p>tenga en cuenta que esta descripcion hace referencia al estado en el que se encuentra el equipo de segurida esta descripcion cambia segun las salidas y entradas para saber el estado en que se encuentra el equipo de seguridad</p>
-                <input type="text" class="form-control" name="descripcion" required>
+                <h5 for="usuario">Mac del dispositivo </h5>
+                <input type="text" class="form-control" name="MAC" >
               </div>
               <div class="mb-3">
-                <h5 for="usuario">selecciona la imagen del equipo de seguridad</h5>
-                <input type="file" class="form-control" name="imagen" id="imagen" key="imagen" required>
+                <h5 for="usuario">Cerial de dispositivos</h5>
+                <input type="text" class="form-control" name="CERIAL" >
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">Estado del dispositivo</h5>
+                <select name="ESTADO" id="" class="form-control">
+                  <option value="N">NUEVO</option>
+                  <option value="S">SEGUNDA MANO</option>
+                  <option value="R">REPARADO</option>
+                </select>
               </div>
           </div>
         </div>
         <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Agregar equipo de seguridad</button>
+          <button type="submit" class="btn btn-primary">Agregar dispositivo</button>
         </div>
       </div>
 
@@ -139,7 +150,7 @@
 
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  
+
   <%- include('./partials/footer.ejs') %>
 </body>
 
