@@ -133,6 +133,11 @@ router.get ('/delateInventarioDispositivosRedline/:id', customerController.delat
 router.get('/SacarInventarioDispositivosRedline/:id', customerController.sacarInventarioDispositivos)
 router.post('/SacarInventarioDispositivosSendRedline', customerController.sacarInventarioDispositivosSend)
 router.get ('/inventarioDispositivosVendidosRedline', customerController.inventarioDispositivosVendidos)
+//Logs del inventario del dispositivos (los logs son un historiar inmodificable)
+router.get('/logsConsumiblesIngreso', customerController.logsConsumiblesIngreso)
+router.get('/logsConsumiblesSalida', customerController.logsConsumiblesSalida)
+router.get('/logsEquipoSeguridad', customerController.logsEquipoSeguridad)
+router.get('/logsHerramientas', customerController.logsHerramientas)
 //codigo de pruebas 
 
 // router.post('/profile-upload-single', customerController.subirImagen)

@@ -3979,6 +3979,105 @@ controller.inventarioDispositivosVendidos = (req, res) => {
     res.redirect("/login");
   }
 };
+// logs 
+controller.logsConsumiblesIngreso = (req, res)=>{
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM logs_inventario_consumibles", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("logs_inventario_consumibles", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+}
+controller.logsConsumiblesSalida = (req, res)=>{
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM logs_inventario_consumibles_2 ", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("logs_inventario_consumibles-salida", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+}
+controller.logsEquipoSeguridad = (req, res)=>{
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM logs_inventario_equipo_seguridad", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("logs_inventario_equipo", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+}
+controller.logsHerramientas = (req, res)=>{
+  if (req.session.loggedin) {
+    if (req.session.role == "admin" || req.session.role == "tecnico") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM logs_inventario_herramientas", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("logs_inventario_herramienta", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+}
+
+
 //sona de pruebas
 controller.img = (req, res) => {
   const file = req.file;
