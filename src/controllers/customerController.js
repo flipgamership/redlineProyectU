@@ -4075,6 +4075,7 @@ controller.logsHerramientas = (req, res)=>{
     res.redirect("/login");
   }
 }
+//sistema de conograma para el uso interno de la empresa
 
 
 //sona de pruebas
@@ -4116,7 +4117,7 @@ controller.img = (req, res) => {
 };
 
 controller.disaing = (req, res) => {
-  res.render("menuEstadisticasReportDia", {
+  res.render("cronograma_menu_servicio_c", {
     login: true,
     name: req.session.name,
     role: req.session.role,

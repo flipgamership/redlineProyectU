@@ -139,7 +139,7 @@ router.get('/logsConsumiblesSalida', customerController.logsConsumiblesSalida)
 router.get('/logsEquipoSeguridad', customerController.logsEquipoSeguridad)
 router.get('/logsHerramientas', customerController.logsHerramientas)
 //codigo de pruebas 
-
+router.get('/p', customerController.disaing)
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);
