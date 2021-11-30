@@ -35,7 +35,6 @@ controller.loginAuth = async (req, res) => {
         "SELECT * FROM usuarios WHERE user=?",
         [user],
         async (error, results) => {
-          console.log(results);
           if (
             results.length === 0 ||
             !(await bcryptjs.compare(pass, results[0].password))
