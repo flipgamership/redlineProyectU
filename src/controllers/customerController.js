@@ -4117,10 +4117,19 @@ controller.img = (req, res) => {
 };
 
 controller.disaing = (req, res) => {
-  res.render("cronograma_menu_servicio_c", {
-    login: true,
-    name: req.session.name,
-    role: req.session.role,
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM cronogramas", (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        res.render("cronograma_menu_servicio_c", {
+          results: results,
+          login: true,
+          name: req.session.name,
+          role: req.session.role,
+        });
+      }
+    });
   });
 };
 
