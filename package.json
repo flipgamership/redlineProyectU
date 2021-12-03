@@ -7,7 +7,7 @@
     "dev": "nodemon src/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "flipgamership: https://github.com/flipgamership",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <title>inventario de consumibles redline</title>
+
+  <link rel="stylesheet" href="/css/styleRegister.css">
+  <link rel="stylesheet" href="/css/styleLogin.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styleNavar.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <script>
+    import 'boxicons';
+  </script>
+  <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
+</head>
+</head>
+
+<body class="login">
+  <header class="headerNav">
+
+  </header>
+
+  <nav class="navbarPrimary">
+    <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
+    <ul class="navMenu">
+        <li class="navItem">
+            <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
+          </li>
+          <li class="navItem">
+            <a href="/telecomunicaciones" class="navLink"> <i class='bx bxs-phone-outgoing'></i> Telecomunicaciones</a>
+          </li>
+          <li class="navItem">
+            <a href="#" class="navLink"><i class='bx bxs-user'></i> Servicio al cliente</a>
+          </li>
+          <li class="navItem">
+            <a href="#" class="navLink"> <i class='bx bxs-badge-dollar'></i> Registro de pagos</a>
+          </li>
+         
+          <li class="navItem">
+            <a  data-toggle="modal" data-target="#exampleModal1" class="navLink" ><i class='bx bxs-notepad'></i>Cronograma</a>
+          </li>
+  
+          <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 16px; ">Selecciona</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 20px; ">
+                    <span style="margin-left: 7px; margin-right: 7px;" aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                 <p style="font-size: 14px; "> Que vas a hacer , Selecciona una accion para mostrar los cronogramas</p>
+                </div>
+                <div class="modal-footer">
+                  
+                  <a type="button" class="btn btn-success" href="/agregarNuevoCronograma"  >Crear nuevo<i class='bx bxs-notepad'></i></a>
+                  <a type="button" class="btn btn-primary" href="/cronogramaTodo"  >Todos <i class='bx bxs-notepad'></i> </a>
+                  <a type="button" class="btn btn-primary" href="/cronogramaHoyRedline"  >Hoy <i class='bx bxs-notepad'></i> </a>
+                  <a type="button" class="btn btn-primary" href="/cronogamaHistorial"  >Historial <i class='bx bxs-notepad'></i></a>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </ul></nav>
+  <div class="container" style="margin-top: 80px; ">
+    <div class="row justify-content-center mt-5 ">
+      <div class="col-lg-5 col-md-8 col-sm-8">
+        <div class="card">
+          <div class="card-title text-center border-bottom">
+            <h2 class="p-3">agregar nuevo ticket al cronograma</h2>
+          </div>
+          <div class="card-body">
+            <form action="/agregarNuevoCronogramaSend" method="POST">
+
+              <div class="mb-3">
+                <h5 for="usuario">feha de la cita</h5>
+                <input type="date" class="form-control" name="fecha_consulta" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">nombre del cliente</h5>
+                <input type="text" class="form-control" name="nombre" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">hora de la cita</h5>
+                <input type="time" class="form-control" name="hora" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">celular</h5>
+                <input type="text" class="form-control" name="celular" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">nota de la cita</h5>
+                <input type="text" class="form-control" name="nota" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">ip</h5>
+                <input type="text" class="form-control" name="ip" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">plan</h5>
+                <input type="text" class="form-control" name="plan" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">coordenadas de la ubicacion</h5>
+                <input type="text" class="form-control" name="coordenas" required>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">¿Tv?</h5>
+                <select id="opcion" class="form-control" style="font-size: 12px;" name="TV" required>
+                  <option style="font-size: 12px;">SI</option>
+                  <option style="font-size: 12px;">NO</option>
+                </select>
+              <div class="mb-3">
+                <input type="text" class="form-control" name="estado" value="INCOMPLETO" hidden>
+              </div>
+
+              <div class="mb-3">
+                <h5 for="usuario">Actividad</h5>
+                <select id="opcion" class="form-control" style="font-size: 12px;" name="tipo_instalacion" required>
+                  <option value="Instalacion" style="font-size: 12px;">Instalacion</option>
+                  <option value="Soporte" style="font-size: 12px;">Soporte</option>
+                  <option value="Migracion" style="font-size: 12px;">Migracion</option>
+                  <option value="Translado" style="font-size: 12px;">Translado</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">Tecnologias</h5>
+                <select id="opcion" class="form-control" style="font-size: 12px;" name="tecnologias" required>
+                  <option value="Fo" style="font-size: 12px;">Fibra optica</option>
+                  <option value="Re" style="font-size: 12px;">Radio enlace</option>
+                  <option value="Ca" style="font-size: 12px;">Camaras</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <h5 for="usuario">seleccione el tecnico al que se le asignara la tarea</h5>
+                <select id="opcion" class="form-control" style="font-size: 12px;" name="id_tecnico" required>
+                    <% results.forEach((users) => {%>
+                    <option value="<%= users.id%>"><%= users.nombre%></option>
+                  <% })%>
+                </select>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Agregar consumible</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <% if(typeof alert != "undefined") { %>
+  <script>
+    Swal.fire({
+      title: '<%=alertTitle %>',
+      text: '<%= alertMessage%>',
+      icon: '<%=alertIcon %>',
+      showConfirmButton: '<%= showConfirmButton %>',
+      timer: '<%= timer %>'
+    }).then(() => {
+      window.location = '/<%= ruta %>'
+    })
+  </script>
+  <% } %>
+  <script>
+    var inputs = $("input[type=text]");
+    for (var i = 0; i < inputs.length; i++) {
+      var aux = $(inputs[i]).val().trim();
+      $(inputs[i]).val(aux);
+    }
+  </script>
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    function seleccionado() {
+      var opt = $('#opcion').val();
+
+      // alert(opt);
+      if (opt == "U") {
+        $('#categoria').show();
+        $('#subcategoria').hide();
+        $('#producto').hide();
+      } else {
+        if (opt == "M") {
+          $('#categoria').hide();
+          $('#subcategoria').show();
+          $('#producto').hide();
+        } else {
+          $('#categoria').hide();
+          $('#subcategoria').hide();
+          $('#producto').show();
+        }
+      }
+    }
+  </script>
+  <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

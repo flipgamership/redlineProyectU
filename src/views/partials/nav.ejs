@@ -30,9 +30,7 @@
         <li class="navItem">
           <a href="/register" class="navLink"><i class='bx bx-food-menu'></i> Registrar nuevos Usuarios</a>
         </li>
-        <li class="navItem">
-          <a href="" class="navLink"><i class='bx bxs-notepad'></i> Cronograma </a>
-        </li>
+        
 
         <li class="navItem">
           <a  data-toggle="modal" data-target="#exampleModal" class="navLink" ><i class='bx bx-food-menu'></i>Logs</a>
@@ -61,26 +59,40 @@
             </div>
           </div>
         </div>
+        <li class="navItem">
+          <a  data-toggle="modal" data-target="#exampleModal1" class="navLink" ><i class='bx bxs-notepad'></i>Cronograma</a>
+        </li>
 
+        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 16px; ">Selecciona</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 20px; ">
+                  <span style="margin-left: 7px; margin-right: 7px;" aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+               <p style="font-size: 14px; "> Que vas a hacer , Selecciona una accion para mostrar los cronogramas</p>
+              </div>
+              <div class="modal-footer">
+                
+                <a type="button" class="btn btn-success" href="/agregarNuevoCronograma"  >Crear nuevo<i class='bx bxs-notepad'></i></a>
+                <a type="button" class="btn btn-primary" href="/cronogramaTodo"  >Todos <i class='bx bxs-notepad'></i> </a>
+                <a type="button" class="btn btn-primary" href="/cronogramaHoyRedline"  >Hoy <i class='bx bxs-notepad'></i> </a>
+                <a type="button" class="btn btn-primary" href="/cronogamaHistorial"  >Historial <i class='bx bxs-notepad'></i></a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
 
         <% }else if(role == 'tecnico'){%>
         
           <li class="navItem">
-            <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
-          </li>
-          <li class="navItem">
-            <a href="/inventarioHerramientasRedline" class="navLink"><i class='bx bxs-box'></i> Inventorio de herramientas</a>
-          </li>
-          <li class="navItem">
-            <a href="/inventarioConsumiblesRedline" class="navLink"><i class='bx bxs-box'></i> inventario de consumibles</a>
-          </li>
-          <li class="navItem">
-            <a href="/menuInventarioEquipoSeduridadRedline" class="navLink"><i class='bx bxs-box'></i> inventario de equipo de seguridad</a>
-          </li>
-          <li class="navItem">
-            <a href="" class="navLink"><i class='bx bxs-notepad'></i> Cronograma </a>
+            <a href="/cronogramaHoyRedline" class="navLink"><i class='bx bxs-notepad'></i> Cronograma </a>
           </li>
   
 
@@ -100,11 +112,38 @@
         <li class="navItem">
           <a href="" class="navLink"><i class='bx bxs-notepad'></i> Cronograma </a>
         </li>
+        <li class="navItem">
+          <a  data-toggle="modal" data-target="#exampleModal1" class="navLink" ><i class='bx bxs-notepad'></i>Cronograma</a>
+        </li>
+
+        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 16px; ">Selecciona</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 20px; ">
+                  <span style="margin-left: 7px; margin-right: 7px;" aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+               <p style="font-size: 14px; "> Que vas a hacer , Selecciona una accion para mostrar los cronogramas</p>
+              </div>
+              <div class="modal-footer">
+                
+                <a type="button" class="btn btn-success" href="/agregarNuevoCronograma"  >Crear nuevo<i class='bx bxs-notepad'></i></a>
+                <a type="button" class="btn btn-primary" href="/cronogramaTodo"  >Todos <i class='bx bxs-notepad'></i> </a>
+                <a type="button" class="btn btn-primary" href="/cronogramaHoyRedline"  >Hoy <i class='bx bxs-notepad'></i> </a>
+                <a type="button" class="btn btn-primary" href="/cronogamaHistorial"  >Historial <i class='bx bxs-notepad'></i></a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <% } %>
         </li class="navItem">
         <a style="margin-left:20px; font-size: 12px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Sesion</a>
-        <li>
-
         </li>
       </ul>
       <div class="hamburger">

@@ -140,6 +140,15 @@ router.get('/logsEquipoSeguridad', customerController.logsEquipoSeguridad)
 router.get('/logsHerramientas', customerController.logsHerramientas)
 //codigo de pruebas 
 router.get('/p', customerController.disaing)
+router.get('/cronogramaHoyRedline', customerController.cronogramaHoy)
+router.get('/cronogramaTodo', customerController.cronogramaTodo)
+router.get('/cronogamaHistorial', customerController.cronogramaHistorial)
+router.get('/cronogramaCompletos', customerController.cronogramaCompletos)
+router.get('/cronogramaInconpletos', customerController.cronogramaIncompletos)
+router.get('/cronogramaReprogramar', customerController.cronogramaReprogramados)
+router.get('/agregarNuevoCronograma', customerController.cronogramaNew)
+router.post('/agregarNuevoCronogramaSend', customerController.cronogramaNewSend)
+router.get('/delateCronogramaRedline/:id', customerController.cronogramasDelate)
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);

@@ -22,53 +22,14 @@
 
     <% if (role == 'tecnico') {%>
       <div class="container" >
-        <div class="row justify-content-center mt-5" >
-          <div class="card-group shadow-lg p-3 mb-5 bg-white rounded" style="margin-left: 10px;" >
-            <div class="card">
-              <img src="https://www.seguridad-laboral.es/wp-content/uploads/sites/6/2020/07/11-900x600.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title" style="font-size: 16px;"> <i class='bx bx-shield'></i> Inventario de equipo de seguridad</h5>
-                <p class="card-text" style="font-size: 14px;">Dentro de acá podras acceder al sistema de inventario para retirar el equipo de seguridad del inventario teniendo en cuenta que se te está realizando un préstamo del equipo de seguridad</p>
-              </div>
-              <div class="card-footer">
-                <a href="/menuInventarioEquipoSeduridadRedline" class="btn btn-primary"  style="font-size: 12px;" type="button">Equipo de seguridad</a>
-              </div>
-            </div>
-            <div class="card" style="margin-left: 10px;">
-              <img src="https://images.pexels.com/photos/6790074/pexels-photo-6790074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title" style="font-size: 16px;"> <i class='bx bx-wrench'></i> Inventario de herramientas</h5>
-                <p class="card-text" style="font-size: 14px;">Dentro de acá podras acceder al sistema de inventario para retirar las herramientas del inventario teniendo en cuenta que se te está realizando un préstamo de las herramientas</p>
-              </div>
-              <div class="card-footer">
-                <a href="/inventarioHerramientasRedline" class="btn btn-primary"  style="font-size: 12px;" type="button">Inventario de herramientas</a>
-              </div>
-            </div>
-            <div class="card" style="margin-left: 10px;">
-              <img src="https://images.pexels.com/photos/315658/pexels-photo-315658.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title"style="font-size: 16px;"><i class='bx bxs-component'></i> Inventario de Insumos </h5>
-                <p class="card-text" style="font-size: 14px;">Dentro de acá podras acceder al sistema de inventario para retirar insumos del inventario</p>
-              </div>
-              <div class="card-footer">
-                <a class="btn btn-primary" href="/inventarioConsumiblesRedline"  style="font-size: 12px;" type="button"> Inventario de Insumos </a>
-              </div>
-            </div>
-            <div class="card" style="margin-left: 10px;">
-              <img src="https://us.123rf.com/450wm/wutlufaipy/wutlufaipy1702/wutlufaipy170200013/71132137-enrutador-de-m%C3%B3dem-inal%C3%A1mbrico-con-cable-de-conexi%C3%B3n.jpg?ver=6" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title"style="font-size: 16px;"><i class='bx bxs-component'></i> Inventario de dispositivos </h5>
-                <p class="card-text" style="font-size: 14px;">Dentro de acá podras acceder al sistema de inventario para retirar dispositivos electronicos como : router, antenas del inventario</p>
-              </div>
-              <div class="card-footer">
-                <a class="btn btn-primary" href="/menuDeInventarioDeDispositivos"  style="font-size: 12px;" type="button"> Inventario de Dispositivos </a>
-              </div>
-            </div>
+        <div class="card" style="width: 36rem;">
+          <img class="card-img-top" src="https://images.vexels.com/media/users/3/205950/isolated/preview/6fbc93ab8efc8497ef9ad1f7c815dd33-icono-de-trazo-de-calendario.png" alt="Card image cap">
+          <div class="card-body">
+            <h3 class="card-title">Cronograma</h3>
+            <p class="card-text" style="font-size: 14px;">aca podras consultar el cronograma diario</p>
+            <a href="/cronogramaHoyRedline" class="btn btn-primary" style="font-size: 14px;">Cronograma</a>
           </div>
-          
         </div>
-      </div>
-    </div>
       <hr>
     <% } %> 
     <% if (role == 'servicioCliente') {%>

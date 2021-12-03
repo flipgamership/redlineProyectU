@@ -59,7 +59,7 @@ controller.loginAuth = async (req, res) => {
               alertMessage: "acceso valido",
               alertIcon: "success",
               showConfirmButton: false,
-              ruta: "welcome",
+              ruta: "home",
               timer: 3000,
             });
           }
@@ -612,6 +612,7 @@ controller.teleEstadisticasMenu = (req, res) => {
         login: true,
         name: req.session.name,
         role: req.session.role,
+        
       });
     }
   } else {
@@ -4123,6 +4124,7 @@ controller.disaing = (req, res) => {
         console.log(error);
       } else {
         res.render("cronograma_menu_servicio_c", {
+          total: false,
           results: results,
           login: true,
           name: req.session.name,
@@ -4133,4 +4135,254 @@ controller.disaing = (req, res) => {
   });
 };
 
+
+controller.cronogramaHoy = (req, res) => {
+ var id_user=req.session.id
+ if(req.session.loggedin) { 
+  var fecha = new Date(); //Fecha actual
+  var mes = fecha.getMonth() + 1; //obteniendo mes
+  var dia = fecha.getDate();
+  var ano = fecha.getFullYear(); //obteniendo año
+  if (dia < 10)
+    dia = '0' + dia; //agrega cero si el menor de 10
+  if (mes < 10)
+    mes = '0' + mes //agrega cero si el menor de 10
+   var value = ano + "-" + mes + "-" + dia;
+   var fechaACTUAL = String(value)
+   console.log(fechaACTUAL)
+
+
+if(req.session.role == 'tecnico'){
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM cronogramas WHERE fecha = ? || estado = 'INCOMPLETO' && fecha <= ? ", [fechaACTUAL, fechaACTUAL ], (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(results)
+        res.render("cronograma_menu_servicio_c", {
+          total: false,
+          results: results,
+          login: true,
+          name: req.session.name,
+          role: req.session.role,
+        });
+      }
+    });
+  });
+} else if(req.session.role == 'admin'  || req.session.role == 'servicioCliente' ) {
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM cronogramas WHERE fecha = ? || estado = 'INCOMPLETO' && fecha <= ? ", [fechaACTUAL, fechaACTUAL ], (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(results)
+        res.render("cronograma_menu_servicio_c", {
+          total: false,
+          results: results,
+          login: true,
+          name: req.session.name,
+          role: req.session.role,
+        });
+      }
+    });
+  });
+}
+} 
+
+
+}
+controller.cronogramaTodo = (req, res) =>{
+  if(req.session.loggedin){
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM cronogramas WHERE estado = 'INCOMPLETO' || estado = 'REPROGRAMAR' ", (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        res.render("cronograma_menu_servicio_c", {
+          total: false,
+          results: results,
+          login: true,
+          name: req.session.name,
+          role: req.session.role,
+          id_user: req.session.id
+        });
+      }
+    });
+  });
+}
+}
+controller.cronogramaHistorial = (req, res) =>{
+  if(req.session.loggedin){
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM cronogramas ", (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        res.render("cronograma_menu_servicio_c", {
+          total: false,
+          results: results,
+          login: true,
+          name: req.session.name,
+          role: req.session.role,
+          id_user: req.session.id
+        });
+      }
+    });
+  });
+}else {
+  res.redirect("/login");
+}
+}
+controller.cronogramaNew = (req, res)=>{
+  if(req.session.loggedin){
+    req.getConnection((error, conn) => {
+      conn.query("SELECT id, nombre, cargo FROM usuarios ", (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(results)
+          res.render("newCronograma", {
+            
+            results: results,
+            login: true,
+            name: req.session.name,
+          });
+        }
+      });
+    });
+  }else {
+    res.redirect("/login");
+  }
+}
+controller.cronogramaNewSend = (req, res)=>{
+  if(req.session.loggedin){
+    let fecha = req.body.fecha_consulta
+    let nombre = req.body.nombre
+    let hora = req.body.hora
+    let celular = req.body.celular
+    let nota = req.body.nota
+    let estado = req.body.estado
+    let actividad = req.body.tipo_instalacion
+    let tv = req.body.TV
+    let ip = req.body.ip
+    let plan = req.body.plan
+    let genero = req.body.tecnologias
+    let id_tecnico = req.body.id_tecnico
+    let coordenas = req.body.coordenas
+    
+    console.log(tv, ip, plan)
+    req.getConnection((error, conn) => {
+      conn.query(
+        "INSERT INTO cronogramas SET ?",
+        {
+          coordenas: coordenas,
+          fecha: fecha,
+          nombre_cliente:nombre,
+          hora: hora,
+          celular: celular,
+          Nota:nota,
+          estado:estado,
+          tv:tv,
+          ip:ip,
+          plan:plan,
+          tipo_instalacion:actividad,
+          genero: genero,
+          id_tecnico : id_tecnico,
+          
+        },
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results)
+            res.redirect('/cronogamaHistorial')
+          }
+        }
+      );
+    });
+  }
+  }
+  controller.cronogramaIncompletos =  (req, res) =>{
+    if(req.session.loggedin){
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM cronogramas WHERE estado = 'INCOMPLETO'", (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.render("cronograma_menu_servicio_c", {
+            total: results.length,
+            results: results,
+            login: true,
+            name: req.session.name,
+            role: req.session.role,
+            id_user: req.session.id
+          });
+        }
+      });
+    });
+  }
+  }
+  controller.cronogramaCompletos =  (req, res) =>{
+    if(req.session.loggedin){
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM cronogramas WHERE estado = 'COMPLETado'", (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.render("cronograma_menu_servicio_c", {
+            total: results.length,
+            results: results,
+            login: true,
+            name: req.session.name,
+            role: req.session.role,
+            id_user: req.session.id
+          });
+        }
+      });
+    });
+  }
+  }
+  controller.cronogramaReprogramados =  (req, res) =>{
+    if(req.session.loggedin){
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM cronogramas WHERE estado = 'REPROGRAMAR'", (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.render("cronograma_menu_servicio_c", {
+            total: results.length,
+            results: results,
+            login: true,
+            name: req.session.name,
+            role: req.session.role,
+            id_user: req.session.id
+          });
+        }
+      });
+    });
+  }
+  }
+  controller.cronogramasDelate = (req, res) => {
+    if (req.session.loggedin) {
+        const id = req.params.id;
+        req.getConnection((error, conn) => {
+          conn.query(
+            "DELETE FROM cronogramas WHERE id= ?",
+            [id],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                res.redirect("/cronogamaHistorial");
+              }
+            }
+          );
+        });
+     
+    } else {
+      res.render("login", {
+        login: false,
+      });
+    }
+  };
 module.exports = controller;
