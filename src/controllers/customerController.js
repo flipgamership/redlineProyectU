@@ -4385,4 +4385,181 @@ controller.cronogramaNewSend = (req, res)=>{
       });
     }
   };
+controller.cronogramaEdit =(req, res) =>{
+  if(req.session.loggedin){
+    let id = req.params.id
+    req.getConnection((error, conn) => {
+      conn.query("SELECT id, nombre, cargo FROM usuarios ", (error, results1) => {
+        if (error) {
+          console.log(error);
+        } else {
+          let resultsUser = results1
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM cronogramas WHERE id = ? ",[id], (error, results) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.render("editarCronogramasRedline", {
+                    data: results[0],
+                    results: resultsUser,
+                    login: true,
+                    name: req.session.name,
+                  });
+                }
+              });
+            });
+        }
+      });
+    });
+  }else {
+    res.redirect("/login");
+  }
+}
+controller.cronogramaSolidReprogramar = (req, res) =>{
+  let id = req.params.id
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM cronogramas WHERE id = ? ",[id], (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        res.render("solidReproCronograma", {
+          data: results[0],
+          login: true,
+          name: req.session.name,
+        });
+      }
+    });
+  });
+}
+controller.cronogramaSolidReprogramarSend = (req, res) =>{
+  let id = req.body.id
+  let evidencia = req.body.evidencia
+  let estado = 'REPROGRAMAR'
+  req.getConnection((error, conn) => {
+    conn.query(
+      "UPDATE cronogramas SET ? WHERE id = ? ",
+      [{
+        evidencias_reprogramacion: evidencia,
+        estado: estado,
+      },id],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(results)
+          res.redirect('/cronogamaHistorial')
+        }
+      }
+    );
+  });
+}
+controller.cronogramaReportReprogramar = (req, res) =>{
+  let id = req.params.id
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM cronogramas WHERE id = ? ",[id], (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        res.render("repoReprogramarCronograma", {
+          data: results[0],
+          login: true,
+          name: req.session.name,
+        });
+      }
+    });
+  });
+}
+
+controller.cronogramaReportReprogramarSend = (req, res) =>{
+  let id = req.body.id
+  let fecha = req.body.fecha
+  let hora = req.body.hora
+  let evidencia = '-'
+  let estado = 'INCOMPLETO'
+  req.getConnection((error, conn) => {
+    conn.query(
+      "UPDATE cronogramas SET ? WHERE id = ? ",
+      [{
+        evidencias_reprogramacion: evidencia,
+        estado: estado,
+        hora:hora,
+        fecha:fecha,
+      },id],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(results)
+          res.redirect('/cronogamaHistorial')
+        }
+      }
+    );
+  });
+}
+
+  controller.cronogramaCompletar = (req, res)=>{
+    res.render("cronogramaComplit", {
+      login: true,
+      name: req.session.name,
+      role: req.session.role,
+      id_user: req.session.id
+    });
+  }
+  controller.cronogramaCompletarSend = (req, res)=>{
+    const file = req.file;
+    const filename = req.filename
+    console.log(file, filename)
+  }
+
+  controller.cronogramaEditSend = (req, res)=>{
+    if(req.session.loggedin){
+      let id = req.body.id
+      let fecha = req.body.fecha_consulta
+      let nombre = req.body.nombre
+      let hora = req.body.hora
+      let celular = req.body.celular
+      let nota = req.body.nota
+      let estado = req.body.estado
+      let actividad = req.body.tipo_instalacion
+      let tv = req.body.TV
+      let ip = req.body.ip
+      let plan = req.body.plan
+      let genero = req.body.tecnologias
+      let id_tecnico = req.body.id_tecnico
+      let coordenas = req.body.coordenas
+      
+      console.log(tv, ip, plan)
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE cronogramas SET ? WHERE id = ? ",
+          [{
+            coordenas: coordenas,
+            fecha: fecha,
+            nombre_cliente:nombre,
+            hora: hora,
+            celular: celular,
+            Nota:nota,
+            estado:estado,
+            tv:tv,
+            ip:ip,
+            plan:plan,
+            tipo_instalacion:actividad,
+            genero: genero,
+            id_tecnico : id_tecnico,
+          },id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(results)
+              res.redirect('/cronogamaHistorial')
+            }
+          }
+        );
+      });
+    }
+    
+
+  }
+  
 module.exports = controller;

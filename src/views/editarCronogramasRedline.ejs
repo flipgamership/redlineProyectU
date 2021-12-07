@@ -77,48 +77,49 @@
       <div class="col-lg-5 col-md-8 col-sm-8">
         <div class="card">
           <div class="card-title text-center border-bottom">
-            <h2 class="p-3">agregar nuevo ticket al cronograma</h2>
+            <h2 class="p-3">editar ticket del cronograma</h2>
           </div>
           <div class="card-body">
-            <form action="/agregarNuevoCronogramaSend" method="POST">
-
+            <form action="/cronogramaEditarSend" method="POST">
+              <% if(data){ %> 
+                <input type="text" name="id" value="<%= data.id %>" hidden>
               <div class="mb-3">
                 <h5 for="usuario">feha de la cita</h5>
-                <input type="date" class="form-control" name="fecha_consulta" required>
+                <input type="date" class="form-control" value="<%= data.fecha %>" name="fecha_consulta" required>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">nombre del cliente</h5>
-                <input type="text" class="form-control" name="nombre" required>
+                <input type="text" class="form-control" name="nombre"  value="<%= data.nombre_cliente %>" required>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">hora de la cita</h5>
-                <input type="time" class="form-control" name="hora" required>
+                <input type="time" class="form-control" name="hora"  value="<%= data.hora %>" required>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">celular</h5>
-                <input type="text" class="form-control" name="celular" required>
+                <input type="text" class="form-control" name="celular"  value="<%= data.celular %>" required>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">nota de la cita</h5>
-                <input type="text" class="form-control" name="nota" required>
+                <input type="text" class="form-control" name="nota"  value="<%= data.Nota %>" required>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">ip</h5>
-                <input type="text" class="form-control" name="ip" required>
+                <input type="text" class="form-control" name="ip"  value="<%= data.ip %>" required>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">plan</h5>
-                <input type="text" class="form-control" name="plan" required>
+                <input type="text" class="form-control" name="plan"  value="<%= data.plan %>" required>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">coordenadas de la ubicacion</h5>
-                <input type="text" class="form-control" name="coordenas" required>
+                <input type="text" class="form-control" name="coordenas" value="<%= data.coordenas %>" required>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">¿Tv?</h5>
                 <select id="opcion" class="form-control" style="font-size: 12px;" name="TV" required>
-                  <option style="font-size: 12px;">SI</option>
-                  <option style="font-size: 12px;">NO</option>
+                  <option <%= data.tv =='SI' ? "selected" : '' %> style="font-size: 12px;">SI</option>
+                  <option <%= data.tv =='NO' ? "selected" : '' %> style="font-size: 12px;">NO</option>
                 </select>
               <div class="mb-3">
                 <input type="text" class="form-control" name="estado" value="INCOMPLETO" hidden>
@@ -127,31 +128,32 @@
               <div class="mb-3">
                 <h5 for="usuario">Actividad</h5>
                 <select id="opcion" class="form-control" style="font-size: 12px;" name="tipo_instalacion" required>
-                  <option value="Instalacion" style="font-size: 12px;">Instalacion</option>
-                  <option value="Soporte" style="font-size: 12px;">Soporte</option>
-                  <option value="Migracion" style="font-size: 12px;">Migracion</option>
-                  <option value="Translado" style="font-size: 12px;">Translado</option>
+                  <option <%= data.tipo_instalacion =='Instalacion' ? "selected" : '' %> value="Instalacion" style="font-size: 12px;">Instalacion</option>
+                  <option <%= data.tipo_instalacion =='Soporte' ? "selected" : '' %> value="Soporte" style="font-size: 12px;">Soporte</option>
+                  <option <%= data.tipo_instalacion =='Migracion' ? "selected" : '' %> value="Migracion" style="font-size: 12px;">Migracion</option>
+                  <option <%= data.tipo_instalacion =='Translado' ? "selected" : '' %> value="Translado" style="font-size: 12px;">Translado</option>
                 </select>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">Tecnologias</h5>
                 <select id="opcion" class="form-control" style="font-size: 12px;" name="tecnologias" required>
-                  <option value="Fo" style="font-size: 12px;">Fibra optica</option>
-                  <option value="Re" style="font-size: 12px;">Radio enlace</option>
-                  <option value="Ca" style="font-size: 12px;">Camaras</option>
+                  <option <%= data.genero =='Fo' ? "selected" : '' %> value="Fo" style="font-size: 12px;">Fibra optica</option>
+                  <option <%= data.genero =='Re' ? "selected" : '' %> value="Re" style="font-size: 12px;">Radio enlace</option>
+                  <option <%= data.genero =='Ca' ? "selected" : '' %> value="Ca" style="font-size: 12px;">Camaras</option>
                 </select>
               </div>
               <div class="mb-3">
                 <h5 for="usuario">seleccione el tecnico al que se le asignara la tarea</h5>
+                <p for="usuario">seleccionar el tecnico al cual estava asignado antes por seguridad</p>
                 <select id="opcion" class="form-control" style="font-size: 12px;" name="id_tecnico" required>
                     <% results.forEach((users) => {%>
                     <option value="<%= users.id%>"><%= users.nombre%></option>
                   <% })%>
                 </select>
               </div>
-
+                    <% } %> 
               <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Agregar consumible</button>
+                <button type="submit" class="btn btn-primary">Editar ticket de cronograma</button>
               </div>
             </form>
           </div>

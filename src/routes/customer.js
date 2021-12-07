@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage, dest: path.join(__dirname, '../public/uploads/') }).single('imagen')
+const upload2 = multer({ storage, dest: path.join(__dirname, '../public/uploads/') }).single('firma')
 const customerController=require('../controllers/customerController')
 
 
@@ -149,6 +150,14 @@ router.get('/cronogramaReprogramar', customerController.cronogramaReprogramados)
 router.get('/agregarNuevoCronograma', customerController.cronogramaNew)
 router.post('/agregarNuevoCronogramaSend', customerController.cronogramaNewSend)
 router.get('/delateCronogramaRedline/:id', customerController.cronogramasDelate)
+router.get('/cronogramaEditar/:id', customerController.cronogramaEdit)
+router.post('/cronogramaEditarSend', customerController.cronogramaEditSend)
+router.get('/cronogramaReprogramar/:id', customerController.cronogramaSolidReprogramar)
+router.post('/cronogramaReprogramarSend', customerController.cronogramaSolidReprogramarSend)
+router.get('/cornogramaReprogramacionRespuesta/:id', customerController.cronogramaReportReprogramar)
+router.post('/cornogramaReprogramacionRespuestaSend', customerController.cronogramaReportReprogramarSend)
+router.get('/cp', customerController.cronogramaCompletar)
+router.post('/imgP', upload2 ,customerController.cronogramaCompletarSend);
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);
