@@ -1,35 +1,15 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2021 a las 22:57:44
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 7.3.29
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Base de datos: `proyectredline`
---
 CREATE DATABASE IF NOT EXISTS `proyectredline` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `proyectredline`;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `consumibles`
---
-
-DROP TABLE IF EXISTS `consumibles`;
 CREATE TABLE `consumibles` (
   `id` int(11) NOT NULL,
   `id_consumibles` varchar(100) NOT NULL,
@@ -41,23 +21,12 @@ CREATE TABLE `consumibles` (
   `tipo_unidad` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `consumibles`
---
-
 INSERT INTO `consumibles` (`id`, `id_consumibles`, `nombre`, `cantidad`, `cantidad_min`, `precio_compra`, `precio_unidad`, `tipo_unidad`) VALUES
 (1, 'GUL73', 'ENGANCHES ADECIBOS', 4000, 1000, 400000, 100, 'U'),
 (2, 'GUL72', 'UNFTS', 300, 222, 30000, 100, 'P'),
 (3, 'GUL71', 'rj45', 598, 598, 49834, 83, 'U'),
 (4, 'GUL70', 'cable utp', 6000, 1, 200000, 33, 'M');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cuadrillas`
---
-
-DROP TABLE IF EXISTS `cuadrillas`;
 CREATE TABLE `cuadrillas` (
   `id` int(11) NOT NULL,
   `miembro` varchar(500) NOT NULL,
@@ -66,26 +35,14 @@ CREATE TABLE `cuadrillas` (
   `celular` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `cuadrillas`
---
-
 INSERT INTO `cuadrillas` (`id`, `miembro`, `correo`, `cc`, `celular`) VALUES
 (1, 'Alejandro duque', 'alejodc412@gmail.com', '1216727457', '3022835914'),
-(2, 'Juan Sebastian Tafur Obando', 'justo2103@gmail.com', '1036965340', '3196534409'),
 (3, 'Juan Pablo Castaño Díaz', 'jcastanodiaz1@gmail.com', '1144075543', '3164215281'),
 (4, 'VICTOR MANUEL FLOREZ O', 'drummy8@gmail.com', '1054548015', '3217762749'),
 (5, 'sebastian hernandez botero', 'shb.2196@gmail.com', '1035918988', '3008373001'),
 (6, 'Juan felipe correa rios', 'thefelipegamer7@gmail.com', '1001724660', '3003044512'),
 (999999999, 'Bodega', 'redline@redline.com', '0000000000', '0000000000');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `dispositivos`
---
-
-DROP TABLE IF EXISTS `dispositivos`;
 CREATE TABLE `dispositivos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -96,22 +53,11 @@ CREATE TABLE `dispositivos` (
   `fecha` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `dispositivos`
---
-
 INSERT INTO `dispositivos` (`id`, `nombre`, `tipo_dispositivo`, `estado`, `mac`, `cereal`, `fecha`) VALUES
 (1, 'router tplink', 'ROUTER', 'N', '61286918227', '81682686272', '2021-11-19'),
 (2, 'ont zte', 'ONT', 'N', '1002836526612231', '299265618816566661', '2021-11-18'),
 (4, 'antena', 'ANTENA', 'N', '1527517277157517', '1296719327197', '2021-11-18');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `dispositivos_vendidos`
---
-
-DROP TABLE IF EXISTS `dispositivos_vendidos`;
 CREATE TABLE `dispositivos_vendidos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -121,20 +67,9 @@ CREATE TABLE `dispositivos_vendidos` (
   `cereal` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `dispositivos_vendidos`
---
-
 INSERT INTO `dispositivos_vendidos` (`id`, `nombre`, `tipo_dispositivo`, `fecha`, `mac`, `cereal`) VALUES
 (1, 'router board x8 port', 'ROUTERBOARD', '2021-11-22', '124612642213331', '6273676726188162');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `equipo_seguridad`
---
-
-DROP TABLE IF EXISTS `equipo_seguridad`;
 CREATE TABLE `equipo_seguridad` (
   `id` varchar(500) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -145,13 +80,6 @@ CREATE TABLE `equipo_seguridad` (
   `id_tecnico` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `herramienta`
---
-
-DROP TABLE IF EXISTS `herramienta`;
 CREATE TABLE `herramienta` (
   `codigo_herramienta` varchar(500) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -162,20 +90,9 @@ CREATE TABLE `herramienta` (
   `id_tecnico` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `herramienta`
---
-
 INSERT INTO `herramienta` (`codigo_herramienta`, `nombre`, `img`, `estado`, `descripcion`, `fecha`, `id_tecnico`) VALUES
-('HRL04', 'pueba bot', 'f001a4f7-e453-4853-a538-4dd068f08f3f.jpg', 'B', '', '2021-11-12', 999999999);
+('HRL04', 'pueba bot', '9fd54514-55b3-4bd2-a414-ccd755227163.jpg', 'P', '', '2021-11-29', 4);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `logs_inventario_consumibles`
---
-
-DROP TABLE IF EXISTS `logs_inventario_consumibles`;
 CREATE TABLE `logs_inventario_consumibles` (
   `id` int(11) NOT NULL,
   `id_consumibles` varchar(500) NOT NULL,
@@ -185,10 +102,6 @@ CREATE TABLE `logs_inventario_consumibles` (
   `cantidad_actual` int(11) NOT NULL,
   `cantidad_nueva_ingresada` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `logs_inventario_consumibles`
---
 
 INSERT INTO `logs_inventario_consumibles` (`id`, `id_consumibles`, `objeto`, `fecha`, `cantidad_anterior`, `cantidad_actual`, `cantidad_nueva_ingresada`) VALUES
 (6, 'GUL70', 'cable utp ', '2021-03-22', 10000, 12000, 2000),
@@ -204,13 +117,6 @@ INSERT INTO `logs_inventario_consumibles` (`id`, `id_consumibles`, `objeto`, `fe
 (16, 'GUL71', 'rj45 ', '2021-11-02', 0, 600, 600),
 (17, 'GUL72', 'UNFTS ', '2021-11-02', 0, 300, 300);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `logs_inventario_consumibles_2`
---
-
-DROP TABLE IF EXISTS `logs_inventario_consumibles_2`;
 CREATE TABLE `logs_inventario_consumibles_2` (
   `id` int(11) NOT NULL,
   `id_consumibles` varchar(500) NOT NULL,
@@ -225,10 +131,6 @@ CREATE TABLE `logs_inventario_consumibles_2` (
   `quien_retiro` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `logs_inventario_consumibles_2`
---
-
 INSERT INTO `logs_inventario_consumibles_2` (`id`, `id_consumibles`, `objeto`, `fecha`, `cantidad_anterior`, `cantidad_actual`, `cantidad_retirada`, `precio_total_antes`, `precio_total_despues`, `precio_gasto`, `quien_retiro`) VALUES
 (1, 'GUL71', 'rj45 ', '2021-10-15', 8000, 7000, 1000, 500000, 437000, 63000, 'juan felipe correa'),
 (2, 'GUL70', 'cable utp ', '2021-10-15', 14000, 10000, 4000, 400000, 284000, 116000, 'juan felipe correa'),
@@ -238,13 +140,6 @@ INSERT INTO `logs_inventario_consumibles_2` (`id`, `id_consumibles`, `objeto`, `
 (6, 'GUL71', 'rj45 ', '2021-11-02', 600, 599, 1, 50000, 49917, 83, 'juan felipe correa'),
 (7, 'GUL71', 'rj45 ', '2021-11-02', 599, 598, 1, 49917, 49834, 83, 'juan felipe correa');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `logs_inventario_equipo_seguridad`
---
-
-DROP TABLE IF EXISTS `logs_inventario_equipo_seguridad`;
 CREATE TABLE `logs_inventario_equipo_seguridad` (
   `id` int(11) NOT NULL,
   `id_equipo_seguridad` varchar(500) NOT NULL,
@@ -254,10 +149,6 @@ CREATE TABLE `logs_inventario_equipo_seguridad` (
   `tecnico` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `logs_inventario_equipo_seguridad`
---
-
 INSERT INTO `logs_inventario_equipo_seguridad` (`id`, `id_equipo_seguridad`, `equipo_seguridad`, `descripción_reportada`, `fecha`, `tecnico`) VALUES
 (1, 'EQ01', 'ARNES', 'nueva', '2021-11-04', '1'),
 (2, 'EQ01', 'ARNES GRANDE ', 'nueva', '2021-11-04', '1'),
@@ -265,13 +156,6 @@ INSERT INTO `logs_inventario_equipo_seguridad` (`id`, `id_equipo_seguridad`, `eq
 (4, 'EQ01', 'ARNES GRANDE ', 'en muy buen estado', '2021-11-05', '1'),
 (5, 'EQ01', 'ARNES GRANDE ', 'en buen estado algo desgastada', '2021-11-05', '6');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `logs_inventario_herramientas`
---
-
-DROP TABLE IF EXISTS `logs_inventario_herramientas`;
 CREATE TABLE `logs_inventario_herramientas` (
   `id` int(11) NOT NULL,
   `id_herramienta` varchar(500) NOT NULL,
@@ -280,10 +164,6 @@ CREATE TABLE `logs_inventario_herramientas` (
   `fecha` varchar(500) NOT NULL,
   `tecnico` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `logs_inventario_herramientas`
---
 
 INSERT INTO `logs_inventario_herramientas` (`id`, `id_herramienta`, `herramienta`, `descripción_reportada`, `fecha`, `tecnico`) VALUES
 (8, 'HRL04', 'GANCHO DOBLADOR ELECTRICO PARA HACERO', 'en buen estado algo desgastada', '2021-10-26', '1000000000'),
@@ -299,15 +179,9 @@ INSERT INTO `logs_inventario_herramientas` (`id`, `id_herramienta`, `herramienta
 (18, 'HRL04', 'pueba bot', '', '2021-11-12', '4'),
 (19, 'HRL04', 'pueba bot', '', '2021-11-12', '4'),
 (20, 'HRL04', 'pueba bot', '', '2021-11-12', '5'),
-(21, 'HRL04', 'pueba bot', '', '2021-11-12', '5');
+(21, 'HRL04', 'pueba bot', '', '2021-11-12', '5'),
+(22, 'HRL04', 'pueba bot', '', '2021-11-29', '4');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `personal_oficina`
---
-
-DROP TABLE IF EXISTS `personal_oficina`;
 CREATE TABLE `personal_oficina` (
   `id` int(11) NOT NULL,
   `miembro` varchar(500) NOT NULL,
@@ -317,23 +191,12 @@ CREATE TABLE `personal_oficina` (
   `actividad_dentro_de_la_empresa` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `personal_oficina`
---
-
 INSERT INTO `personal_oficina` (`id`, `miembro`, `correo`, `cc`, `celular`, `actividad_dentro_de_la_empresa`) VALUES
 (1, 'Laura Quirós Cano', 'quiroscanolaura@gmail.com', '1042456999', '3008645381', 'quiroscanolaura@gmail.com'),
 (2, 'Maria Alejandra Vasquez ossa', 'cartera.redline@gmail.com', '1035916276', '3137380529', 'Cartera'),
 (3, 'Leidy Johana Alzate Velasquez', 'secretariaredline@gmail.com', '1035911642', '3207354611', 'Auxiliar administrativa y servicio al cliente'),
 (4, 'Claudia Patricia Navarro Castillo', 'patiii0429@gmail.com', '1095922695', '3114720894', 'Aux administrativo');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `telemercadeoclientes`
---
-
-DROP TABLE IF EXISTS `telemercadeoclientes`;
 CREATE TABLE `telemercadeoclientes` (
   `id` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -360,15 +223,11 @@ CREATE TABLE `telemercadeoclientes` (
   `estado_factura` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `telemercadeoclientes`
---
-
 INSERT INTO `telemercadeoclientes` (`id`, `nombre`, `cedula`, `telefono`, `plan`, `estado`, `estado_contrato`, `estadoLLamada`, `tipificacion`, `observaciones`, `ip`, `direccion`, `coordenadas`, `router`, `mac`, `seguimiento`, `sectorial`, `observaciones_seguimiento`, `fecha_instalación`, `precio_plan`, `pendiente_pago`, `ultima_factura`, `estado_factura`) VALUES
 (1, 'Eliana Cristina Rios Jimenez', '1035913239', '3144288996', '50 MEGAS FIBRA OPTICA', '', 'Activo', '', '', '', '192.168.104.66', 'Vereda la Clara', '6.2651544,-75.4265094', 'ROUTER FIBRA FTTH 01/05', '60:7E:CD:34:D2:22', '', '', '', '20/09/2021', 80000, '1Pago, $29400.00', '#11992 - 01/10/2021', 'Pendiente de Pago'),
 (2, 'Nohemy Estela Botero Gallego', '43210630', '3104355509', '30 MEGAS FIBRA OPTICA', '', 'Activo', '', '', '', '192.168.104.67', 'Vereda Monta¤ez hacia arriba de la sede acci¢n comunal', '6.2984908,-75.4387012', 'ROUTER FIBRA FTTH 01/05', '60:7E:CD:34:64:F4', '', '', '', '20/09/2021', 70000, '1Pago, $25700.00', '#11991 - 01/10/2021', 'Pendiente de Pago'),
 (3, 'Fabio Hernan Serna Mayorga', '71680883', '3014251325', '50 MEGAS FIBRA OPTICA', '', 'Activo', '', '', '', '192.168.104.65', 'Vereda Monta¤ez, Finca los Geranios', '6.296215534210205,-75.44007110595703', 'ROUTER FIBRA FTTH 01/05 + IVA', '60:7E:CD:34:D1:EE', '', '', '', '20/09/2021', 80000, '1Pago, $34900.00', '#11989 - 01/10/2021', 'Pendiente de Pago'),
-(4, 'Adriana Maria Gomez Lezcano', '39443007', '3014601530', '50 MEGAS FIBRA OPTICA', '', 'Activo', '', '', '', '192.168.104.59', 'Cra 52 Nø 44 34 Int 301, Barrio San Francisco', '6.276361,-75.4408966', 'ROUTER FIBRA FTTH 01/05', '60:7E:CD:34:65:AA', '', '', '', '15/09/2021', 80000, '', '', 'Pagadas'),
+(4, 'Adriana Maria Gomez Lezcano', '39443007', '3014601530', '50 MEGAS FIBRA OPTICA', '', 'Activo', 'Si', 'Soporte', 'necesita soporte', '192.168.104.59', 'Cra 52 Nø 44 34 Int 301, Barrio San Francisco', '6.276361,-75.4408966', 'ROUTER FIBRA FTTH 01/05', '60:7E:CD:34:65:AA', '', '', '', '15/09/2021', 80000, '', '', 'Pagadas'),
 (5, 'Juan Pablo Ponce Franco', '98668633', '3127310205', 'Plan 10 Megas', '', 'Activo', '', '', '', '172.30.32.55', 'Vereda la Enea', '', 'PCQ Facturacion 01/05 Yolombal', 'B8:69:F4:5F:51:1F', '', 'GUYO5', '', '15/09/2021', 135000, '2Pagos, $272000.00', '#11988 - 01/10/2021', 'Pendiente de Pago'),
 (6, 'GRUPO NETHEXA SAS', '900347152', '3007042027', '70 MEGAS FIBRA OPTICA', '', 'Activo', '', '', '', '192.168.104.58', 'Vereda La Clara', '6.265140533447266,-75.4334487915039', 'ROUTER FIBRA FTTH 15/20 + IVA', '60:7E:CD:34:C1:FC', '', '', '', '15/09/2021', 90000, '', '', 'Pagadas'),
 (7, 'Licinia Isabel Gutierrez Herrera', '32315781', '3004410067', '50 MEGAS FIBRA OPTICA', '', 'Activo', '', '', '', '192.168.104.57', 'Vereda La clara parte baja', '6.261617,-75.4341048', 'ROUTER FIBRA FTTH 15/20 + IVA', '60:7E:CD:34:65:B7', '', '', '', '14/09/2021', 80000, '', '', 'Pagadas'),
@@ -1173,13 +1032,6 @@ INSERT INTO `telemercadeoclientes` (`id`, `nombre`, `cedula`, `telefono`, `plan`
 (826, 'Luz Stella Ortiz Uribe', '42867217', '3122516210', 'Plan 6 Megas', '', 'Activo', '', '', '', '172.30.3.167', 'Vereda Hojas Anchas - Parcelacion las Quinelas (3)', '6.238102, -75.439096', 'PCQ Facturacion 01/05 Organo', '64:D1:54:B2:53:AC', '', 'GUSA', '', '28/07/2018', 80000, '', '', 'Pagadas'),
 (827, 'Angela Maria Ortiz Uribe', '32491053', '3117339345', 'Plan 6 Megas', '', 'Activo', '', '', '', '172.30.12.166', 'Vereda Hojas Anchas - Parcelacion las quinelas (casa 1)', '6.238847, -75.438892', 'PCQ Facturacion 01/05 Organo', '64:D1:54:B2:53:C3', '', 'GUGU', '', '28/07/2018', 80000, '', '', 'Pagadas');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `telemercadoreportediario`
---
-
-DROP TABLE IF EXISTS `telemercadoreportediario`;
 CREATE TABLE `telemercadoreportediario` (
   `id` int(11) NOT NULL,
   `fecha` varchar(500) NOT NULL,
@@ -1192,10 +1044,6 @@ CREATE TABLE `telemercadoreportediario` (
   `observaciones` varchar(5000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `telemercadoreportediario`
---
-
 INSERT INTO `telemercadoreportediario` (`id`, `fecha`, `llamadas`, `contestadas`, `noContestadas`, `buzon`, `soporte`, `interesados`, `observaciones`) VALUES
 (2, '2021-09-14', 40, 20, 20, 12, 3, 3, 'No hay ningún comentario'),
 (3, '2021-09-15', 70, 50, 20, 10, 3, 10, 'No hay ningún comentario'),
@@ -1206,13 +1054,6 @@ INSERT INTO `telemercadoreportediario` (`id`, `fecha`, `llamadas`, `contestadas`
 (9, '2021-09-19', 40, 30, 10, 10, 13, 12, 'No hay ningún comentario'),
 (10, '2021-09-20', 23, 10, 13, 13, 3, 10, 'No hay ningún comentario');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
-DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -1222,177 +1063,93 @@ CREATE TABLE `usuarios` (
   `cargo` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `usuarios`
---
-
 INSERT INTO `usuarios` (`id`, `nombre`, `user`, `password`, `email`, `cargo`) VALUES
 (2, 'juan felipe correa', 'dev', '$2a$08$DcBFeycAlRnmNsB65zjMWOlgkj4szgbCDU54O2UjMSlZAJ45ZRCja', 'thefelipegamer7@gmail.com', 'admin'),
 (28, 'redline', 'redline', '$2a$08$4s81nOuXSSybbhnySlz3N.2r/jqcJShJ8AJ1ug8YMWwFBRuz.Nczi', 'redline@redline.com', 'servicioCliente'),
-(31, 'tecnico', 'tec', '$2a$08$9LlfRGEHetgjNCYTUbZ46.UbuZK27RV7Qj/pq89PzxIoIlmtc7M1S', 'redline@redline.com', 'tecnico'),
-(32, 'sunchadora amarilla', 'dev2', '$2a$08$/SiknxUlAU2Y2DFVUIU05eTwz2zcGKnoVKtm3LNeRriXKpYtS6gU2', 'thefelipegamer7@gmail.com', 'servicioCliente');
+(31, 'tecnico', 'tec', '$2a$08$NVurKtFx8H1rPqe7UH8WnukRJ9ud.HBPihY3m.z9KTdInPHyGmhkC', 'redline@redline.com', 'tecnico'),
+(32, 'sunchadora amarilla', 'dev2', '$2a$08$/SiknxUlAU2Y2DFVUIU05eTwz2zcGKnoVKtm3LNeRriXKpYtS6gU2', 'thefelipegamer7@gmail.com', 'servicioCliente'),
+(33, 'admin', 'admin', '$2a$08$JlJOtjQsMmcnh9xcndY3VeHNdThKOnHZl/hzcpP4ojhdOLFGtaC32', 'admin@admin.com', 'admin');
 
---
--- Índices para tablas volcadas
---
 
---
--- Indices de la tabla `consumibles`
---
 ALTER TABLE `consumibles`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_consumibles` (`id_consumibles`);
 
---
--- Indices de la tabla `cuadrillas`
---
 ALTER TABLE `cuadrillas`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `dispositivos`
---
 ALTER TABLE `dispositivos`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `dispositivos_vendidos`
---
 ALTER TABLE `dispositivos_vendidos`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `equipo_seguridad`
---
 ALTER TABLE `equipo_seguridad`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id cuadrilla` (`id_tecnico`);
 
---
--- Indices de la tabla `herramienta`
---
 ALTER TABLE `herramienta`
   ADD PRIMARY KEY (`codigo_herramienta`),
   ADD KEY `id_cuadrilla` (`id_tecnico`);
 
---
--- Indices de la tabla `logs_inventario_consumibles`
---
 ALTER TABLE `logs_inventario_consumibles`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `logs_inventario_consumibles_2`
---
 ALTER TABLE `logs_inventario_consumibles_2`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `logs_inventario_equipo_seguridad`
---
 ALTER TABLE `logs_inventario_equipo_seguridad`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `logs_inventario_herramientas`
---
 ALTER TABLE `logs_inventario_herramientas`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `personal_oficina`
---
 ALTER TABLE `personal_oficina`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `telemercadeoclientes`
---
 ALTER TABLE `telemercadeoclientes`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cedula` (`cedula`);
 
---
--- Indices de la tabla `telemercadoreportediario`
---
 ALTER TABLE `telemercadoreportediario`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `usuarios`
---
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT de las tablas volcadas
---
 
---
--- AUTO_INCREMENT de la tabla `consumibles`
---
 ALTER TABLE `consumibles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
---
--- AUTO_INCREMENT de la tabla `cuadrillas`
---
 ALTER TABLE `cuadrillas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000000001;
 
---
--- AUTO_INCREMENT de la tabla `dispositivos`
---
 ALTER TABLE `dispositivos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
---
--- AUTO_INCREMENT de la tabla `dispositivos_vendidos`
---
 ALTER TABLE `dispositivos_vendidos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
---
--- AUTO_INCREMENT de la tabla `logs_inventario_consumibles`
---
 ALTER TABLE `logs_inventario_consumibles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
---
--- AUTO_INCREMENT de la tabla `logs_inventario_consumibles_2`
---
 ALTER TABLE `logs_inventario_consumibles_2`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
---
--- AUTO_INCREMENT de la tabla `logs_inventario_equipo_seguridad`
---
 ALTER TABLE `logs_inventario_equipo_seguridad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
---
--- AUTO_INCREMENT de la tabla `logs_inventario_herramientas`
---
 ALTER TABLE `logs_inventario_herramientas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
---
--- AUTO_INCREMENT de la tabla `telemercadeoclientes`
---
 ALTER TABLE `telemercadeoclientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=828;
 
---
--- AUTO_INCREMENT de la tabla `telemercadoreportediario`
---
 ALTER TABLE `telemercadoreportediario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
