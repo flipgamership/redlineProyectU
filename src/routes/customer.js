@@ -11,7 +11,8 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage, dest: path.join(__dirname, '../public/uploads/') }).single('imagen')
-const upload2 = multer({ storage, dest: path.join(__dirname, '../public/uploads/') }).single('firma')
+const uploadEF = multer({ storage, dest: path.join(__dirname, '../public/uploads/') }).single('evidencia_foto')
+const uploadF = multer({ storage, dest: path.join(__dirname, '../public/uploads/') }).single('firma')
 const customerController=require('../controllers/customerController')
 
 
@@ -156,8 +157,15 @@ router.get('/cronogramaReprogramar/:id', customerController.cronogramaSolidRepro
 router.post('/cronogramaReprogramarSend', customerController.cronogramaSolidReprogramarSend)
 router.get('/cornogramaReprogramacionRespuesta/:id', customerController.cronogramaReportReprogramar)
 router.post('/cornogramaReprogramacionRespuestaSend', customerController.cronogramaReportReprogramarSend)
-router.get('/cp', customerController.cronogramaCompletar)
-router.post('/imgP', upload2 ,customerController.cronogramaCompletarSend);
+router.get('/cronogramaFirmaPast/:id', customerController.cronogramaCompletar)
+router.get('/cronogramaCompletar/:id', customerController.cronogramaCompletar2)
+router.post('/cronogramaCompletarSend' ,customerController.cronogramaCompletarSend);
+router.post('/cronogramaFotoCedula', uploadEF ,customerController.cronogramaCompletarFotoCedula)
+router.post('/cronogramaFotoSP', uploadEF ,customerController.cronogramaCompletarFotoSP)
+router.post('/cronogramaFotoOnt', uploadEF ,customerController.cronogramaCompletarFotoOnt)
+router.post('/cronogramaFotoInstalacion', uploadEF ,customerController.cronogramaCompletarFotoInstalacion)
+router.post('/cronogramaCompletarfinSend', uploadF ,customerController.cronogramaCompletarfinSend);
+router.get('/cronogramaDetalles/:id', customerController.detallesCronograma)
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);

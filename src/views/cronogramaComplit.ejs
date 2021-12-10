@@ -18,19 +18,23 @@
   <!-- jsinger para firma-->
   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
-  <script src="js/jSignature.min.js"></script>
-  <script src="js/jSignature.min.noconflict.js"></script>
-  <script src="js/flashcanvas.js"></script>
-  <script src="js/flashcanvas.swf"></script>
+  <script src="/js/jSignature.min.js"></script>
+  <script src="/js/jSignature.min.noconflict.js"></script>
+  <script src="/js/flashcanvas.js"></script>
+  <script src="/js/flashcanvas.swf"></script>
 
   <style type="text/css">
     article {
       width: 400px;
       height: 180px;
     }
-    .boton{
-        float:left; margin-left: 15%; margin-top: 3px;
+
+    .boton {
+      float: left;
+      margin-left: 15%;
+      margin-top: 3px;
     }
+
     #signature {
       background-color: #EEE;
       margin-left: 15%;
@@ -42,24 +46,28 @@
       height: 80x;
       border: 2px solid #888;
     }
+
     @media screen and (max-width: 600px) {
-        #signature {
-      background-color: #EEE;
-      margin-left: 10%;
-      margin-right: 10%;
-      margin-top: 30px;
-      border-radius: 6px;
-      border: white solid 1px;
-      width: 290px;
-      height: 80x;
-      border: 2px solid #888;
-    }
-    .boton{
-        float:left; margin-left: 10%; margin-top: 3px;
-    }
+      #signature {
+        background-color: #EEE;
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 30px;
+        border-radius: 6px;
+        border: white solid 1px;
+        width: 290px;
+        height: 80x;
+        border: 2px solid #888;
+      }
+
+      .boton {
+        float: left;
+        margin-left: 10%;
+        margin-top: 3px;
+      }
     }
   </style>
-
+ 
   <script>
     $(document).ready(function() {
       var signatureDiv = $("#signature").jSignature();
@@ -89,24 +97,26 @@
 </head>
 
 <body class="login">
-    <header class="headerNav">
-      <nav class="navbarPrimary">
-        <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
-        <ul class="navMenu">
-          <li class="navItem">
-            <a href="" class="navLink"><i class='bx bxs-notepad'></i>Cronograma</a>
-          </li>
-          
-  
-  
-        </ul>
-        <div class="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </div>
-      </nav>
-    </header>
+  <header class="headerNav">
+    <nav class="navbarPrimary">
+      <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
+      <ul class="navMenu">
+        <li class="navItem">
+          <a href="" class="navLink"><i class='bx bxs-notepad'></i>Cronograma</a>
+        </li>
+        </li class="navItem">
+        <a style="margin-left:20px; font-size: 12px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Sesion</a>
+        </li>
+
+
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </header>
 
   <div class="container" style="margin-top: 80px; ">
     <div class="row justify-content-center mt-5 ">
@@ -118,7 +128,7 @@
               <div class="">
                 <p style="text-align:center; font-size: 14px;">Ingresar Firma</p>
                 <div class="signature" id="signature"></div>
-                <div class="boton">
+                <div class="boton" id="clicki">
                   <button id="borrar" class="btn btn-warning">Borrar</button>
                   <button id="guardar" class="btn btn-primary">Guardar</button>
                 </div>
@@ -126,7 +136,8 @@
 
                 <hr style="margin-top: 20px;">
                 <div class="d-grid">
-                  <button class="btn btn-primary">Continuar</button>
+                    <a href="/cronogramaCompletar/<%= id %>" class="btn btn-primary">Continuar</a>
+
                 </div>
 
 
