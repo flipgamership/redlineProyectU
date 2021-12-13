@@ -38,7 +38,7 @@
       height: 240px;
       border-radius: 5px;
       border: solid 5px rgb(219, 68, 55);
-      /* background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta.png); */
+      /* background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta.png); */ 
       background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta1.png);
       background-color: rgb(219, 68, 55);
       display: inline-flex;
@@ -206,6 +206,7 @@
     <br>
     <!----------------------------------------------------------------------------------------------------------------------------------------------------------->
     <% results.forEach((data) => {%>
+      <% if(role == 'admin' || role == 'servicioCliente'){ %> 
     <% if(data.estado == 'COMPLETADO'){ %>
     <div class="card mb-3 cartdising">
       <div class="row g-0">
@@ -465,7 +466,271 @@
       </div>
     </div>
     <% } %>
-    <% }) %>
+    <% }else if (role == 'tecnico'){%>
+        <% if(data.id_tecnico == id_user){%>
+          <% if(data.estado == 'COMPLETADO'){ %>
+            <div class="card mb-3 cartdising">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <iframe class="card-img-top" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=<%= data.coordenas %> &amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" width="" height="230px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" style="font-size: 18px; margin-top: 0px; margin-bottom: 0px; display: inline-block; width: 150px;"><%= data.tipo_instalacion  %></h5>
+                    <% if(data.tv == 'SI'){%>
+                      <li class="SI">TV</li>
+                      <% if(data.genero == 'Re'){%>
+                        <li class="Re2">RE</li>
+                        <% }else if (data.genero == 'Fo') {%>
+                        <li class="Fo2">FO</li>
+                        <%  } %>
+                      <% }else{%>
+                        <% if(data.genero == 'Re'){%>
+                          <li class="Re">RE</li>
+                          <% }else if (data.genero == 'Fo') {%>
+                          <li class="Fo">FO</li>
+                          <%  } %>
+                          <% } %> 
+                    
+        
+                    <li style="font-size: 14px;  border-radius: 3px; width: 160px; display: block;  border-top: 1px black solid; margin-top: 0px;"><%= data.hora %> --- <%= data.fecha %></li>
+                    <div>
+                      <div style="border-radius: 6px; overflow:hidden; height: 55px; margin-bottom: 4px;">
+                        <table class="table table-responsive table-light" style="width: 100%; font-size: 10px;">
+                          <thead class="thead">
+                            <tr>
+                              <th>#</th>
+                              <th>Nombre del cliente</th>
+                              <th>Numero de celular</th>
+        
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row"><%= data.id %></th>
+                              <td><%= data.nombre_cliente %></td>
+                              <td><%= data.celular  %> - <a href="http://wa.me/57<%= data.celular  %>" class="btn btn-success" style="font-size: 10px;"><i class='bx bx-message-rounded-dots'></i></a>
+                              </td>
+                            </tr>
+                          </tbody>
+        
+                        </table>
+                      </div>
+                      <div style="border-radius: 6px; overflow:hidden; height: 46px;">
+                        <table class="table table-responsive table-light" style="width: 100%; font-size: 10px;">
+                          <thead class="thead">
+                            <tr>
+                              <th>Ip</th>
+                              <th>plan</th>
+        
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><%= data.ip %></td>
+                              <td><%= data.plan  %></a>
+                              </td>
+                            </tr>
+                          </tbody>
+        
+                        </table>
+                      </div>
+                      <li style="font-size: 13px; border-radius: 3px; width: 40px; font-weight: bold;">Nota:</li>  
+                      <p style="width: 100; height: 25px; background-color: white; border-radius: 5px; padding-left: 3px; margin-bottom: 0px; font-size: 12px">
+                        <%= data.Nota  %>
+                      </p>
+                      <% if(role ==  'admin' || role == 'servicioCliente' ){ %>
+                      
+                        <a class="btn btn-success btn-sm " style="font-size: 9px; margin-top: 0%;" href="/cronogramaDetalles/<%= data.id %>" role="button">detalles <i class='bx bx-check'></i></a>
+                      <a class="btn btn-warning btn-sm " style="font-size: 9px; margin-top: 0%;" href="/cronogramaEditar/<%= data.id %>" role="button">editar <i class='bx bx-pencil'></i></a>
+                      <a class="btn btn-danger btn-sm " style="font-size: 9px; margin-top: 0%;" href="/delateCronogramaRedline/<%= data.id %>" role="button">eliminar
+                        <i class='bx bx-trash'></i></a>
+                      <% } %>
+                      <a href="https://chat.whatsapp.com/FDqYFIrSbyFFlwsu6jYwqi" class="btn btn-primary" style="font-size: 9px; margin-top: 0%;"><i class='bx bx-message-rounded-dots'></i>Chat</a>
+         
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+            <% }else if (data.estado == 'INCOMPLETO'){  %>
+        
+            <div class="card mb-3 cartdising2 ">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <iframe class="card-img-top" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=<%= data.coordenas %> &amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" width="" height="230px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" style="font-size: 18px;margin-top: 0px; margin-bottom: 0px; display: inline-block; width: 150px;"><%= data.tipo_instalacion  %></h5>
+                    <% if(data.tv == 'SI'){%>
+                      <li class="SI">TV</li>
+                      <% if(data.genero == 'Re'){%>
+                        <li class="Re2">RE</li>
+                        <% }else if (data.genero == 'Fo') {%>
+                        <li class="Fo2">FO</li>
+                        <%  } %>
+                      <% }else{%>
+                        <% if(data.genero == 'Re'){%>
+                          <li class="Re">RE</li>
+                          <% }else if (data.genero == 'Fo') {%>
+                          <li class="Fo">FO</li>
+                          <%  } %>
+                          <% } %> 
+        
+                    <li style="font-size: 14px;  border-radius: 3px; width: 160px; display: block;  border-top: 1px black solid; margin-top: 0px;"><%= data.hora %> --- <%= data.fecha %></li>
+                    <div>
+                      <div style="border-radius: 6px; overflow:hidden; height: 55px; margin-bottom: 4px;">
+                        <table class="table table-responsive table-light" style="width: 100%; font-size: 10px;">
+                          <thead class="thead">
+                            <tr>
+                              <th>#</th>
+                              <th>Nombre del cliente</th>
+                              <th>Numero de celular</th>
+        
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row"><%= data.id %></th>
+                              <td><%= data.nombre_cliente %></td>
+                              <td><%= data.celular  %> - <a href="http://wa.me/57<%= data.celular  %>" class="btn btn-success" style="font-size: 10px;"><i class='bx bx-message-rounded-dots'></i></a>
+                              </td>
+                            </tr>
+                          </tbody>
+        
+                        </table>
+                      </div>
+                      <div style="border-radius: 6px; overflow:hidden; height: 46px;">
+                        <table class="table table-responsive table-light" style="width: 100%; font-size: 10px;">
+                          <thead class="thead">
+                            <tr>
+                              <th>Ip</th>
+                              <th>plan</th>
+        
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><%= data.ip %></td>
+                              <td><%= data.plan  %></a>
+                              </td>
+                            </tr>
+                          </tbody>
+        
+                        </table>
+                      </div>
+                      <li style="font-size: 13px; border-radius: 3px; width: 40px; font-weight: bold;">Nota:</li>
+                      <p style="width: 100; height: 25px; background-color: white; border-radius: 5px; padding-left: 3px; margin-bottom: 0px ; font-size: 12px;">
+                        <%= data.Nota  %>
+                      </p>
+                      <% if(role ==  'admin' || role == 'servicioCliente' ){ %>
+                      <a class="btn btn-warning btn-sm " style="font-size: 9px; margin-top: 0%;" href="/cronogramaEditar/<%= data.id %>" role="button">editar <i class='bx bx-pencil'></i></a>
+                      <a class="btn btn-danger btn-sm " style="font-size: 9px; margin-top: 0%;" href="/delateCronogramaRedline/<%= data.id %>" role="button">eliminar
+                      <i class='bx bx-trash'></i></a>
+                      
+                      <% } %>
+                      <% if(role == 'tecnico'  ){ %>
+                      <a class="btn btn-success btn-sm " style="font-size: 9px; margin-top: 0%;" href="/cronogramaFirmaPast/<%= data.id %>" role="button">completar <i class='bx bx-trim'></i></a>
+                      <a class="btn btn-warning btn-sm " style="font-size: 9px; margin-top: 0%;" href="/cronogramaReprogramar/<%= data.id %>" role="button">solicitar reprogramar <i class='bx bx-pencil'></i></a>
+                      <% } %>
+                      <a href="https://chat.whatsapp.com/FDqYFIrSbyFFlwsu6jYwqi" class="btn btn-primary" style="font-size: 9px; margin-top: 0%;"><i class='bx bx-message-rounded-dots'></i>Chat</a>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }else if (data.estado == 'REPROGRAMAR'){  %>
+        
+            <div class="card mb-3 cartdising3">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <iframe class="card-img-top" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=<%= data.coordenas %> &amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" width="" height="230px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" style="font-size: 18px; margin-top: 0px; margin-bottom: 0px; display: inline-block; width: 150px;"><%= data.tipo_instalacion  %></h5>
+                    <% if(data.tv == 'SI'){%>
+                      <li class="SI">TV</li>
+                      <% if(data.genero == 'Re'){%>
+                        <li class="Re2">RE</li>
+                        <% }else if (data.genero == 'Fo') {%>
+                        <li class="Fo2">FO</li>
+                        <%  } %>
+                      <% }else{%>
+                        <% if(data.genero == 'Re'){%>
+                          <li class="Re">RE</li>
+                          <% }else if (data.genero == 'Fo') {%>
+                          <li class="Fo">FO</li>
+                          <%  } %>
+                          <% } %> 
+        
+                    <li style="font-size: 14px;  border-radius: 3px; width: 160px; display: block;  border-top: 1px black solid; margin-top: 0px;"><%= data.hora %> --- <%= data.fecha %></li>
+                    <div>
+                      <div style="border-radius: 6px; overflow:hidden; height: 55px; margin-bottom: 4px;">
+                        <table class="table table-responsive table-light" style="width: 100%; font-size: 10px;">
+                          <thead class="thead">
+                            <tr>
+                              <th>#</th>
+                              <th>Nombre del cliente</th>
+                              <th>Numero de celular</th>
+        
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row"><%= data.id %></th>
+                              <td><%= data.nombre_cliente %></td>
+                              <td><%= data.celular  %> - <a href="http://wa.me/57<%= data.celular  %>" class="btn btn-success" style="font-size: 10px;"><i class='bx bx-message-rounded-dots'></i></a>
+                              </td>
+                            </tr>
+                          </tbody>
+        
+                        </table>
+                      </div>
+                      <div style="border-radius: 6px; overflow:hidden; height: 46px;">
+                        <table class="table table-responsive table-light" style="width: 100%; font-size: 10px;">
+                          <thead class="thead">
+                            <tr>
+                              <th>Ip</th>
+                              <th>plan</th>
+        
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><%= data.ip %></td>
+                              <td><%= data.plan  %></a>
+                              </td>
+                            </tr>
+                          </tbody>
+        
+                        </table>
+                      </div>
+                      <li style="font-size: 13px; border-radius: 3px; width: 40px; font-weight: bold;">Nota:</li>
+                      <p style="width: 100; height: 25px; background-color: white; border-radius: 5px; padding-left: 3px; margin-bottom: 0px ; font-size: 12px;">
+                        <%= data.Nota  %>
+                      </p>
+                      <% if(role ==  'admin' || role == 'servicioCliente' ){ %>
+                      <a class="btn btn-warning btn-sm " style="font-size: 9px; margin-top: 0%;" href="/cronogramaEditar/<%= data.id %>" role="button">editar <i class='bx bx-pencil'></i></a>
+                      <a class="btn btn-danger btn-sm " style="font-size: 9px; margin-top: 0%;" href="/delateCronogramaRedline/<%= data.id %>" role="button">eliminar
+                      <i class='bx bx-trash'></i></a>
+                      <a class="btn btn-warning btn-sm " style="font-size: 9px; margin-top: 0%;" href="/cornogramaReprogramacionRespuesta/<%= data.id %>" role="button">Reprogramar <i class='bx bx-pencil'></i></a>
+                      <% } %>
+                      <a href="https://chat.whatsapp.com/FDqYFIrSbyFFlwsu6jYwqi" class="btn btn-primary" style="font-size: 9px; margin-top: 0%;"><i class='bx bx-message-rounded-dots'></i>Chat</a>
+        
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%   } %> 
+          <%   } %> 
+
+      <%} %>
+    <%}) %>
   </div>
 
 
