@@ -53,7 +53,7 @@ controller.loginAuth = async (req, res) => {
             req.session.loggedin = true;
             req.session.name = results[0].nombre;
             req.session.role = results[0].cargo;
-            req.session.ID = results[0].id; 
+            req.session.ID = results[0].id;
             res.render("login", {
               alert: true,
               alertTitle: "acceso consedido",
@@ -4149,7 +4149,6 @@ controller.disaing = (req, res) => {
 };
 
 controller.cronogramaHoy = (req, res) => {
-  
   if (req.session.loggedin) {
     var fecha = new Date(); //Fecha actual
     var mes = fecha.getMonth() + 1; //obteniendo mes
@@ -4178,7 +4177,7 @@ controller.cronogramaHoy = (req, res) => {
                 login: true,
                 name: req.session.name,
                 role: req.session.role,
-                id_user: req.session.ID
+                id_user: req.session.ID,
               });
             }
           }
@@ -4203,7 +4202,7 @@ controller.cronogramaHoy = (req, res) => {
                 login: true,
                 name: req.session.name,
                 role: req.session.role,
-                id_user: req.session.ID
+                id_user: req.session.ID,
               });
             }
           }
@@ -4227,7 +4226,7 @@ controller.cronogramaTodo = (req, res) => {
               login: true,
               name: req.session.name,
               role: req.session.role,
-              id_user: req.session.ID
+              id_user: req.session.ID,
             });
           }
         }
@@ -4248,7 +4247,7 @@ controller.cronogramaHistorial = (req, res) => {
             login: true,
             name: req.session.name,
             role: req.session.role,
-            id_user: req.session.ID
+            id_user: req.session.ID,
           });
         }
       });
@@ -4271,7 +4270,6 @@ controller.cronogramaNew = (req, res) => {
               results: results,
               login: true,
               name: req.session.name,
-              
             });
           }
         }
@@ -4343,7 +4341,7 @@ controller.cronogramaIncompletos = (req, res) => {
               login: true,
               name: req.session.name,
               role: req.session.role,
-              id_user: req.session.ID
+              id_user: req.session.ID,
             });
           }
         }
@@ -4366,7 +4364,7 @@ controller.cronogramaCompletos = (req, res) => {
               login: true,
               name: req.session.name,
               role: req.session.role,
-              id_user: req.session.ID
+              id_user: req.session.ID,
             });
           }
         }
@@ -4389,7 +4387,7 @@ controller.cronogramaReprogramados = (req, res) => {
               login: true,
               name: req.session.name,
               role: req.session.role,
-              id_user: req.session.ID
+              id_user: req.session.ID,
             });
           }
         }
@@ -4559,7 +4557,7 @@ controller.cronogramaCompletar = (req, res) => {
     login: true,
     name: req.session.name,
     role: req.session.role,
-    id_user: req.session.ID
+    id_user: req.session.ID,
   });
 };
 controller.cronogramaCompletar2 = (req, res) => {
@@ -4579,7 +4577,7 @@ controller.cronogramaCompletar2 = (req, res) => {
             login: true,
             name: req.session.name,
             role: req.session.role,
-            id_user: req.session.ID
+            id_user: req.session.ID,
           });
         }
       }
@@ -4610,7 +4608,7 @@ controller.cronogramaCompletarSend = (req, res) => {
             login: true,
             name: req.session.name,
             role: req.session.role,
-            id_user: req.session.ID
+            id_user: req.session.ID,
           });
           // res.render("cronogramaConplit3", {
           //   id:id,
@@ -4650,7 +4648,7 @@ controller.cronogramaCompletarFotoCedula = (req, res) => {
             login: true,
             name: req.session.name,
             role: req.session.role,
-            id_user: req.session.ID
+            id_user: req.session.ID,
           });
           // res.render("cronogramaConplit3", {
           //   id:id,
@@ -4690,8 +4688,8 @@ controller.cronogramaCompletarFotoOnt = (req, res) => {
             login: true,
             name: req.session.name,
             role: req.session.role,
-            id_user: req.session.ID
-          })
+            id_user: req.session.ID,
+          });
           // res.render("cronogramaConplit3", {
           //   id:id,
           //   fecha:fecha,
@@ -4731,7 +4729,7 @@ controller.cronogramaCompletarFotoSP = (req, res) => {
             login: true,
             name: req.session.name,
             role: req.session.role,
-            id_user: req.session.ID
+            id_user: req.session.ID,
           });
           // res.render("cronogramaConplit3", {
           //   id:id,
@@ -4835,7 +4833,7 @@ controller.detallesCronograma = (req, res) => {
                 } else {
                   res.render("cronogramadetalles", {
                     data: data,
-                    tecnico:results[0],
+                    tecnico: results[0],
                     login: true,
                     name: req.session.name,
                     role: req.session.role,
@@ -4901,6 +4899,28 @@ controller.cronogramaEditSend = (req, res) => {
       );
     });
   }
+};
+controller.converterDetallesCronogramaPdf = (req, res) => {
+  let id = req.params.id;
+  req.getConnection((error, conn) => {
+    conn.query(
+      "SELECT * FROM cronogramas WHERE id =  ?",
+      [id],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.render("generatorpfe", {
+            data: results[0],
+            login: true,
+            name: req.session.name,
+            role: req.session.role,
+            id_user: req.session.id,
+          });
+        }
+      }
+    );
+  });
 };
 
 module.exports = controller;

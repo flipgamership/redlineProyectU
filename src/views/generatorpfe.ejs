@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8">
+	<title>hoja de servicio redline - redline</title>
+	<link href="" rel="shortcut icon" type="image/x-icon" />
+	<link href="" rel="apple-touch-icon-precomposed" />
+	<style type="text/css">body, td, th { font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif; font-style: normal; font-size: 11px; }
+        body { padding: 0; margin: 0 }
+        table p, table h4 { margin: 5px 0; }
+        h1, h4 { margin: 7px 0; }
+        .table { font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif; border-collapse: collapse; width: 100%; border: 1px solid #bdbdbd; font-size: 11px; }
+        .table th { border: 1px solid #bdbdbd; padding: 4px; }
+        .table td { border: 1px solid #bdbdbd; padding: 2px; font-size: 11px; }
+        .table th { padding-top: 6px; padding-bottom: 6px; text-align: left; background-image: -webkit-linear-gradient(top, #f5f5f5 0, #e8e8e8 100%); background-image: -o-linear-gradient(top, #f5f5f5 0, #e8e8e8 100%); background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#e8e8e8)); background-image: linear-gradient(to bottom, #f5f5f5 0, #e8e8e8 100%);  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+        background-repeat: repeat-x; }
+	</style>
+	<style media="print" type="text/css">@page {
+        size: auto;
+        /* auto is the initial value */
+        margin-bottom: 0px;
+        /* this affects the margin in the printer settings */
+    }
+	</style>
+</head>
+<body>
+<div style="height:80%">
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top" width="39%">                                 <img alt="" src="https://redline.net.co/wp-content/uploads/2021/02/Logo-Redline-1024x602.png" width="39%" /></td>
+			<td valign="top" width="39%">
+			<h4><strong>Redline INC S.A.S   NIT  </strong>Redline</h4>
+
+			<p>Autopista Medellin Bogota kilometro 26</p>
+
+			<p>redlinecomunications@gmail.com</p>
+
+			<p>Celular: +57 3041443186</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h1 style="width:100%; text-align:center"><b>HOJA DE SERVICIO</b></h1>
+
+<table class="table" width="100%">
+	<thead>
+		<tr>
+			<th align="center" colspan="2" valign="middle"><strong>DATOS DEL CLIENTE</strong></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% if(data){ %> 
+		<tr>
+			<td align="right" width="24%"><b>Nombre y Apellidos:</b></td>
+			<td width="76%"><%= data.nombre_cliente %> </td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Telefono:</strong></td>
+			<td><%= data.celular  %> </td>
+		</tr>
+		<tr>
+			<td align="right"><b>Coordenadas</b>:</td>
+			<td><%= data.coordenadas %> </td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Fecha de instalacion:</strong></td>
+			<td><%= data.fecha %></td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Fecha fin de instalacion:</strong></td>
+			<td>
+			<p><%= data.fecha_fin %></p>
+			</td>
+			
+	</tbody>
+</table>
+
+<h4><b>SERVICIOS INSTALADOS</b></h4>
+
+<table class="table" width="100%">
+	<thead>
+		<tr>
+			<th align="center"><b>Plan</b></th>
+			<th align="center"><b>Nº IP</b></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><%= data.plan %></td>
+			<td><%= data.ip %></td>
+		</tr>
+	</tbody>
+</table>
+
+<h4><b>---- EVIDENCIA</b></h4>
+
+<table class="table" width="100%">
+	<thead>
+		<tr>
+			<th align="center"><b>ONT</b></th>
+			<th align="center"><b>INSTALACION</b></th>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><img src="/uploads/<%=data.foto_ont%>" alt="" width="30%"></td>
+			<td><img src="/uploads/<%=data.foto_instalacion%>" alt="" width="30%"></td>
+		</tr>
+	</tbody>
+	<table class="table" width="100%">
+		<thead>
+			<tr>
+				<th align="center"><b>CC / Nit</b></th>
+				<th align="center"><b>foto factura</b></th>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><img src="/uploads/<%=data.foto_cedula%>" alt="" width="30%"></td>
+				<td><img src="/uploads/<%=data.foto_sp%>" alt="" width="30%">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</table>
+<table class="table" style="margin-top:20px" width="100%">
+	<thead>
+		<tr>
+			<th align="left">
+			<h4><b>Observaciones</b></h4>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td valign="top">
+			<ul>
+				<li>Todo reporte por falla de su servicio tiene un plazo de 12 a 24 horas, para solucionarlo.</li>
+				<li>La facturación se realiza mes vencido.</li>
+				<li>Los equipos entregados al usuario para la prestacion del servicio son propiedad exclusiva de REDLINE y se entregan a titulo de comodato.</li>
+				<li>Al cancelar su servicio, retiramos todos los equipos: Antena, modem, etc.</li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="table" style="margin-top:20px" width="100%">
+	<thead>
+		<tr>
+			<th align="left">
+			<h4><b>Horarios de Atencion</b></h4>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td valign="top">
+			<ul>
+				<li><b>Tel. Servicio Al Cliente:</b> +57 3041443186</li>
+				<li><b>Lunes a Viernes:</b> 8:00 AM a 5:00 PM</li>
+				<li><b>Sabado: </b>8:00 AM a 12:00 PM</li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div style="width:100%; height:10%; margin-top: 4%">
+<table width="100%">
+	<tbody>
+		<tr>
+			<td align="center"><img src="/uploads/<%=data.firma%>" alt="" width="15%"></td>
+		</tr>
+		<tr>
+			<td align="center" style="font-style: normal; font-weight: bold;">
+			<p>_______________________________________________________</p>
+
+			<p>Cliente</p>
+			</td>
+		
+		</tr>
+	</tbody>
+</table>
+<% } %> 
+</div>
+<script type="text/javascript">
+window.print();
+window.setTimeout(redirect, 180000);
+function redirect (){
+	window.location = '/cronogramaCompletos'
+}
+</script></body>
+</html>

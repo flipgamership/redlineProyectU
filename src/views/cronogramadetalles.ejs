@@ -128,7 +128,9 @@
                 <img style="width: 400px; height: 180px; display: inline-block; border-bottom: 3px black solid;" src="/uploads/<%=data.firma%>" alt="" >
                 <% } %> 
                 <p class="card-text">este servicio se le asigno a <%= tecnico.nombre  %> </p>
-              <a href="#" class="btn btn-primary">convertir a pdf</a>
+                <% if(data){ %> 
+              <a href="/convertirPdfCronograma/<%= data.id %>" class="btn btn-primary">convertir a pdf</a>
+              <% } %> 
             </div>
             <div class="card-footer text-muted">
               Redline.sas
