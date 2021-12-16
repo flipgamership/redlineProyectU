@@ -167,6 +167,9 @@ router.post('/cronogramaFotoInstalacion', uploadEF ,customerController.cronogram
 router.post('/cronogramaCompletarfinSend', uploadF ,customerController.cronogramaCompletarfinSend);
 router.get('/cronogramaDetalles/:id', customerController.detallesCronograma)
 router.get('/convertirPdfCronograma/:id', customerController.converterDetallesCronogramaPdf)
+router.get('/cronogamaRadioEnlace', customerController.cronogramaRadioEnlace)
+router.get('/cronogamaFibraOptica', customerController.cronogramaFibraOptica)
+router.post('/cronogramaOrganizarPorFecha', customerController.cronogramaOrganizarFecha)
 // router.post('/profile-upload-single', customerController.subirImagen)
 // router.post('/add', customerController.save);
 // router.get('/delate/:ID', customerController.delate);

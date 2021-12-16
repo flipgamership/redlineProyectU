@@ -4130,23 +4130,7 @@ controller.img = (req, res) => {
   });
 };
 
-controller.disaing = (req, res) => {
-  req.getConnection((error, conn) => {
-    conn.query("SELECT * FROM cronogramas", (error, results) => {
-      if (error) {
-        console.log(error);
-      } else {
-        res.render("cronograma_menu_servicio_c", {
-          total: false,
-          results: results,
-          login: true,
-          name: req.session.name,
-          role: req.session.role,
-        });
-      }
-    });
-  });
-};
+
 
 controller.cronogramaHoy = (req, res) => {
   if (req.session.loggedin) {
@@ -4209,6 +4193,8 @@ controller.cronogramaHoy = (req, res) => {
         );
       });
     }
+  } else {
+    res.redirect("/login");
   }
 };
 controller.cronogramaTodo = (req, res) => {
@@ -4232,6 +4218,8 @@ controller.cronogramaTodo = (req, res) => {
         }
       );
     });
+  } else {
+    res.redirect("/login");
   }
 };
 controller.cronogramaHistorial = (req, res) => {
@@ -4324,6 +4312,8 @@ controller.cronogramaNewSend = (req, res) => {
         }
       );
     });
+  } else {
+    res.redirect("/login");
   }
 };
 controller.cronogramaIncompletos = (req, res) => {
@@ -4347,6 +4337,8 @@ controller.cronogramaIncompletos = (req, res) => {
         }
       );
     });
+  } else {
+    res.redirect("/login");
   }
 };
 controller.cronogramaCompletos = (req, res) => {
@@ -4370,6 +4362,8 @@ controller.cronogramaCompletos = (req, res) => {
         }
       );
     });
+  } else {
+    res.redirect("/login");
   }
 };
 controller.cronogramaReprogramados = (req, res) => {
@@ -4393,6 +4387,8 @@ controller.cronogramaReprogramados = (req, res) => {
         }
       );
     });
+  } else {
+    res.redirect("/login");
   }
 };
 controller.cronogramasDelate = (req, res) => {
@@ -4411,10 +4407,8 @@ controller.cronogramasDelate = (req, res) => {
         }
       );
     });
-  } else {
-    res.render("login", {
-      login: false,
-    });
+  }  else {
+    res.redirect("/login");
   }
 };
 controller.cronogramaEdit = (req, res) => {
@@ -4455,6 +4449,7 @@ controller.cronogramaEdit = (req, res) => {
   }
 };
 controller.cronogramaSolidReprogramar = (req, res) => {
+  if(req.session.loggedin){
   let id = req.params.id;
   req.getConnection((error, conn) => {
     conn.query(
@@ -4473,34 +4468,43 @@ controller.cronogramaSolidReprogramar = (req, res) => {
       }
     );
   });
+}else {
+    res.redirect("/login");
+  }
 };
 controller.cronogramaSolidReprogramarSend = (req, res) => {
-  let id = req.body.id;
-  let evidencia = req.body.evidencia;
-  let estado = "REPROGRAMAR";
-  req.getConnection((error, conn) => {
-    conn.query(
-      "UPDATE cronogramas SET ? WHERE id = ? ",
-      [
-        {
-          evidencias_reprogramacion: evidencia,
-          estado: estado,
-        },
-        id,
-      ],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(results);
-          res.redirect("/cronogamaHistorial");
+  if (req.session.loggedin){
+    let id = req.body.id;
+    let evidencia = req.body.evidencia;
+    let estado = "REPROGRAMAR";
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE cronogramas SET ? WHERE id = ? ",
+        [
+          {
+            evidencias_reprogramacion: evidencia,
+            estado: estado,
+          },
+          id,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results);
+            res.redirect("/cronogamaHistorial");
+          }
         }
-      }
-    );
-  });
+      );
+    }); 
+  } else {
+    res.redirect("/login");
+  }
+ 
 };
 controller.cronogramaReportReprogramar = (req, res) => {
-  let id = req.params.id;
+  if(req.session.loggedin){
+    let id = req.params.id;
   req.getConnection((error, conn) => {
     conn.query(
       "SELECT * FROM cronogramas WHERE id = ? ",
@@ -4518,335 +4522,413 @@ controller.cronogramaReportReprogramar = (req, res) => {
       }
     );
   });
+  }else {
+    res.redirect("/login");
+  }
+  
 };
 
 controller.cronogramaReportReprogramarSend = (req, res) => {
-  let id = req.body.id;
-  let fecha = req.body.fecha;
-  let hora = req.body.hora;
-  let evidencia = "-";
-  let estado = "INCOMPLETO";
-  req.getConnection((error, conn) => {
-    conn.query(
-      "UPDATE cronogramas SET ? WHERE id = ? ",
-      [
-        {
-          evidencias_reprogramacion: evidencia,
-          estado: estado,
-          hora: hora,
-          fecha: fecha,
-        },
-        id,
-      ],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(results);
-          res.redirect("/cronogamaHistorial");
+  if(req.session.loggedin){
+    let id = req.body.id;
+    let fecha = req.body.fecha;
+    let hora = req.body.hora;
+    let evidencia = "-";
+    let estado = "INCOMPLETO";
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE cronogramas SET ? WHERE id = ? ",
+        [
+          {
+            evidencias_reprogramacion: evidencia,
+            estado: estado,
+            hora: hora,
+            fecha: fecha,
+          },
+          id,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results);
+            res.redirect("/cronogamaHistorial");
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else {
+    res.redirect("/login");
+  }
+ 
 };
 
 controller.cronogramaCompletar = (req, res) => {
-  let id = req.params.id;
-  res.render("cronogramaComplit", {
-    id: id,
-    login: true,
-    name: req.session.name,
-    role: req.session.role,
-    id_user: req.session.ID,
-  });
+  if(res.session.loggedin){
+    let id = req.params.id;
+    res.render("cronogramaComplit", {
+      id: id,
+      login: true,
+      name: req.session.name,
+      role: req.session.role,
+      id_user: req.session.ID,
+    });
+  }else{
+    res.redirect("/login")
+  }
+  
 };
 controller.cronogramaCompletar2 = (req, res) => {
-  let id = req.params.id;
-  console.log(id);
-  req.getConnection((error, conn) => {
-    conn.query(
-      "SELECT * FROM cronogramas WHERE id = ? ",
-      [id],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(results);
-          res.render("cronogramaConplit2", {
-            data: results[0],
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-            id_user: req.session.ID,
-          });
+  if(res.session.loggedin){
+    let id = req.params.id;
+    console.log(id);
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM cronogramas WHERE id = ? ",
+        [id],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results);
+            res.render("cronogramaConplit2", {
+              data: results[0],
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.ID,
+            });
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+  
 };
 controller.cronogramaCompletarSend = (req, res) => {
-  let id = req.body.id;
-  let fecha = req.body.fecha;
-  let hora = req.body.hora;
-  req.getConnection((error, conn) => {
-    conn.query(
-      "UPDATE cronogramas SET ? WHERE id = ? ",
-      [
-        {
-          hora_fin: hora,
-          fecha_fin: fecha,
-        },
-        id,
-      ],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(results);
-          res.render("cronogramafotoCedula", {
-            id: id,
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-            id_user: req.session.ID,
-          });
-          // res.render("cronogramaConplit3", {
-          //   id:id,
-          //   fecha:fecha,
-          //   hora:hora,
-          //   nombre_archivo:nombre_archivo,
-          //   login: true,
-          //   name: req.session.name,
-          //   role: req.session.role,
-          //   id_user: req.session.id
-          // });
+  if(res.session.loggedin){
+    let id = req.body.id;
+    let fecha = req.body.fecha;
+    let hora = req.body.hora;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE cronogramas SET ? WHERE id = ? ",
+        [
+          {
+            hora_fin: hora,
+            fecha_fin: fecha,
+          },
+          id,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results);
+            res.render("cronogramafotoCedula", {
+              id: id,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.ID,
+            });
+            // res.render("cronogramaConplit3", {
+            //   id:id,
+            //   fecha:fecha,
+            //   hora:hora,
+            //   nombre_archivo:nombre_archivo,
+            //   login: true,
+            //   name: req.session.name,
+            //   role: req.session.role,
+            //   id_user: req.session.id
+            // });
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+ 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 controller.cronogramaCompletarFotoCedula = (req, res) => {
-  let id = req.body.id;
-  let foto = req.file.filename;
-
-  req.getConnection((error, conn) => {
-    conn.query(
-      "UPDATE cronogramas SET ? WHERE id = ? ",
-      [
-        {
-          foto_cedula: foto,
-        },
-        id,
-      ],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(results);
-          res.render("cronogramafotoSP", {
-            id: id,
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-            id_user: req.session.ID,
-          });
-          // res.render("cronogramaConplit3", {
-          //   id:id,
-          //   fecha:fecha,
-          //   hora:hora,
-          //   nombre_archivo:nombre_archivo,
-          //   login: true,
-          //   name: req.session.name,
-          //   role: req.session.role,
-          //   id_user: req.session.id
-          // });
+  if(res.session.loggedin){
+    let id = req.body.id;
+    let foto = req.file.filename;
+  
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE cronogramas SET ? WHERE id = ? ",
+        [
+          {
+            foto_cedula: foto,
+          },
+          id,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results);
+            res.render("cronogramafotoSP", {
+              id: id,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.ID,
+            });
+            // res.render("cronogramaConplit3", {
+            //   id:id,
+            //   fecha:fecha,
+            //   hora:hora,
+            //   nombre_archivo:nombre_archivo,
+            //   login: true,
+            //   name: req.session.name,
+            //   role: req.session.role,
+            //   id_user: req.session.id
+            // });
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+ 
 };
-controller.cronogramaCompletarFotoOnt = (req, res) => {
-  let id = req.body.id;
-  let foto = req.file.filename;
 
-  req.getConnection((error, conn) => {
-    conn.query(
-      "UPDATE cronogramas SET ? WHERE id = ? ",
-      [
-        {
-          foto_sp: foto,
-        },
-        id,
-      ],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(results);
-          res.render("cronogramaFotoInstalacion", {
-            id: id,
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-            id_user: req.session.ID,
-          });
-          // res.render("cronogramaConplit3", {
-          //   id:id,
-          //   fecha:fecha,
-          //   hora:hora,
-          //   nombre_archivo:nombre_archivo,
-          //   login: true,
-          //   name: req.session.name,
-          //   role: req.session.role,
-          //   id_user: req.session.id
-          // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+controller.cronogramaCompletarFotoOnt = (req, res) => {
+  if(res.session.loggedin){
+    let id = req.body.id;
+    let foto = req.file.filename;
+  
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE cronogramas SET ? WHERE id = ? ",
+        [
+          {
+            foto_ont: foto,
+          },
+          id,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results);
+            res.render("cronogramaFotoInstalacion", {
+              id: id,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.ID,
+            });
+            // res.render("cronogramaConplit3", {
+            //   id:id,
+            //   fecha:fecha,
+            //   hora:hora,
+            //   nombre_archivo:nombre_archivo,
+            //   login: true,
+            //   name: req.session.name,
+            //   role: req.session.role,
+            //   id_user: req.session.id
+            // });
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+ 
 };
 
 controller.cronogramaCompletarFotoSP = (req, res) => {
-  let id = req.body.id;
-  let foto = req.file.filename;
-
-  req.getConnection((error, conn) => {
-    conn.query(
-      "UPDATE cronogramas SET ? WHERE id = ? ",
-      [
-        {
-          foto_ont: foto,
-        },
-        id,
-      ],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(results);
-          res.render("cronogramafotoOnt", {
-            id: id,
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-            id_user: req.session.ID,
-          });
-          // res.render("cronogramaConplit3", {
-          //   id:id,
-          //   fecha:fecha,
-          //   hora:hora,
-          //   nombre_archivo:nombre_archivo,
-          //   login: true,
-          //   name: req.session.name,
-          //   role: req.session.role,
-          //   id_user: req.session.id
-          // });
+  if(res.session.loggedin){
+    let id = req.body.id;
+    let foto = req.file.filename;
+  
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE cronogramas SET ? WHERE id = ? ",
+        [
+          {
+            foto_sp: foto,
+          },
+          id,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(results);
+            res.render("cronogramafotoOnt", {
+              id: id,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.ID,
+            });
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+  
 };
 controller.cronogramaCompletarFotoInstalacion = (req, res) => {
-  let id = req.body.id;
-  let foto = req.file.filename;
-
-  req.getConnection((error, conn) => {
-    conn.query(
-      "UPDATE cronogramas SET ? WHERE id = ? ",
-      [
-        {
-          foto_instalacion: foto,
-        },
-        id,
-      ],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          req.getConnection((error, conn) => {
-            conn.query(
-              "SELECT * FROM cronogramas WHERE id =  ?",
-              [id],
-              (error, results) => {
-                if (error) {
-                  console.log(error);
-                } else {
-                  res.render("cronogramaConplit3", {
-                    data: results[0],
-                    login: true,
-                    name: req.session.name,
-                    role: req.session.role,
-                    id_user: req.session.id,
-                  });
+  if(res.session.loggedin){
+    let id = req.body.id;
+    let foto = req.file.filename;
+  
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE cronogramas SET ? WHERE id = ? ",
+        [
+          {
+            foto_instalacion: foto,
+          },
+          id,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query(
+                "SELECT * FROM cronogramas WHERE id =  ?",
+                [id],
+                (error, results) => {
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    res.render("cronogramaConplit3", {
+                      data: results[0],
+                      login: true,
+                      name: req.session.name,
+                      role: req.session.role,
+                      id_user: req.session.id,
+                    });
+                  }
                 }
-              }
-            );
-          });
+              );
+            });
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+ 
 };
 controller.cronogramaCompletarfinSend = (req, res) => {
-  let firma = req.file.filename;
-  let id = req.body.id;
-  const estado = "COMPLETADO";
-  req.getConnection((error, conn) => {
-    conn.query(
-      "UPDATE cronogramas SET ? WHERE id = ? ",
-      [
-        {
-          estado: estado,
-          firma: firma,
-        },
-        id,
-      ],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.redirect("/cronogramaCompletos");
+  if(res.session.loggedin){
+    let firma = req.file.filename;
+    let id = req.body.id;
+    const estado = "COMPLETADO";
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE cronogramas SET ? WHERE id = ? ",
+        [
+          {
+            estado: estado,
+            firma: firma,
+          },
+          id,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.redirect("/cronogramaCompletos");
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+  
 };
 controller.detallesCronograma = (req, res) => {
-  let id = req.params.id;
-  req.getConnection((error, conn) => {
-    conn.query(
-      "SELECT * FROM cronogramas WHERE id =  ?",
-      [id],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          let tecnico = results[0].id_tecnico;
-          let data = results[0];
-          req.getConnection((error, conn) => {
-            conn.query(
-              "SELECT nombre FROM usuarios WHERE id =  ?",
-              [tecnico],
-              (error, results) => {
-                if (error) {
-                  console.log(error);
-                } else {
-                  res.render("cronogramadetalles", {
-                    data: data,
-                    tecnico: results[0],
-                    login: true,
-                    name: req.session.name,
-                    role: req.session.role,
-                    id_user: req.session.id,
-                  });
+  if(res.session.loggedin){
+    let id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM cronogramas WHERE id =  ?",
+        [id],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            let tecnico = results[0].id_tecnico;
+            let data = results[0];
+            req.getConnection((error, conn) => {
+              conn.query(
+                "SELECT nombre FROM usuarios WHERE id =  ?",
+                [tecnico],
+                (error, results) => {
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    res.render("cronogramadetalles", {
+                      data: data,
+                      tecnico: results[0],
+                      login: true,
+                      name: req.session.name,
+                      role: req.session.role,
+                      id_user: req.session.id,
+                    });
+                  }
                 }
-              }
-            );
-          });
+              );
+            });
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+  
 };
 
 controller.cronogramaEditSend = (req, res) => {
@@ -4898,29 +4980,159 @@ controller.cronogramaEditSend = (req, res) => {
         }
       );
     });
+  }else{
+    res.redirect("/login")
   }
 };
 controller.converterDetallesCronogramaPdf = (req, res) => {
-  let id = req.params.id;
-  req.getConnection((error, conn) => {
-    conn.query(
-      "SELECT * FROM cronogramas WHERE id =  ?",
-      [id],
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.render("generatorpfe", {
-            data: results[0],
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-            id_user: req.session.id,
-          });
+  if(res.session.loggedin){
+    let id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM cronogramas WHERE id =  ?",
+        [id],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("generatorpfe", {
+              data: results[0],
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.id,
+            });
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }else{
+    res.redirect("/login")
+  }
+  
+};
+controller.cronogramaRadioEnlace = (req, res) => {
+  if (req.session.loggedin) {
+    var fecha = new Date(); //Fecha actual
+    var mes = fecha.getMonth() + 1; //obteniendo mes
+    var dia = fecha.getDate();
+    var ano = fecha.getFullYear(); //obteniendo año
+    if (dia < 10) dia = "0" + dia; //agrega cero si el menor de 10
+    if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
+    var value = ano + "-" + mes + "-" + dia;
+    var fechaACTUAL = String(value);
+    console.log(fechaACTUAL);
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM cronogramas WHERE genero = 'Re' && fecha = ?",
+        [fechaACTUAL],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("cronograma_menu_servicio_c", {
+              total: false,
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.ID,
+            });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.cronogramaFibraOptica = (req, res) => {
+  if (req.session.loggedin) {
+    var fecha = new Date(); //Fecha actual
+    var mes = fecha.getMonth() + 1; //obteniendo mes
+    var dia = fecha.getDate();
+    var ano = fecha.getFullYear(); //obteniendo año
+    if (dia < 10) dia = "0" + dia; //agrega cero si el menor de 10
+    if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
+    var value = ano + "-" + mes + "-" + dia;
+    var fechaACTUAL = String(value);
+    console.log(fechaACTUAL);
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM cronogramas WHERE genero = 'Fo' &&  fecha = ?",
+        [fechaACTUAL],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("cronograma_menu_servicio_c", {
+              total: false,
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.ID,
+            });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
 };
 
+controller.cronogramaOrganizarFecha = (req, res) => {
+  if (req.session.loggedin) {
+    const fechaI = req.body.fechaInicio;
+    const fechaF = req.body.fechaFin;
+
+    console.log(fechaI, fechaF)
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM cronogramas WHERE fecha>= ? &&  fecha<= ?",
+        [fechaI, fechaF],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            const array = results;
+            var orden = array.sort(
+              (a, b) =>
+                new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
+            );
+            console.log(orden);
+            res.render("cronograma_menu_servicio_c", {
+              total: false,
+              results: orden,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+              id_user: req.session.ID,
+            });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.disaing = (req, res) => {
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM cronogramas", (error, results) => {
+      if (error) {
+        console.log(error);
+      } else {
+        res.render("cronograma_menu_servicio_c", {
+          total: false,
+          results: results,
+          login: true,
+          name: req.session.name,
+          role: req.session.role,
+        });
+      }
+    });
+  });
+};
 module.exports = controller;
