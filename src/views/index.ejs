@@ -1,62 +1,320 @@
 <!DOCTYPE html>
-<html>
+<!--
+	App by FreeHTML5.co
+	Twitter: http://twitter.com/fh5co
+	URL: http://freehtml5.co
+-->
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>RedLine inventory</title>
-    <link rel="shortcut icon" href="/img/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" />
-    <link href="css/templatemo-style.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Welcome panel Redline</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
+  <meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+  <meta name="author" content="FreeHTML5.co" />
+
+  <!-- Facebook and Twitter integration -->
+  <meta property="og:title" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:site_name" content="" />
+  <meta property="og:description" content="" />
+  <meta name="twitter:title" content="" />
+  <meta name="twitter:image" content="" />
+  <meta name="twitter:url" content="" />
+  <meta name="twitter:card" content="" />
+
+  <!-- Bootstrap  -->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <!-- Owl Carousel  -->
+  <link rel="stylesheet" href="css/owl.carousel.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="css/animate.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <!-- Theme style  -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-    <div class="container">
-        <div class="placeholder">
-            <div class="parallax-window" data-parallax="scroll" data-image-src="img/simple-house-01.jpg">
-                <div class="tm-header">
-                    <div class="row tm-header-inner">
-                        <div class="col-md-6 col-12">
-                            <img src="img/1logo.png" alt="Logo" class="tm-site-logo" style="width: 200px;" />
 
-                        </div>
-                        <nav class="col-md-6 col-12 tm-nav">
-                            <ul class="tm-nav-ul">
-                                <li class="tm-nav-li"><a href="/" class="tm-nav-link active">Home</a></li>
-                                <li class="tm-nav-li"><a href="https://redline.net.co/" class="tm-nav-link">About</a>
-                                </li>
-                                <li class="tm-nav-li"><a href="/contact" class="tm-nav-link">Contact</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
+  <div id="page-wrap">
+
+
+    <!-- ==========================================================================================================
+													   HERO
+		 ========================================================================================================== -->
+
+    <div id="fh5co-hero-wrapper">
+      <nav class="container navbar navbar-expand-lg main-navbar-nav navbar-light">
+        <a class="navbar-brand" href=""><img src="https://redline.net.co/wp-content/uploads/2021/12/LOGO-REDLINE-MALL-COMUNEROS.png" alt="" class="logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav-items-center ml-auto mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="$('#fh5co-features').goTo();return false;">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="$('#fh5co-reviews').goTo();return false;">Reviews</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login" >Login</a>
+            </li>
+          </ul>
+          <div class="social-icons-header">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="http://www.instagram.com/redlineincsas/"><i class="fab fa-instagram"></i></a>
+           <a href="#"><i class="fab fa-twitter"></i></a> <
+          </div>
         </div>
-        
-        <main>
-            <header class="row tm-welcome-section">
-                <h2 class="col-12 text-center tm-section-title">Bienvenido a la plataforma interna de redline</h2>
-                <p class="col-12 text-center">Esta plataforma fue desarrollada por <a rel="nofollow" href="https://github.com/flipgamership">Juan felipe correa</a>  para la compañía de <a rel="nofollow" href="https://redline.net.co">Redline</a> para su uso interno dentro de la empresa esta aplicación permite la administración de inventarios, servicio al cliente y algunas funcionalidades extras</p>
-            </header>
-            <div class="tm-paging-links">
-                <nav>
-                    <ul>
-                        <li class="tm-paging-item"><a href="/login" class="tm-paging-link active">Ingresar a la plataforma de inventario</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="row tm-welcome-section">
-                <p class="col-12 text-center">Para tener acceso a la plataforma deberás solicitar unas credenciales a alguno de los administradores de la plataforma</p>
-            </div>
-        </main>
-        <footer class="tm-footer text-center">
-            <p>Copyright &copy; 2021 RedLine
-                | Design: <a rel="nofollow" href="https://github.com/flipgamership">Juan felipe correa</a></p>
-        </footer>
+      </nav>
+
+      <div class="container fh5co-hero-inner">
+        <h1 class="animated fadeIn wow" data-wow-delay="0.4s">Construimos un Espacio al Alcance de tus Manos</h1>
+        <p class="animated fadeIn wow" data-wow-delay="0.67s">Este espacio es una gran herramienta llena de utilidades que puedes utilizar día tras día para mejorar tus procesos.</p>
+        <a class="btn btn-md download-btn-first wow fadeInLeft animated" href="/login">Login</a>
+        <button class="btn btn-md features-btn-first animated fadeInLeft wow" data-wow-delay="0.95s" onclick="$('#fh5co-features').goTo();return false;">Características</button>
+        <img class="fh5co-hero-smartphone animated fadeInRight wow" data-wow-delay="1s" src="img/phone-image.png" alt="Smartphone">
+      </div>
+
+
+    </div> <!-- first section wrapper -->
+
+
+    <!-- ==========================================================================================================
+													 ADVANTAGES
+		 ========================================================================================================== -->
+
+    <div class="fh5co-advantages-outer">
+      <div class="container">
+        <h1 class="second-title"><span class="span-perfect">Caracteristicas</span> <span class="span-features">Unicas</span></h1>
+        <small>Solo lo Necesario</small>
+
+        <div class="row fh5co-advantages-grid-columns wow animated fadeIn" data-wow-delay="0.36s">
+
+          <div class="col-sm-4">
+            <img class="grid-image" src="img/icon-1.png" alt="Icon-1">
+            <h1 class="grid-title">Usabilidad</h1>
+            <p class="grid-desc">Esta app puedes usarla donde quieras y en lo que quieras, ya que está totalmente diseñada para funcionar en cualquier dispositivo y no la tienes que instalar porque funciona en la nube. </p>
+          </div>
+
+          <div class="col-sm-4">
+            <img class="grid-image" src="img/icon-2.png" alt="Icon-2">
+            <h1 class="grid-title">Organizado</h1>
+            <p class="grid-desc">Esta app te permite mantener organizado tu ambiente de trabajo con sus diversos sistemas de Inventario.</p>
+          </div>
+
+          <div class="col-sm-4">
+            <img class="grid-image" src="img/icon-3.png" alt="Icon-3">
+            <h1 class="grid-title">Intuitivo</h1>
+            <p class="grid-desc">La app mantiene una presentación amena y sencilla de entender para el usuario.</p>
+          </div>
+
+
+        </div>
+      </div>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/parallax.min.js"></script>
+
+
+    <!-- ==========================================================================================================
+													  SLIDER
+		 ========================================================================================================== -->
+
+    <div class="fh5co-slider-outer wow fadeIn" data-wow-delay="0.36s">
+      <h1>Grandes diseños</h1>
+      <small>Amenos y simples</small>
+      <div class="container fh5co-slider-inner">
+
+        <div class="owl-carousel owl-theme">
+
+          <div class="item"><img class="carouseles" src="img/smartphone-2.png" alt=""></div>
+          <div class="item"><img class="carouseles" src="img/smartphone-3.png" alt=""></div>
+          <div class="item"><img class="carouseles" src="img/iphone.png" alt=""></div>
+          <div class="item"><img class="carouseles" src="img/smartphone-4.png" alt=""></div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ==========================================================================================================
+													  FEATURES
+		 ========================================================================================================== -->
+
+    <div class="curved-bg-div wow animated fadeIn" data-wow-delay="0.15s"></div>
+    <div id="fh5co-features" class="fh5co-features-outer">
+      <div class="container">
+
+        <div class="row fh5co-features-grid-columns">
+
+          <div class="col-sm-6 in-order-1 wow animated fadeInLeft" data-wow-delay="0.22s">
+            <div class="col-sm-image-container">
+              <img class="img-float-left" src="img/smartphone-1.png" alt="smartphone-1">
+              <span class="span-new">NEW</span>
+              <span class="span-free">Useful</span>
+            </div>
+          </div>
+
+          <div class="col-sm-6 in-order-2 sm-6-content wow animated fadeInRight" data-wow-delay="0.22s">
+            <h1>Características únicas</h1>
+            <p>podras aceder desde el navegador que quieras y el dispositivos que quieras, Sus utilidades son simples y utiles, Podras filtrar y gestionar tus inventarios y todo al alcance de tus manos </p>
+            <span class="circle circle-first"><i class="fab fa-instagram"></i></span>
+            <span class="circle circle-middle"><i class="fab fa-facebook"></i></span>
+            <span class="circle circle-last"><i class="fab fa-twitter"></i></span>
+          </div>
+
+          <div class="col-sm-6 in-order-3 sm-6-content wow animated fadeInLeft" data-wow-delay="0.22s">
+            <h1>Inventarios a tiempo real</h1>
+            <p>podras utilizar, llevar estadisticas de consumo, aprosimaciones de agotamiento, costos por unidad y costos totales de tus inventarios  </p>
+            <span class="circle circle-first"><i class="fas fa-star"></i></span>
+            <span class="circle circle-middle"><i class="far fa-star"></i></span>
+            <span class="circle circle-last"><i class="far fa-thumbs-up"></i></span>
+          </div>
+
+          <div class="col-sm-6 in-order-4 wow animated fadeInRight" data-wow-delay="0.22s">
+            <img class="img-float-right" src="img/Samsung_curved_panel (1).png" alt="smartphone-2">
+          </div>
+
+          <div class="col-sm-6 in-order-5 wow animated fadeInLeft" data-wow-delay="0.22s">
+            <div class="col-sm-image-container">
+              <img class="img-float-left" src="img/smartphone-4.png" alt="smartphone-3">
+              <span class="span-data">DATA</span>
+              <span class="span-percent">100%</span>
+            </div>
+          </div>
+          <div class="col-sm-6 in-order-6 sm-6-content wow animated fadeInRight" data-wow-delay="0.22s">
+            <h1>una base de datos poderosa</h1>
+            <p>la app contiene una base de datos muy poderosa que nos permitira evolucionar y mejorar la experiencia del usuario es tan poderosa que podemos crear mapas, cronogramas, estadisticas,  la informacion es poder </p>
+            <span class="circle circle-first">95%</span>
+            <span class="circle circle-middle"><i class="fas fa-forward"></i></span>
+            <span class="circle circle-last"><i class="fab fa-github"></i></span>
+
+          </div>
+
+
+
+
+        </div> <!-- row -->
+
+
+      </div>
+    </div>
+
+
+    <!-- ==========================================================================================================
+													  REVIEWS
+		 ========================================================================================================== -->
+
+    <div id="fh5co-reviews" class="fh5co-reviews-outer">
+      <h1>Lo que la gente esta diciendo</h1>
+      <small>Reviews</small>
+      <div class="container fh5co-reviews-inner">
+        <div class="row justify-content-center">
+          <div class="col-sm-5 wow fadeIn animated" data-wow-delay="0.25s">
+            <img class="float-left" src="img/quotes-1.jpg" alt="Quote 1">
+            <p class="testimonial-desc">Me parece muy innovador y creativo ayuda demasiado para mantener el orden de los trabajos realizados.</p>
+            <small class="testimonial-author">Ana Milena</small>
+            <img class="float-right" src="img/quotes-2.jpg" alt="Quote 2">
+          </div>
+          <div class="col-sm-5 testimonial-2 wow fadeIn animated" data-wow-delay="0.67s">
+            <img class="float-left" src="img/quotes-1.jpg" alt="Quote 1">
+            <p class="testimonial-desc">Permite monitorizar las actividades y los inventarios de la empresa con mucha precisión</p>
+            <small class="testimonial-author">Alejandro</small>
+            <img class="float-right" src="img/quotes-2.jpg" alt="Quote 2">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ==========================================================================================================
+                                                 BOTTOM
+    ========================================================================================================== -->
+
+    <div id="fh5co-download" class="fh5co-bottom-outer">
+      <div class="overlay">
+        <div class="container fh5co-bottom-inner">
+          <div class="row">
+            <div class="col-sm-6">
+              <h1>Quieres empezar a utilizarla?</h1>
+              <p>Entonces que esperas para iniciar sesión y empieza a usarla adecuadamente</p>
+			  <p>ten en cuenta que si no tienes acceso a la app debes de solicitar acceso a Redline contáctanos</p>
+              <a href="/login" class="btn btn-md download-btn-first wow fadeInLeft animated" data-wow-delay="0.85s" style="text-decoration: none;">Login</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ==========================================================================================================
+                                               SECTION 7 - SUB FOOTER
+    ========================================================================================================== -->
+
+    <footer class="footer-outer">
+      <div class="container footer-inner">
+
+        <div class="footer-three-grid wow fadeIn animated" data-wow-delay="0.66s">
+          <div class="column-1-3">
+          <img src="https://redline.net.co/wp-content/uploads/2021/12/LOGO-REDLINE-MALL-COMUNEROS.png" alt="" class="logo2">
+          </div>
+          <div class="column-2-3">
+            <nav class="footer-nav">
+              <ul>
+                <a href="#" onclick="$('#fh5co-hero-wrapper').goTo();return false;">
+                  <li>Home</li>
+                </a>
+                <a href="#" onclick="$('#fh5co-features').goTo();return false;">
+                  <li>Features</li>
+                </a>
+                <a href="#" onclick="$('#fh5co-reviews').goTo();return false;">
+                  <li>Reviews</li>
+                </a>
+                <a href="#" onclick="$('#fh5co-download').goTo();return false;">
+                  <li class="active">Login</li>
+                </a>
+              </ul>
+            </nav>
+          </div>
+          <div class="column-3-3">
+            <div class="social-icons-footer">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="http://www.instagram.com/redlineincsas/"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <span class="border-bottom-footer"></span>
+
+        <p class="copyright">&copy; 2021 App. All rights reserved. Design by <a href="https://github.com/flipgamership" target="_blank">Juan felipe correa rios</a>.</p>
+
+      </div>
+    </footer>
+
+
+
+
+  </div> <!-- main page wrapper -->
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/owl.carousel.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>
