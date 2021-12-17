@@ -4564,7 +4564,7 @@ controller.cronogramaReportReprogramarSend = (req, res) => {
 };
 
 controller.cronogramaCompletar = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.params.id;
     res.render("cronogramaComplit", {
       id: id,
@@ -4579,7 +4579,7 @@ controller.cronogramaCompletar = (req, res) => {
   
 };
 controller.cronogramaCompletar2 = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.params.id;
     console.log(id);
     req.getConnection((error, conn) => {
@@ -4608,7 +4608,7 @@ controller.cronogramaCompletar2 = (req, res) => {
   
 };
 controller.cronogramaCompletarSend = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.body.id;
     let fecha = req.body.fecha;
     let hora = req.body.hora;
@@ -4674,7 +4674,7 @@ controller.cronogramaCompletarSend = (req, res) => {
 
 
 controller.cronogramaCompletarFotoCedula = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.body.id;
     let foto = req.file.filename;
   
@@ -4733,7 +4733,7 @@ controller.cronogramaCompletarFotoCedula = (req, res) => {
 
 
 controller.cronogramaCompletarFotoOnt = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.body.id;
     let foto = req.file.filename;
   
@@ -4779,7 +4779,7 @@ controller.cronogramaCompletarFotoOnt = (req, res) => {
 };
 
 controller.cronogramaCompletarFotoSP = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.body.id;
     let foto = req.file.filename;
   
@@ -4814,7 +4814,7 @@ controller.cronogramaCompletarFotoSP = (req, res) => {
   
 };
 controller.cronogramaCompletarFotoInstalacion = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.body.id;
     let foto = req.file.filename;
   
@@ -4860,7 +4860,7 @@ controller.cronogramaCompletarFotoInstalacion = (req, res) => {
  
 };
 controller.cronogramaCompletarfinSend = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let firma = req.file.filename;
     let id = req.body.id;
     const estado = "COMPLETADO";
@@ -4889,7 +4889,7 @@ controller.cronogramaCompletarfinSend = (req, res) => {
   
 };
 controller.detallesCronograma = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.params.id;
     req.getConnection((error, conn) => {
       conn.query(
@@ -4985,7 +4985,7 @@ controller.cronogramaEditSend = (req, res) => {
   }
 };
 controller.converterDetallesCronogramaPdf = (req, res) => {
-  if(res.session.loggedin){
+  if(req.session.loggedin){
     let id = req.params.id;
     req.getConnection((error, conn) => {
       conn.query(

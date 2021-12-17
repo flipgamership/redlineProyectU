@@ -24,10 +24,10 @@ app.set("views", path.join(__dirname, 'views'))
 app.use(morgan('dev'));
 app.use(myconnection(mysql,{
     host: 'localhost',
-    user: 'c9panel',
-    password: '@jbhfNAHF6',
+    user: 'root',
+    password: '',
     port: 3306,
-    database: 'c9panel'
+    database: 'proyectredline'
     //c9panel
     //@jbhfNAHF6 
 }))
