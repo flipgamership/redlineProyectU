@@ -19,33 +19,7 @@
 </head>
 </head>
 <body class="login" >
-    <header class="headerNav" >
-        <nav class="navbarPrimary">
-            <a href="#" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
-            <ul class="navMenu">
-                <li class="navItem">
-                    <a  href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal' ></i> Home</a>
-                </li>
-                <li class="navItem">
-                    <a href="" class="navLink"><i class='bx bxs-box'></i> Inventorio Herramientas</a>
-                </li>
-                <li class="navItem">
-                    <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de material</a>
-                </li>
-                <li class="navItem"> 
-                    <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipo</a>
-                </li>
-                    
-                
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </nav>
-    </header>
-
+    <%- include('partials/dev2.ejs') %>
 <div class="container" style="margin-top: 150px; ">
     <div class="row justify-content-center mt-5 ">
         <div class="col-lg-5 col-md-8 col-sm-8">
@@ -123,6 +97,6 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<%- include('./partials/footer.ejs') %>
+<%- include('partials/footer2.ejs') %>
 </body>
 </html>

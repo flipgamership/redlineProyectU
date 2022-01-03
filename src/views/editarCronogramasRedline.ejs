@@ -24,57 +24,9 @@
 </head>
 
 <body class="login">
-  <header class="headerNav">
 
-  </header>
+  <%- include('partials/nav2.ejs') %>
 
-  <nav class="navbarPrimary">
-    <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
-    <ul class="navMenu">
-        <li class="navItem">
-            <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
-          </li>
-          <li class="navItem">
-            <a href="/telecomunicaciones" class="navLink"> <i class='bx bxs-phone-outgoing'></i> Telecomunicaciones</a>
-          </li>
-          <li class="navItem">
-            <a href="#" class="navLink"><i class='bx bxs-user'></i> Servicio al cliente</a>
-          </li>
-          <li class="navItem">
-            <a href="#" class="navLink"> <i class='bx bxs-badge-dollar'></i> Registro de pagos</a>
-          </li>
-         
-          <li class="navItem">
-            <a  data-toggle="modal" data-target="#exampleModal1" class="navLink" ><i class='bx bxs-notepad'></i>Cronograma</a>
-          </li>
-  
-          <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 16px; ">Selecciona</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 20px; ">
-                    <span style="margin-left: 7px; margin-right: 7px;" aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                 <p style="font-size: 14px; "> Que vas a hacer , Selecciona una accion para mostrar los cronogramas</p>
-                </div>
-                <div class="modal-footer">
-                  
-                  <a type="button" class="btn btn-success" href="/agregarNuevoCronograma"  >Crear nuevo<i class='bx bxs-notepad'></i></a>
-                  <a type="button" class="btn btn-primary" href="/cronogramaTodo"  >Todos <i class='bx bxs-notepad'></i> </a>
-                  <a type="button" class="btn btn-primary" href="/cronogramaHoyRedline"  >Hoy <i class='bx bxs-notepad'></i> </a>
-                  <a type="button" class="btn btn-primary" href="/cronogamaHistorial"  >Historial <i class='bx bxs-notepad'></i></a>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li class="navItem">
-        <a style="margin-left:20px; font-size: 12px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Sesion</a>
-        </li>
-    </ul></nav>
   <div class="container" style="margin-top: 80px; ">
     <div class="row justify-content-center mt-5 ">
       <div class="col-lg-5 col-md-8 col-sm-8">
@@ -215,7 +167,7 @@
       }
     }
   </script>
-  <%- include('./partials/footer.ejs') %>
+  <%- include('partials/footer2.ejs') %>
 </body>
 
 </html>

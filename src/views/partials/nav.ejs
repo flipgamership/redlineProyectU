@@ -1,157 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styleNavar.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-
-  <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
-</head>
-
+<!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Responsive Sidebar Menu  | CodingLab </title>
+    <link rel="stylesheet" href="../css/styleNav.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
 <body>
-  <header class="headerNav">
-    <nav class="navbarPrimary">
-      <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
-      <ul class="navMenu">
-          
-        <% if (role == 'admin') {%>
-        <li class="navItem">
-          <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
-        </li>
-        <li class="navItem">
-          <a href="/registerTecnico" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i>registrar tecnicos</a>
-        </li>
-        <li class="navItem">
-          <a href="/register" class="navLink"><i class='bx bx-food-menu'></i> Registrar nuevos Usuarios</a>
-        </li>
-        
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bx-podcast icon' ></i>
+        <div class="logo_name">Redline</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <%if( role == 'admin'){%> 
+        <a href="/home">
+          <i class='bx bxs-home' style="margin-left: -10px;"></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="/menuDeInventarioDeDispositivos">
+         <i class='bx bxs-mobile-vibration' style="margin-left: -10px;" ></i>
+         <span class="links_name">I Dispositivos</span>
+       </a>
+       <span class="tooltip">Inventario de Dispositivos</span>
+     </li>
+     <li>
+       <a href="/inventarioConsumiblesRedline">
+        <i class='bx bxs-leaf' style="margin-left: -10px;" ></i>
+         <span class="links_name">I Consumibles</span>
+       </a>
+       <span class="tooltip">Inventario de Consumibles </span>
+     </li>
+     <li>
+       <a href="/menuInventarioEquipoSeduridadRedline">
+         <i class='bx bx-check-shield' style="margin-left: -10px;" ></i>
+         <span class="links_name">I Equipo de seguridad</span>
+       </a>
+       <span class="tooltip">Inventario De Equipo De Seguridad</span>
+     </li>
+     <li>
+      <a href="/menuInventarioEquipoSeduridadRedline">
+        <i class='bx bx-wrench' style="margin-left: -10px;" ></i>
+        <span class="links_name">I Herramientas</span>
+      </a>
+      <span class="tooltip">Inventario De Herramientas</span>
+    </li>
+     <li>
+       <a href="/telecomunicaciones">
+         <i class='bx bx-support'  style="margin-left: -10px;"></i>
+         <span class="links_name">Satisfacion al Cliente</span>
+       </a>
+       <span class="tooltip">Satisfacion al Cliente</span>
+     </li>
+     <li>
+       <a href="/cronogramaHoyRedline">
+         <i class='bx bxs-calendar' style="margin-left: -10px;"></i>
+         <span class="links_name">Cronograma</span>
+       </a>
+       <span class="tooltip">Cronograma</span>
+     </li>
+     <li>
+       <a href="/loginAut"><i class='bx bx-log-out' id="log_out"  style="margin-left: -10px;"></i><span class="links_name">cerrar cesion</span></a>
+     </li>
+     <% }else if ( role == 'tecnico'){%> 
+      <a href="/home">
+        <i class='bx bxs-home' style="margin-left: -10px;"></i>
+        <span class="links_name">Home</span>
+      </a>
+       <span class="tooltip">Home</span>
+    </li>
+   <li>
+     <a href="/cronogramaHoyRedline">
+       <i class='bx bxs-calendar' style="margin-left: -10px;"></i>
+       <span class="links_name">Cronograma</span>
+     </a>
+     <span class="tooltip">Cronograma</span>
+   </li>
+   <li>
+     <a href="/loginAut"><i class='bx bx-log-out' id="log_out"  style="margin-left: -10px;"></i><span class="links_name">cerrar cesion</span></a>
+   </li>
+    <% }else if (role == 'servicioCliente'){ %> 
+      <a href="/home">
+        <i class='bx bxs-home' style="margin-left: -10px;"></i>
+        <span class="links_name">Home</span>
+      </a>
+       <span class="tooltip">Home</span>
+    </li>
+   <li>
+     <a href="/telecomunicaciones">
+       <i class='bx bx-support'  style="margin-left: -10px;"></i>
+       <span class="links_name">Satisfacion al Cliente</span>
+     </a>
+     <span class="tooltip">Satisfacion al Cliente</span>
+   </li>
+   <li>
+     <a href="/cronogramaHoyRedline">
+       <i class='bx bxs-calendar' style="margin-left: -10px;"></i>
+       <span class="links_name">Cronograma</span>
+     </a>
+     <span class="tooltip">Cronograma</span>
+   </li>
+   <li>
+     <a href="/loginAut"><i class='bx bx-log-out' id="log_out"  style="margin-left: -10px;"></i><span class="links_name">cerrar cesion</span></a>
+   </li>
 
-        <li class="navItem">
-          <a  data-toggle="modal" data-target="#exampleModal" class="navLink" ><i class='bx bx-food-menu'></i>Logs</a>
-        </li>
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 16px; ">Selecciona</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 20px; ">
-                  <span style="margin-left: 7px; margin-right: 7px;" aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-               <p style="font-size: 14px; "> ¿Que logs deseas mirar?</p>
-              </div>
-              <div class="modal-footer">
-                
-                <a type="button" class="btn btn-primary" href="/logsHerramientas"  >Logs H <i style="font-size: 14px;" class='bx bx-wrench'></i></a>
-                <a type="button" class="btn btn-primary" href="/logsEquipoSeguridad"  >logs  S <i  style="font-size: 14px;" class='bx bx-shield'></i> </a>
-                <a type="button" class="btn btn-primary" href="/logsConsumiblesIngreso"  >logs CE <i  style="font-size: 14px;" class='bx bxs-archive-in' ></i> </a>
-                <a type="button" class="btn btn-primary" href="/logsConsumiblesSalida"  >logs CS <i  style="font-size: 14px;" class='bx bxs-archive-out'></i></a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <li class="navItem">
-          <a  data-toggle="modal" data-target="#exampleModal1" class="navLink" ><i class='bx bxs-notepad'></i>Cronograma</a>
-        </li>
-
-        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 16px; ">Selecciona</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 20px; ">
-                  <span style="margin-left: 7px; margin-right: 7px;" aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-               <p style="font-size: 14px; "> Que vas a hacer , Selecciona una accion para mostrar los cronogramas</p>
-              </div>
-              <div class="modal-footer">
-                
-                <a type="button" class="btn btn-success" href="/agregarNuevoCronograma"  >Crear nuevo<i class='bx bxs-notepad'></i></a>
-                <a type="button" class="btn btn-primary" href="/cronogramaTodo"  >Todos <i class='bx bxs-notepad'></i> </a>
-                <a type="button" class="btn btn-primary" href="/cronogramaHoyRedline"  >Hoy <i class='bx bxs-notepad'></i> </a>
-                <a type="button" class="btn btn-primary" href="/cronogamaHistorial"  >Historial <i class='bx bxs-notepad'></i></a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <% }else if(role == 'tecnico'){%>
-        
-          <li class="navItem">
-            <a href="/cronogramaHoyRedline" class="navLink"><i class='bx bxs-notepad'></i> Cronograma </a>
-          </li>
+      <% } %> 
+    </li>
+    </ul>
+  </div>
   
-
-        <% }else if(role == 'servicioCliente'){%>
-        <li class="navItem">
-          <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
-        </li>
-        <li class="navItem">
-          <a href="/telecomunicaciones" class="navLink"> <i class='bx bxs-phone-outgoing'></i> Telecomunicaciones</a>
-        </li>
-        <li class="navItem">
-          <a href="#" class="navLink"><i class='bx bxs-user'></i> Servicio al cliente</a>
-        </li>
-        <li class="navItem">
-          <a href="#" class="navLink"> <i class='bx bxs-badge-dollar'></i> Registro de pagos</a>
-        </li>
-        <li class="navItem">
-          <a  data-toggle="modal" data-target="#exampleModal1" class="navLink" ><i class='bx bxs-notepad'></i>Cronograma</a>
-        </li>
-
-        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 16px; ">Selecciona</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 20px; ">
-                  <span style="margin-left: 7px; margin-right: 7px;" aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-               <p style="font-size: 14px; "> Que vas a hacer , Selecciona una accion para mostrar los cronogramas</p>
-              </div>
-              <div class="modal-footer">
-                
-                <a type="button" class="btn btn-success" href="/agregarNuevoCronograma"  >Crear nuevo<i class='bx bxs-notepad'></i></a>
-                <a type="button" class="btn btn-primary" href="/cronogramaTodo"  >Todos <i class='bx bxs-notepad'></i> </a>
-                <a type="button" class="btn btn-primary" href="/cronogramaHoyRedline"  >Hoy <i class='bx bxs-notepad'></i> </a>
-                <a type="button" class="btn btn-primary" href="/cronogamaHistorial"  >Historial <i class='bx bxs-notepad'></i></a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <% } %>
-        </li class="navItem">
-        <a style="margin-left:20px; font-size: 12px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Sesion</a>
-        </li>
-      </ul>
-      <div class="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-    </nav>
-    <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </header>
+  <section class="home-section">

@@ -18,32 +18,7 @@
 </head>
 
 <body class="login">
-  <header class="headerNav">
-    <nav class="navbarPrimary">
-      <a href="/home" class="navLogo"><img src="/img/2logo.png" alt="" width="100px"></a>
-      <ul class="navMenu">
-        <li class="navItem">
-          <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
-        </li>
-        <li class="navItem">
-          <a href="/inventarioHerramientasRedline" class="navLink"><i class='bx bxs-box'></i> Inventorio de herramientas</a>
-        </li>
-        <li class="navItem">
-          <a href="/inventarioConsumiblesRedline" class="navLink"><i class='bx bxs-box'></i> inventario de consumibles</a>
-        </li>
-        <li class="navItem">
-          <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipo de seguridad</a>
-        </li>
-
-
-      </ul>
-      <div class="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-    </nav>
-  </header>
+  <%- include('partials/nav2.ejs') %>
 
   <div class="container" style="margin-top: 150px; ">
     <div class="row justify-content-center mt-5 ">
@@ -136,7 +111,7 @@
 
     }
   </script>
-
+<%- include('partials/footer2.ejs') %>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/mainNavar.js"></script>

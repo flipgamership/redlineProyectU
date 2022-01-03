@@ -4751,7 +4751,7 @@ controller.cronogramaCompletarFotoOnt = (req, res) => {
             console.log(error);
           } else {
             console.log(results);
-            res.render("cronogramaFotoInstalacion", {
+            res.render("cronogramafotoInstalacion", {
               id: id,
               login: true,
               name: req.session.name,
@@ -5119,20 +5119,11 @@ controller.cronogramaOrganizarFecha = (req, res) => {
   }
 };
 controller.disaing = (req, res) => {
-  req.getConnection((error, conn) => {
-    conn.query("SELECT * FROM cronogramas", (error, results) => {
-      if (error) {
-        console.log(error);
-      } else {
-        res.render("cronograma_menu_servicio_c", {
-          total: false,
-          results: results,
-          login: true,
-          name: req.session.name,
-          role: req.session.role,
-        });
-      }
-    });
+  res.render("disaing", {
+    total: false,
+    login: true,
+    name: req.session.name,
+    role: req.session.role,
   });
 };
 module.exports = controller;

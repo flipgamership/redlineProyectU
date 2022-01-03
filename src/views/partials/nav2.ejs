@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Responsive Sidebar Menu  | CodingLab </title>
+    <link rel="stylesheet" href="../css/styleNav.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus icon'></i>
+        <div class="logo_name">CodingLab</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Responsive Sidebar Menu  | CodingLab </title>
+    <link rel="stylesheet" href="../css/styleNav.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bx-podcast icon' ></i>
+        <div class="logo_name">Redline</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <%if( role == 'admin'){%> 
+        <a href="/home">
+          <i class='bx bxs-home' style="margin-left: -10px;"></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="/menuDeInventarioDeDispositivos">
+         <i class='bx bxs-mobile-vibration' style="margin-left: -10px;" ></i>
+         <span class="links_name">I Dispositivos</span>
+       </a>
+       <span class="tooltip">Inventario de Dispositivos</span>
+     </li>
+     <li>
+       <a href="/inventarioConsumiblesRedline">
+        <i class='bx bxs-leaf' style="margin-left: -10px;" ></i>
+         <span class="links_name">I Consumibles</span>
+       </a>
+       <span class="tooltip">Inventario de Consumibles </span>
+     </li>
+     <li>
+       <a href="/menuInventarioEquipoSeduridadRedline">
+         <i class='bx bx-check-shield' style="margin-left: -10px;" ></i>
+         <span class="links_name">I Equipo de seguridad</span>
+       </a>
+       <span class="tooltip">Inventario De Equipo De Seguridad</span>
+     </li>
+     <li>
+      <a href="/menuInventarioEquipoSeduridadRedline">
+        <i class='bx bx-wrench' style="margin-left: -10px;" ></i>
+        <span class="links_name">I Herramientas</span>
+      </a>
+      <span class="tooltip">Inventario De Herramientas</span>
+    </li>
+     <li>
+       <a href="/telecomunicaciones">
+         <i class='bx bx-support'  style="margin-left: -10px;"></i>
+         <span class="links_name">Satisfacion al Cliente</span>
+       </a>
+       <span class="tooltip">Satisfacion al Cliente</span>
+     </li>
+     <li>
+       <a href="/cronogramaHoyRedline">
+         <i class='bx bxs-calendar' style="margin-left: -10px;"></i>
+         <span class="links_name">Cronograma</span>
+       </a>
+       <span class="tooltip">Cronograma</span>
+     </li>
+     <li>
+       <a href="/loginAut"><i class='bx bx-log-out' id="log_out"  style="margin-left: -10px;"></i><span class="links_name">cerrar cesion</span></a>
+     </li>
+     <% }else if ( role == 'tecnico'){%> 
+      <a href="/home">
+        <i class='bx bxs-home' style="margin-left: -10px;"></i>
+        <span class="links_name">Home</span>
+      </a>
+       <span class="tooltip">Home</span>
+    </li>
+   <li>
+     <a href="/cronogramaHoyRedline">
+       <i class='bx bxs-calendar' style="margin-left: -10px;"></i>
+       <span class="links_name">Cronograma</span>
+     </a>
+     <span class="tooltip">Cronograma</span>
+   </li>
+   <li>
+     <a href="/loginAut"><i class='bx bx-log-out' id="log_out"  style="margin-left: -10px;"></i><span class="links_name">cerrar cesion</span></a>
+   </li>
+    <% }else if (role == 'servicioCliente'){ %> 
+      <a href="/home">
+        <i class='bx bxs-home' style="margin-left: -10px;"></i>
+        <span class="links_name">Home</span>
+      </a>
+       <span class="tooltip">Home</span>
+    </li>
+   <li>
+     <a href="/telecomunicaciones">
+       <i class='bx bx-support'  style="margin-left: -10px;"></i>
+       <span class="links_name">Satisfacion al Cliente</span>
+     </a>
+     <span class="tooltip">Satisfacion al Cliente</span>
+   </li>
+   <li>
+     <a href="/cronogramaHoyRedline">
+       <i class='bx bxs-calendar' style="margin-left: -10px;"></i>
+       <span class="links_name">Cronograma</span>
+     </a>
+     <span class="tooltip">Cronograma</span>
+   </li>
+   <li>
+     <a href="/loginAut"><i class='bx bx-log-out' id="log_out"  style="margin-left: -10px;"></i><span class="links_name">cerrar cesion</span></a>
+   </li>
+
+      <% } %> 
+    </li>
+    </ul>
+  </div>
+  
+  <section class="home-section">

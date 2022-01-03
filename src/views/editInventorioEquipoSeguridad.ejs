@@ -24,34 +24,7 @@
 </head>
 
 <body class="login">
-  <header class="headerNav">
-    <nav class="navbarPrimary">
-      <a href="/home" class="navLogo"><img src="img/2logo.png" alt="" width="100px"></a>
-      <ul class="navMenu">
-        <li class="navItem">
-          <a href="/home" class="navLink"><i class='bx bxs-home-circle bx-flip-horizontal'></i> Home</a>
-        </li>
-        <li class="navItem">
-          <a href="" class="navLink"><i class='bx bxs-box'></i> Inventorio de herramientas</a>
-        </li>
-        <li class="navItem">
-          <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de consumibles</a>
-        </li>
-        <li class="navItem">
-          <a href="#" class="navLink"><i class='bx bxs-box'></i> inventario de equipo de seguridad</a>
-        </li>
-      </li class="navItem">
-      <a style="margin-left:20px; font-size: 12px;" href="loginAut" class="btn btn-danger" type="button">Cerrar Sesion</a>
-      </li>
-
-      </ul>
-      <div class="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-    </nav>
-  </header>
+  <%- include('partials/nav2.ejs') %>
 
 
 
@@ -162,7 +135,7 @@
       }
     }
   </script>
-  <%- include('./partials/footer.ejs') %>
+  <%- include('partials/footer2.ejs') %>
 </body>
 
 </html>
