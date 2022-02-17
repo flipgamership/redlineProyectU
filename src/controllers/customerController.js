@@ -6,10 +6,7 @@ const express = require("express");
 const moment = require("moment");
 const { text } = require("express");
 const controller = {};
-//SELECT SUM(cantidad) AS total FROM consumibles WHERE id_consumibles = 'GUL02';
-//SELECT * FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70');
-//SELECT SUM(cantidad_nueva_ingresada) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70';
-//SELECT fecha FROM logs_inventario_consumibles WHERE id=(SELECT max(id) FROM logs_inventario_consumibles WHERE id_consumibles = 'GUL70');
+
 controller.inicialPage = (req, res) => {
   res.render("index");
 };
@@ -1118,8 +1115,8 @@ controller.sendCorreoH1 = async (req, res) => {
     port: 587,
     secure: false,
     auth: {
-      user: "maisanmailer@gmail.com",
-      pass: "231215maisanmailer",
+      user: "correo del bot",
+      pass: "password del bot",
     },
   });
   var mailOptions = {
