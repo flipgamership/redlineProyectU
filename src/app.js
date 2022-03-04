@@ -28,8 +28,7 @@ app.use(myconnection(mysql,{
     password: '',
     port: 3306,
     database: 'proyectredline'
-    //c9panel
-    //@jbhfNAHF6 
+    
 }))
 app.use(express.urlencoded({extended:false}));
 
